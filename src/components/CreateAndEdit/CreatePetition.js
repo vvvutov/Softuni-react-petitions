@@ -3,13 +3,7 @@ import './create.css'
 export const CreatePetition = () => {
     return (
         <>
-            {/* In case of error, you should display div with class "errorContainer" */}
-            {/* You can choose to display the first error or all of them (error message/s in your opinion) */}
-            {/* <div>
-            <div class="errorContainer">
-                <p>Error</p>
-            </div>
-        </div> */}
+
             <section id="create-container">
                 <div className="create-container-info">
                     <h1>Създай петиция</h1>
@@ -24,7 +18,7 @@ export const CreatePetition = () => {
                             name="description"
                             placeholder="Кратко описание"
                             rows="3"
-                            />
+                        />
                         <label for="petition-text">Вашия текст <strong>  *</strong></label>
                         <textarea
                             id="petition-text"
@@ -42,9 +36,55 @@ export const CreatePetition = () => {
                             <option value="charity">Благотворителност</option>
                             <option value="other">Друго...</option>
                         </select>
+
                         <label for="other" >Дайте кратко описание<strong>  *</strong></label>
                         <input type="text" id="other" name="other" placeholder="Категория" />
-                        <input type="submit" id="btn" defaultValue="TRADE" />
+
+                        <label for="goal" >Колко подписа целите да съберете? <strong>  *</strong></label>
+                        <input type="number" id="goal" name="goal" placeholder="Колко подписа целите да съберете?" />
+
+
+                        <div style={{"display": "flex"}}>
+                            <label for="showMyName" >Покажи името ми </label>
+                            <input type="checkbox"
+                                id="showMyName"
+                                name="showMyName"
+                                // checked={values.confirmation.checked}
+                                // onChange={checkboxHandler}
+                            />
+                        </div>
+                        <div style={{"display": "flex"}}>
+
+                            <label for="showMyLastname" >Покажи фамилията ми </label>
+                            <input type="checkbox"
+                                id="showMyLastname"
+                                name="showMyLastname"
+                                // checked={values.confirmation.checked}
+                                // onChange={checkboxHandler}
+                            />
+                        </div>
+                        <div style={{"display": "flex"}}>
+
+                            <label for="showMyAge" >Покажи възрастта ми </label>
+                            <input type="checkbox"
+                                id="showMyAge"
+                                name="showMyAge"
+                                // checked={values.confirmation.checked}
+                                // onChange={checkboxHandler}
+                            />
+                        </div>
+                        <div style={{"display": "flex"}}>
+
+                            <label for="showMyAge" >Покажи пола ми </label>
+                            <input type="checkbox"
+                                id="showMyAge"
+                                name="showMyAge"
+                                // checked={values.confirmation.checked}
+                                // onChange={checkboxHandler}
+                            />
+                        </div>
+
+                        <input type="submit" id="btn" value="submit" />
                     </form>
                 </div>
             </section>
