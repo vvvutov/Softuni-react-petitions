@@ -43,45 +43,52 @@ export const CreatePetition = () => {
                         <label for="goal" >Колко подписа целите да съберете? <strong>  *</strong></label>
                         <input type="number" id="goal" name="goal" placeholder="Колко подписа целите да съберете?" />
 
+                        <div style={{ "display": "grid" }}>
 
-                        <div style={{"display": "flex"}}>
-                            <label for="showMyName" >Покажи името ми </label>
-                            <input type="checkbox"
-                                id="showMyName"
-                                name="showMyName"
-                                // checked={values.confirmation.checked}
-                                // onChange={checkboxHandler}
-                            />
-                        </div>
-                        <div style={{"display": "flex"}}>
+                            <li >
+                                <label for="showMyName" >Покажи името ми
+                                    <input type="checkbox"
+                                        id="showMyName"
+                                        name="showMyName"
+                                    // checked={values.confirmation.checked}
+                                    // onChange={checkboxHandler}
+                                    />
+                                </label>
+                            </li>
+                            <li >
 
-                            <label for="showMyLastname" >Покажи фамилията ми </label>
-                            <input type="checkbox"
-                                id="showMyLastname"
-                                name="showMyLastname"
-                                // checked={values.confirmation.checked}
-                                // onChange={checkboxHandler}
-                            />
-                        </div>
-                        <div style={{"display": "flex"}}>
+                                <label for="showMyLastname" >Покажи фамилията ми
+                                    <input type="checkbox"
+                                        id="showMyLastname"
+                                        name="showMyLastname"
+                                    // checked={values.confirmation.checked}
+                                    // onChange={checkboxHandler}
+                                    />
+                                </label>
+                            </li>
+                            <li >
 
-                            <label for="showMyAge" >Покажи възрастта ми </label>
-                            <input type="checkbox"
-                                id="showMyAge"
-                                name="showMyAge"
-                                // checked={values.confirmation.checked}
-                                // onChange={checkboxHandler}
-                            />
-                        </div>
-                        <div style={{"display": "flex"}}>
+                                <label for="showMyAge" >Покажи възрастта ми
+                                    <input type="checkbox"
+                                        id="showMyAge"
+                                        name="showMyAge"
+                                    // checked={values.confirmation.checked}
+                                    // onChange={checkboxHandler}
+                                    />
+                                </label>
+                            </li>
+                            <li >
 
-                            <label for="showMyAge" >Покажи пола ми </label>
-                            <input type="checkbox"
-                                id="showMyAge"
-                                name="showMyAge"
-                                // checked={values.confirmation.checked}
-                                // onChange={checkboxHandler}
-                            />
+                                <label for="showMyAge" >Покажи пола ми
+                                    <input type="checkbox"
+                                        id="showMyAge"
+                                        name="showMyAge"
+                                    // checked={values.confirmation.checked}
+                                    // onChange={checkboxHandler}
+                                    />
+                                </label>
+
+                            </li>
                         </div>
 
                         <input type="submit" id="btn" value="submit" />
