@@ -1,5 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useState } from "react";
+import { useState, useContext } from "react";
+
+import { AuthContext } from '../../contexts/AuthContext';
 
 import './register.css'
 
@@ -8,6 +10,8 @@ import { About } from '../AboutAndNotFound/About';
 
 
 export const Register = () => {
+
+    const {userLogin} = useContext(AuthContext)
 
     const [values, setValues] = useState({
         username: '',
@@ -47,6 +51,7 @@ export const Register = () => {
         register({ ...values })
             .then(authData => {
                 console.log(authData)
+                userLogin(authData)
                 navigate('/')
             })
     }

@@ -1,5 +1,9 @@
 import { Routes, Route, } from 'react-router-dom'
 
+import { useState } from 'react'
+
+import { AuthContext } from './contexts/AuthContext';
+
 
 // import { Footer } from './components/Home/Footer';
 import { Header } from './components/Home/Header';
@@ -17,14 +21,28 @@ import { Search } from './components/Search/Search';
 
 
 
-
-
 function App() {
+
+    const [auth, setAuth] = useState('auth', {});
+
+    const userLogin = (authData) => {
+        setAuth(authData);
+    };
+
+    const userLogout = () => {
+        setAuth({});
+    };
 
 
 
     return (
+
+
+
+
         <>
+        <AuthContext.Provider value={{auth, userLogin, userLogout}}>
+
             <main>
             < Header />
 
@@ -50,6 +68,7 @@ function App() {
 
             {/* < Footer /> */}
             </main>
+        </AuthContext.Provider>
         </>
 
     );
