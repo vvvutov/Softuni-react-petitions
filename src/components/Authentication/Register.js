@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 
 import { AuthContext } from '../../contexts/AuthContext';
 
@@ -7,9 +7,11 @@ import './register.css'
 
 import { register } from '../../services/authService'
 import { About } from '../AboutAndNotFound/About';
+// import {useForm} from 'react-hook-form'
 
 
 export const Register = () => {
+
 
     const {userLogin} = useContext(AuthContext)
 
@@ -24,7 +26,7 @@ export const Register = () => {
         rePassword: '',
         confirmation: {
             checked: false
-        },
+        }
     });
 
     const [errors, setErrors] = useState({});
@@ -39,23 +41,24 @@ export const Register = () => {
     }
 
     const changeHandler = (e) => {
-        setValues(state => ({
-            ...state,
+        setValues({
+            ...values,
             [e.target.name]: e.target.value,
-        }));
+    });
     }
+   
 
     const onSubmit = (e) => {
         e.preventDefault();
-
+        
         register({ ...values })
             .then(authData => {
-                console.log(authData)
+                // console.log(authData)
                 userLogin(authData)
                 navigate('/')
             })
     }
-
+     
     const lenghtCheck = (e, minLength, maxLength) => {
 
         setErrors(state => ({
@@ -88,7 +91,7 @@ export const Register = () => {
             [e.target.name]: [e.target.value] != values.password
         }))
     }
-    // window.onload = console.log(errors, !Object.values(errors).some((v) => v === true))
+
 
     return (
 
@@ -100,9 +103,10 @@ export const Register = () => {
                     id="username"
                     name="username"
                     placeholder="Потребителско име"
+                    // defaultValue={values.username}
                     value={values.username}
                     onChange={changeHandler}
-                    onBlur={(e) => lenghtCheck(e, 3, 12)}
+                    onBlur={(e) =>{ (lenghtCheck(e, 3, 12))}}
                 />
                 {errors.username &&
                     <p className="error">
@@ -115,6 +119,7 @@ export const Register = () => {
                     id="firstName"
                     name="firstName"
                     placeholder="Име"
+                    // defaultValue={values.firstName}
                     value={values.firstName}
                     onChange={changeHandler}
                     onBlur={(e) => lenghtCheck(e, 3, 15)}
@@ -130,6 +135,7 @@ export const Register = () => {
                     id="lastName"
                     name="lastName"
                     placeholder="Фамилия"
+                    // defaultValue={values.lastName}
                     value={values.lastName}
                     onChange={changeHandler}
                     onBlur={(e) => lenghtCheck(e, 3, 15)}
@@ -145,6 +151,7 @@ export const Register = () => {
                     id="age"
                     name="age"
                     placeholder="Възраст"
+                    // defaultValue={values.age}
                     value={values.age}
                     onChange={changeHandler}
                     onBlur={isPositive}
@@ -161,6 +168,7 @@ export const Register = () => {
                         type="radio"
                         value="male"
                         name="gender"
+                        // value = {values.gender.checked}
                         checked={values.gender.checked}
                         onChange={changeHandler }
                         onBlur={(e) => lenghtCheck(e, 3, 7)}
@@ -170,6 +178,7 @@ export const Register = () => {
                         type="radio"
                         value="female"
                         name="gender"
+                        // value = {values.gender.checked}
                         checked={values.gender.checked}
                         onChange={changeHandler}
                         onBlur={(e) => lenghtCheck(e, 3, 7)}
@@ -189,6 +198,7 @@ export const Register = () => {
                     name="email"
                     placeholder="Електронна поща"
                     value={values.email}
+                    // defaultValue = {values.email}
                     onChange={changeHandler}
                     onBlur={validateEmail}
                 />
@@ -203,6 +213,7 @@ export const Register = () => {
                     id="password"
                     name="password"
                     placeholder="Парола"
+                    // defaultValue = {values.password}
                     value={values.password}
                     onChange={changeHandler}
                     onBlur={(e) => lenghtCheck(e, 6, 20)}
@@ -218,6 +229,7 @@ export const Register = () => {
                     id="rePassword"
                     name="rePassword"
                     placeholder="Повторете паролата"
+                    // defaultValue = {values.rePassword}
                     value={values.rePassword}
                     onChange={changeHandler}
                     onBlur={validateRePass}
@@ -235,6 +247,7 @@ export const Register = () => {
                         type="checkbox"
                         id="confirmation"
                         name="confirmation"
+                        value={values.confirmation.checked}
                         checked={values.confirmation.checked}
                         onChange={checkboxHandler}
                     />

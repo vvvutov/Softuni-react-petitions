@@ -1,95 +1,253 @@
 import './create.css'
 
+import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { AuthContext } from '../../contexts/AuthContext';
+// import { PetitionContext } from ''
+
+
 export const CreatePetition = () => {
+
+    const { user } = useContext(AuthContext)
+
+    const [values, setValues] = useState({
+        title: '',
+        image: '',
+        petitionText: '',
+        category: 'none',
+        other: '',
+        goal: '',
+        showMyFirstName: {
+            checked: true
+        },
+        showMyLastName: {
+            checked: true
+        },
+        showMyAge: {
+            checked: false
+        },
+        showMyGender: {
+            checked: false
+        }
+    });
+
+    const [errors, setErrors] = useState({});
+
+    const navigate = useNavigate();
+
+    const checkboxHandler = (e) => {
+        setValues(state => ({
+            ...state,
+            [e.target.name]: { checked: e.target.checked },
+        }))
+    }
+
+    const changeHandler = (e) => {
+        setValues({
+            ...values,
+            [e.target.name]: e.target.value,
+        });
+    }
+
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        if (values.category === 'other'){
+           values.category = values.other
+        }
+        console.log(errors)
+        console.log(values)
+
+        // register({ ...values })
+        //     .then(authData => {
+        //         // console.log(authData)
+        //         userLogin(authData)
+        //         navigate('/')
+        //     })
+    }
+
+    const lengthCheck = (e, minLength, maxLength) => {
+
+        setErrors(state => ({
+            ...state,
+            [e.target.name]: values[e.target.name].length < minLength || values[e.target.name].length > maxLength
+        }))
+
+    }
+
+    const isPositive = (e) => {
+        let number = Number(values[e.target.name]);
+        setErrors(state => ({
+            ...state,
+            [e.target.name]: !(number > 0),
+        }))
+    }
+
+    const isHTML = (e) => {
+        setErrors(state => ({
+            ...state,
+            [e.target.name]: !/(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(values[e.target.name])
+        }))
+    }
+
+    const options = [
+
+        {
+            label: "Екология",
+            value: "ecology",
+        },
+        {
+            label: "Социална тематика",
+            value: "social",
+        },
+        {
+            label: "Политика",
+            value: "politics",
+        },
+        {
+            label: "Благотворителност",
+            value: "charity",
+        },
+        {
+            label: "Друго",
+            value: "other",
+        },
+
+    ];
+
     return (
         <>
 
             <section id="create-container">
                 <div className="create-container-info">
                     <h1>Създай петиция</h1>
-                    <form  >
-                        <label for="title" >Заглавие <strong>  *</strong></label>
-                        <input type="text" id="title" name="title" placeholder="Заглавие на вашата петиция" />
-                        <label for="imageURL">Поставете URL към изображение</label>
-                        <input type="text" id="imageURL" name="" placeholder="http://..." />
-                        <label for="description">Кратко описание <strong>  *</strong></label>
+                    <form onSubmit={onSubmit} >
+                        <label htmlFor="title" >Заглавие <strong>  *</strong></label>
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            placeholder="Заглавие на вашата петиция"
+                            value={values.title}
+                            onChange={changeHandler}
+                            onBlur={(e) => lengthCheck(e, 10, 80)}
+                        />
+
+                        <label htmlFor="image">Поставете URL към изображение</label>
+                        <input
+                            type="text"
+                            id="image"
+                            name="image"
+                            placeholder="http://..."
+                            value={values.image}
+                            onChange={changeHandler}
+                            onBlur={(e) => isHTML}
+                        />
+
+                        <label htmlFor="description">Кратко описание <strong>  *</strong></label>
                         <textarea
                             id="description"
                             name="description"
                             placeholder="Кратко описание"
                             rows="3"
+                            onChange={changeHandler}
+                            onBlur={(e) => { lengthCheck(e, 10, 100) }}
+
                         />
-                        <label for="petition-text">Вашия текст <strong>  *</strong></label>
+
+                        <label htmlFor="petition-text">Вашия текст <strong>  *</strong></label>
                         <textarea
                             id="petition-text"
                             name="petitionText"
                             placeholder="Вашия текст"
                             rows="10"
+                            onChange={changeHandler}
+                            onBlur={(e) => { lengthCheck(e, 10, 1000) }}
                         />
-                        <label for="category">Категория:</label>
-                        <select id="category" name="category">
-                            <option value="none" selected disabled hidden>Изберете категория</option>
 
-                            <option value="ecology">Екология</option>
-                            <option value="social">Социална тематика</option>
-                            <option value="politics">Политика</option>
-                            <option value="charity">Благотворителност</option>
-                            <option value="other">Друго...</option>
+                        <label htmlFor="category">Категория:</label>
+                        <select 
+                        id="category" 
+                        name="category"
+                        value={values.category}
+                        onChange={changeHandler}
+                        >
+                            <option value="none" selected={true} disabled={true} hidden={true}>Изберете категория</option>
+                            {options.map((o) => (
+                                <option value={o.value}>{o.label}</option>
+                            ))}
                         </select>
-
-                        <label for="other" >Дайте кратко описание<strong>  *</strong></label>
-                        <input type="text" id="other" name="other" placeholder="Категория" />
-
-                        <label for="goal" >Колко подписа целите да съберете? <strong>  *</strong></label>
-                        <input type="number" id="goal" name="goal" placeholder="Колко подписа целите да съберете?" />
-
-                        <div style={{ "display": "grid" }}>
-
-                            <li >
-                                <label for="showMyName" >Покажи името ми
-                                    <input type="checkbox"
-                                        id="showMyName"
-                                        name="showMyName"
-                                    // checked={values.confirmation.checked}
-                                    // onChange={checkboxHandler}
-                                    />
-                                </label>
-                            </li>
-                            <li >
-
-                                <label for="showMyLastname" >Покажи фамилията ми
-                                    <input type="checkbox"
-                                        id="showMyLastname"
-                                        name="showMyLastname"
-                                    // checked={values.confirmation.checked}
-                                    // onChange={checkboxHandler}
-                                    />
-                                </label>
-                            </li>
-                            <li >
-
-                                <label for="showMyAge" >Покажи възрастта ми
-                                    <input type="checkbox"
-                                        id="showMyAge"
-                                        name="showMyAge"
-                                    // checked={values.confirmation.checked}
-                                    // onChange={checkboxHandler}
-                                    />
-                                </label>
-                            </li>
-                            <li >
-
-                                <label for="showMyAge" >Покажи пола ми
-                                    <input type="checkbox"
-                                        id="showMyAge"
-                                        name="showMyAge"
-                                    // checked={values.confirmation.checked}
-                                    // onChange={checkboxHandler}
-                                    />
-                                </label>
-
-                            </li>
+                        { values.category === 'other' &&  
+                        <div>
+                        <label htmlFor="other" >Дайте кратко описание на категорията<strong>&nbsp;  *</strong> </label>
+                        
+                        <input
+                        type="text"
+                        id="other"
+                        name="other"
+                        placeholder="Категория"
+                        value={values.other }
+                        onChange={changeHandler}
+                        />
                         </div>
+                    }
+
+                        <label htmlFor="goal" >Колко подписа целите да съберете? <strong>&nbsp;  *</strong></label>
+                        <input
+                            type="number"
+                            id="goal"
+                            name="goal"
+                            placeholder="Колко подписа целите да съберете?"
+                        />
+
+                        <ul>
+                            <li >
+                                <label htmlFor="showMyFirstName" >Покажи името ми
+                                    <input type="checkbox"
+                                        id="showMyFirstName"
+                                        name="showMyFirstName"
+                                    checked={values.showMyFirstName.checked}
+                                    onChange={checkboxHandler}
+                                    />
+                                </label>
+                            </li>
+                            <li >
+
+                                <label htmlFor="showMyLastName" >Покажи фамилията ми
+                                    <input type="checkbox"
+                                        id="showMyLastName"
+                                        name="showMyLastName"
+                                    checked={values.showMyLastName.checked}
+                                    onChange={checkboxHandler}
+                                    />
+                                </label>
+                            </li>
+                            <li >
+
+                                <label htmlFor="showMyAge" >Покажи възрастта ми
+                                    <input type="checkbox"
+                                        id="showMyAge"
+                                        name="showMyAge"
+                                    checked={values.showMyAge.checked}
+                                    onChange={checkboxHandler}
+                                    />
+                                </label>
+                            </li>
+                            <li >
+
+                                <label htmlFor="showMyGender" >Покажи пола ми
+                                    <input type="checkbox"
+                                        id="showMyGender"
+                                        name="showMyGender"
+                                    checked={values.showMyGender.checked}
+                                    onChange={checkboxHandler}
+                                    />
+                                </label>
+
+                            </li>
+                        </ul>
+
 
                         <input type="submit" id="btn" value="submit" />
                     </form>
