@@ -93,8 +93,15 @@ main {
     font-size: 15px;
     margin-bottom: 30px;
 }
+#create-container ul {
+    display:grid;
+}
 
-#create-container div li input[type="checkbox"]
-{
+#create-container div li {
+    list-style-type: none;
+
+}
+
+#create-container div li input[type="checkbox"]{
     vertical-align: middle;
 }

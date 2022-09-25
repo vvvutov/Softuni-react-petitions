@@ -1,7 +1,12 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom'
+import { AuthContext } from '../../contexts/AuthContext';
 
 
 export const Header = () => {
+
+    const {user} = useContext(AuthContext)
+    
     return (
             <div>
         <header className="header">
@@ -18,21 +23,25 @@ export const Header = () => {
                         <li>
                             <Link to="/search">Търсене</Link>
                         </li>
-                        <li>
+                        {user.accessToken && <li>
                             <Link to="/create">Създай петиция</Link>
-                        </li>
+                        </li>}
                         <li>
                             <Link to="/about">About</Link>
                         </li>
-                        <li>
-                            <Link to="/login">Вход</Link>
-                        </li>
-                        <li>
+                        
+                        {!user.accessToken && <li>
                             <Link to="/register">Регистрация</Link>
-                        </li>
+                        </li>}
+                       {user.accessToken ? 
                         <li>
                             <Link to="/logout">Logout</Link>
                         </li>
+                        : 
+                        <li>
+                            <Link to="/login">Вход</Link>
+                        </li>
+                       }
                     </ul>
                 </nav>
         </header>

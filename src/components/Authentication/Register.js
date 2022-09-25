@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext} from "react";
 
 import { AuthContext } from '../../contexts/AuthContext';
 
@@ -7,7 +7,7 @@ import './register.css'
 
 import { register } from '../../services/authService'
 import { About } from '../AboutAndNotFound/About';
-// import {useForm} from 'react-hook-form'
+
 
 
 export const Register = () => {
@@ -53,12 +53,15 @@ export const Register = () => {
         
         register({ ...values })
             .then(authData => {
-                // console.log(authData)
+                console.log(authData)
                 userLogin(authData)
                 navigate('/')
             })
     }
      
+    
+    
+    
     const lenghtCheck = (e, minLength, maxLength) => {
 
         setErrors(state => ({

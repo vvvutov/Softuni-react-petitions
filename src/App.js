@@ -41,7 +41,7 @@ function App() {
 
 
         <>
-        <AuthContext.Provider value={{auth, userLogin, userLogout}}>
+        <AuthContext.Provider value={{user: auth, userLogin, userLogout}}>
 
             <main>
             < Header />

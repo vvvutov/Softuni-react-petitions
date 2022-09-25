@@ -8,9 +8,11 @@ export const login = async (userData) => {
 
 }
 
+
 export const register = async (userData) => {
     return await request(`${baseUrl}/users/register`, 'POST', userData)
 }
+
 
 export const logout = async (accessToken) => {
     try {

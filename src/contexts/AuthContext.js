@@ -10,6 +10,7 @@ export const AuthContext = createContext()
 //     const [auth, setAuth] = useLocalStorage('auth', {});
 
 //     const userLogin = (authData) => {
+//         console.log(authData)
 //         setAuth(authData);
 //     };
 
@@ -30,19 +31,19 @@ export const AuthContext = createContext()
 // };
 
 
-// export const useAuthContext = () => {
-//     const context = useContext(AuthContext);
+// // export const useAuthContext = () => {
+// //     const context = useContext(AuthContext);
 
-//     return context;
-// };
+// //     return context;
+// // };
 
 
-// export const withAuth = (Component) => {
-//     const AuthWrapper = (props) => {
-//         const context = useContext(AuthContext);
+// // export const withAuth = (Component) => {
+// //     const AuthWrapper = (props) => {
+// //         const context = useContext(AuthContext);
         
-//         return <Component {...props} auth={context} />
-//     }
+// //         return <Component {...props} auth={context} />
+// //     }
 
-//     return AuthWrapper;
-// } 
+// //     return AuthWrapper;
+// // } 

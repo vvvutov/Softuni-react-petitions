@@ -2,6 +2,7 @@ import './create.css'
 
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { create } from '../../services/petitionService';
 
 import { AuthContext } from '../../contexts/AuthContext';
 // import { PetitionContext } from ''
@@ -56,8 +57,11 @@ export const CreatePetition = () => {
         if (values.category === 'other'){
            values.category = values.other
         }
-        console.log(errors)
-        console.log(values)
+        // console.log(errors)
+        // console.log(values)
+
+        create(values)
+        .then(result => {console.log(result)})
 
         // register({ ...values })
         //     .then(authData => {

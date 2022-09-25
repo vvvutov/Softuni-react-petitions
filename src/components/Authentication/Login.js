@@ -21,8 +21,11 @@ export const Login = () => {
         const loginData = Object.fromEntries( new FormData(e.target))
 
         login(loginData)
-        .then(userData =>  userLogin(userData))
-        .then(navigate('/'))
+        .then(userData =>  {
+            console.log(userData)
+            userLogin(userData)
+        })
+         .then(navigate('/'))
     }
 
 

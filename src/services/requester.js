@@ -6,7 +6,7 @@ export const request = async (url, method = 'GET' , data) => {
         // const user = localStorage.getItem('auth')
         // const auth = JSON.parse(user || {})
 
-        let headers = {};
+        let headers = '';
 
         // if (auth.accessToken) {
         //     headers['X-Authorization'] = auth.accessToken
@@ -18,7 +18,7 @@ export const request = async (url, method = 'GET' , data) => {
             
         } else {
 
-            console.log(JSON.stringify({...data}))
+            // console.log(JSON.stringify({...data}))
             response = await fetch(url, {
                 method: method,
                 headers: {
