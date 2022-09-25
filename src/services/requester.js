@@ -1,10 +1,15 @@
 export const request = async (url, method = 'GET' , data) => {
     let response = '';
     let result = '';
+    let auth = '';
 
     try {
         const user = localStorage.getItem('auth')
-        const auth = JSON.parse(user || {})
+        if (user !== "undefined") {
+             auth = JSON.parse(user)
+        } else {
+            auth = {}
+        }
 
         let headers = {};
 

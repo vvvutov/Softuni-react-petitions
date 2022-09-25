@@ -53,7 +53,6 @@ export const Register = () => {
         
         register({ ...values })
             .then(authData => {
-                console.log(authData)
                 userLogin(authData)
                 navigate('/')
             })
