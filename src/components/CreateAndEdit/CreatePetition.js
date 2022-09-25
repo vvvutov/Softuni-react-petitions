@@ -57,18 +57,9 @@ export const CreatePetition = () => {
         if (values.category === 'other'){
            values.category = values.other
         }
-        // console.log(errors)
-        // console.log(values)
 
         create(values)
         .then(result => {console.log(result)})
-
-        // register({ ...values })
-        //     .then(authData => {
-        //         // console.log(authData)
-        //         userLogin(authData)
-        //         navigate('/')
-        //     })
     }
 
     const lengthCheck = (e, minLength, maxLength) => {

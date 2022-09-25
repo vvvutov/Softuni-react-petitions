@@ -18,12 +18,15 @@ import { About } from './components/AboutAndNotFound/About';
 import { NotFound } from './components/AboutAndNotFound/NotFound';
 import { Edit } from './components/CreateAndEdit/Edit';
 import { Search } from './components/Search/Search';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
 
 
 function App() {
 
-    const [auth, setAuth] = useState('auth', {});
+    // const [auth, setAuth] = useState('auth', {});
+    const [auth, setAuth] = useLocalStorage('auth', {});
+
 
     const userLogin = (authData) => {
         setAuth(authData);

@@ -3,14 +3,14 @@ export const request = async (url, method = 'GET' , data) => {
     let result = '';
 
     try {
-        // const user = localStorage.getItem('auth')
-        // const auth = JSON.parse(user || {})
+        const user = localStorage.getItem('auth')
+        const auth = JSON.parse(user || {})
 
-        let headers = '';
+        let headers = {};
 
-        // if (auth.accessToken) {
-        //     headers['X-Authorization'] = auth.accessToken
-        // }
+        if (auth.accessToken) {
+            headers['X-Authorization'] = auth.accessToken
+        }
 
         if (method === 'GET') {
             response = await fetch(url);
