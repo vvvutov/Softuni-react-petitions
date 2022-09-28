@@ -22,7 +22,7 @@ export const Login = () => {
 
         login(loginData)
         .then(userData =>  {
-            // console.log(userData)
+            console.log(userData)
             userLogin(userData)
         })
          .then(navigate('/'))

@@ -1,8 +1,9 @@
 import { Routes, Route, } from 'react-router-dom'
+import { useEffect, useState } from 'react';
 
-import { useState } from 'react'
 
-import { AuthContext } from './contexts/AuthContext';
+import { AuthProvider } from './contexts/AuthContext';
+import * as petitionService from './services/petitionService'
 
 
 // import { Footer } from './components/Home/Footer';
@@ -19,59 +20,56 @@ import { NotFound } from './components/AboutAndNotFound/NotFound';
 import { Edit } from './components/CreateAndEdit/Edit';
 import { Search } from './components/Search/Search';
 import { useLocalStorage } from './hooks/useLocalStorage';
+import { PetitionProvider } from './contexts/PetitionContext';
 
 
 
 function App() {
 
-    // const [auth, setAuth] = useState('auth', {});
-    const [auth, setAuth] = useLocalStorage('auth', {});
 
+    // const [petitions, setPetitions] = useState([]);
 
-    const userLogin = (authData) => {
-        setAuth(authData);
-    };
+    // useEffect(() => {
+    //     petitionService.getAll()
+    //         .then(res => { setPetitions(res) })
+    // }, []);
 
-    const userLogout = () => {
-        setAuth({});
-    };
-
+    // const [auth, setAuth] = useLocalStorage('auth', {});
+    // const userLogin = (authData) => {
+    //     setAuth(authData);
+    // };
+    // const userLogout = () => {
+    //     setAuth({});
+    // };
 
 
     return (
-
-
-
-
         <>
-        <AuthContext.Provider value={{user: auth, userLogin, userLogout}}>
+            <AuthProvider>
+                <main>
+                    < Header />
+                    <PetitionProvider>
 
-            <main>
-            < Header />
+                        <Routes>
+                            <Route path='/' element={<Home/>} />
+                            <Route path='/petitions' element={<Catalog />} />
+                            <Route path='/create' element={<CreatePetition />} />
+                            <Route path='/login' element={<Login />} />
+                            <Route path='/register' element={<Register />} />
+                            <Route path='/logout' element={<Logout />} />
+                            <Route path='/404' element={< NotFound />} />
+                            <Route path='/details' element={<Details />} />
+                            <Route path='/search' element={<Search />} />
 
-                <Routes>
-                    <Route path='/' element={<Home />} />
-                    <Route path='/petitions' element={<Catalog />} />
-                    <Route path='/create' element={<CreatePetition />} />
-                    <Route path='/login' element={<Login />} />
-                    <Route path='/register' element={<Register />} />
-                    <Route path='/logout' element={<Logout />} />
-                    <Route path='/404' element={< NotFound />} />
-                    <Route path='/details' element={<Details />} />
-                    <Route path='/search' element={<Search />} />
+                            <Route path='/edit' element={<Edit />} />
+                            <Route path='/about' element={<About />} />
+                            <Route path='*' element={<NotFound />} />
+                        </Routes>
+                    </PetitionProvider>
 
-                    <Route path='/edit' element={<Edit />} />
-                    <Route path='/about' element={<About />} />
-                    <Route path='*' element={<NotFound />} />
-
-
-
-
-                </Routes>
-
-            {/* < Footer /> */}
-            </main>
-        </AuthContext.Provider>
+                    {/* < Footer /> */}
+                </main>
+            </AuthProvider>
         </>
 
     );

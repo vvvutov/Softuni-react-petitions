@@ -4,7 +4,6 @@ const baseUrl = 'http://localhost:3030';
 
 export const getAll = async () => {
     return await request(`${baseUrl}/data/petitions`)
-        // .then(res => res.json())
 }
 
 

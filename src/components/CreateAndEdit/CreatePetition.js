@@ -19,6 +19,7 @@ export const CreatePetition = () => {
         category: 'none',
         other: '',
         goal: '',
+        authorInfo: {...user},
         showMyFirstName: {
             checked: true
         },
@@ -59,7 +60,7 @@ export const CreatePetition = () => {
         }
 
         create(values)
-        .then(result => {console.log(result)})
+        .then(result => {console.log(JSON.stringify(result))})
     }
 
     const lengthCheck = (e, minLength, maxLength) => {
@@ -168,9 +169,9 @@ export const CreatePetition = () => {
                         value={values.category}
                         onChange={changeHandler}
                         >
-                            <option value="none" selected={true} disabled={true} hidden={true}>Изберете категория</option>
+                            <option value="none"  disabled={true} hidden={true}>Изберете категория</option>
                             {options.map((o) => (
-                                <option value={o.value}>{o.label}</option>
+                                <option value={o.value} key={o.value} >{o.label}</option>
                             ))}
                         </select>
                         { values.category === 'other' &&  
@@ -197,7 +198,7 @@ export const CreatePetition = () => {
                         />
 
                         <ul>
-                            <li >
+                            <li key={'firstName'} >
                                 <label htmlFor="showMyFirstName" >Покажи името ми
                                     <input type="checkbox"
                                         id="showMyFirstName"
@@ -207,7 +208,7 @@ export const CreatePetition = () => {
                                     />
                                 </label>
                             </li>
-                            <li >
+                            <li key={'lastName'}>
 
                                 <label htmlFor="showMyLastName" >Покажи фамилията ми
                                     <input type="checkbox"
@@ -218,7 +219,7 @@ export const CreatePetition = () => {
                                     />
                                 </label>
                             </li>
-                            <li >
+                            <li key={'age'}>
 
                                 <label htmlFor="showMyAge" >Покажи възрастта ми
                                     <input type="checkbox"
@@ -229,7 +230,7 @@ export const CreatePetition = () => {
                                     />
                                 </label>
                             </li>
-                            <li >
+                            <li key={'gender'}>
 
                                 <label htmlFor="showMyGender" >Покажи пола ми
                                     <input type="checkbox"

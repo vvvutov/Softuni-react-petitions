@@ -1,11 +1,16 @@
-// import styles from './home.module.css'
+import { useContext } from 'react';
 import { Link } from 'react-router-dom'
+import { PetitionContext } from '../../contexts/PetitionContext';
 
 import './home.css'
 
 import { PetitionItem } from './PetitionItem';
 
+
 export const Home = () => {
+
+    const {petitions} = useContext(PetitionContext)
+
      return(
      <>
      <div className="content">
@@ -21,9 +26,9 @@ export const Home = () => {
                     </Link>
                 </div>
                 <div className="petition-list">
-                    <PetitionItem />
-                    <PetitionItem />
-                    <PetitionItem />
+                    {petitions.map( p => 
+                        <PetitionItem petition={p} />
+                    )}
                 </div>
      </>
      )

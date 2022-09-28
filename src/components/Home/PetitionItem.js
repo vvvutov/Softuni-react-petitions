@@ -1,13 +1,23 @@
-export const PetitionItem = (props) => {
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
+
+
+export const PetitionItem = ({petition}) => {
+
+const { user } = useContext(AuthContext)
+
     return (
         <>
-            <div className="petition">
-                <img src="image" alt='alt' />
+            <article className="petition">
+                <img src={petition.image} alt='alt' />
                 <div>
-                    <h3>category</h3>
-                    <p>petition</p>
+                    <h3>{petition.category}</h3>
+                    <p>{petition.description}</p>
                 </div>
-            </div>
+                <div>
+                    <p>{user.username}</p>
+                </div>
+            </article>
         </>
     )
 };

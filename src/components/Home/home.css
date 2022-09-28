@@ -96,7 +96,9 @@ nav ul li a {
     align-items: center;
 }
 
-.petition {
+ article.petition {
+    width: 400px;
+    height: 400px;
     display: flex;
     align-items: center;
     font-size: 14px;
@@ -108,7 +110,8 @@ nav ul li a {
 }
 
 .petition img {
-    width: 40px;
+    width: 50px;
+    height: 50px;
     margin-right: 10px;
 }
 
