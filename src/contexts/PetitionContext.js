@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import * as petitionService from '../services/petitionService'
 
@@ -8,7 +8,7 @@ export const PetitionContext = createContext()
 
 export const PetitionProvider = ({ children }) => {
 
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
 
     const [petitions, setPetitions] = useState([]);
 
@@ -17,9 +17,19 @@ export const PetitionProvider = ({ children }) => {
             .then(res => { setPetitions(res) })
     }, []);
 
+    const addPetitionHandler = (petitionData) => {
+        setPetitions(state => [
+            ...state,
+            petitionData
+
+        ]);
+        navigate('/')
+    }
+
     return (
         <PetitionContext.Provider value={{
             petitions,
+            addPetitionHandler,
         }} >
             {children}
         </PetitionContext.Provider>

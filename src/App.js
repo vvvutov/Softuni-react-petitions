@@ -1,10 +1,6 @@
 import { Routes, Route, } from 'react-router-dom'
-import { useEffect, useState } from 'react';
-
 
 import { AuthProvider } from './contexts/AuthContext';
-import * as petitionService from './services/petitionService'
-
 
 // import { Footer } from './components/Home/Footer';
 import { Header } from './components/Home/Header';
@@ -19,7 +15,6 @@ import { About } from './components/AboutAndNotFound/About';
 import { NotFound } from './components/AboutAndNotFound/NotFound';
 import { Edit } from './components/CreateAndEdit/Edit';
 import { Search } from './components/Search/Search';
-import { useLocalStorage } from './hooks/useLocalStorage';
 import { PetitionProvider } from './contexts/PetitionContext';
 
 
@@ -28,12 +23,10 @@ function App() {
 
 
     // const [petitions, setPetitions] = useState([]);
-
     // useEffect(() => {
     //     petitionService.getAll()
     //         .then(res => { setPetitions(res) })
     // }, []);
-
     // const [auth, setAuth] = useLocalStorage('auth', {});
     // const userLogin = (authData) => {
     //     setAuth(authData);

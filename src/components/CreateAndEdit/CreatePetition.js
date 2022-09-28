@@ -1,17 +1,18 @@
 import './create.css'
 
 import { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { create } from '../../services/petitionService';
 
 import { AuthContext } from '../../contexts/AuthContext';
-// import { PetitionContext } from ''
+import { PetitionContext } from '../../contexts/PetitionContext';
 
 
 export const CreatePetition = () => {
 
+    const { addPetitionHandler } = useContext(PetitionContext)
     const { user } = useContext(AuthContext)
 
+    //TODO too many thing attached as authorInfo in values
     const [values, setValues] = useState({
         title: '',
         image: '',
@@ -36,7 +37,6 @@ export const CreatePetition = () => {
 
     const [errors, setErrors] = useState({});
 
-    const navigate = useNavigate();
 
     const checkboxHandler = (e) => {
         setValues(state => ({
@@ -60,7 +60,7 @@ export const CreatePetition = () => {
         }
 
         create(values)
-        .then(result => {console.log(JSON.stringify(result))})
+        .then(result => addPetitionHandler(result))
     }
 
     const lengthCheck = (e, minLength, maxLength) => {
