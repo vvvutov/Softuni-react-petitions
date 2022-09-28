@@ -27,7 +27,7 @@ export const Home = () => {
                 </div>
                 <div className="petition-list">
                     {petitions.map( p => 
-                        <PetitionItem petition={p} />
+                        <PetitionItem petition={p} key={p.title} />
                     )}
                 </div>
      </>

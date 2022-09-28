@@ -23,6 +23,7 @@ export const PetitionProvider = ({ children }) => {
             petitionData
 
         ]);
+        console.log(petitionData)
         navigate('/')
     }
 

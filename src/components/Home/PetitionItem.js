@@ -1,10 +1,11 @@
-import { useContext } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
+// import { useContext } from "react";
+// import { AuthContext } from "../../contexts/AuthContext";
 
 
 export const PetitionItem = ({petition}) => {
 
-const { user } = useContext(AuthContext)
+// const { user } = useContext(AuthContext)
+
 
     return (
         <>
@@ -15,7 +16,7 @@ const { user } = useContext(AuthContext)
                     <p>{petition.description}</p>
                 </div>
                 <div>
-                    <p>{user.username}</p>
+                    <p>{petition.authorInfo.username}</p>
                 </div>
             </article>
         </>
