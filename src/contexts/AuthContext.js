@@ -9,7 +9,7 @@ export const AuthProvider = ({children}) => {
     const [auth, setAuth] = useLocalStorage('auth', {});
 
     const userLogin = (authData) => {
-        setAuth(authData);
+        setAuth(authData, {});
     };
 
     const userLogout = () => {
@@ -21,7 +21,7 @@ export const AuthProvider = ({children}) => {
             user: auth,
             userLogin,
             userLogout,
-            isAuthenticated: !!auth.accessToken
+            isAuthenticated: Boolean(auth.accessToken) 
         }}>
             {children}
         </AuthContext.Provider>  

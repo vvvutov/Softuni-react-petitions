@@ -21,7 +21,6 @@ export const PetitionProvider = ({ children }) => {
         setPetitions(state => [
             ...state,
             petitionData
-
         ]);
         console.log(petitionData)
         navigate('/')

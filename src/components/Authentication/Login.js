@@ -19,7 +19,7 @@ export const Login = () => {
         e.preventDefault()
 
         const loginData = Object.fromEntries( new FormData(e.target))
-
+        console.log(loginData);
         login(loginData)
         .then(userData =>  {
             console.log(userData)

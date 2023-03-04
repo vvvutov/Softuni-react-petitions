@@ -1,23 +1,23 @@
 import './catalog.css'
+import { Link } from 'react-router-dom'
 
-export const CatalogPetitionItem = () => {
+
+export const CatalogPetitionItem = ({ petition }) => {
     return (
         <div className="petition">
             <div className="petition-img">
                 <img src="image" alt='alt' />
             </div>
             <div className="petition-info">
-                <h1>Petition title</h1>
+                <h1>{petition.title}</h1>
                 <p>
-                    <span>Category</span>something
+                    <span>Категория</span>{petition.category}
                 </p>
                 <p>
-                    Petition summary
+                    <span>Описание: </span>{petition.description}
                 </p>
             </div>
-            <a href="/details" className="btn-details">
-                Details
-            </a>
+            <Link to="/details" className="btn-details"> Виж петицията</Link>
         </div>
 
     )
