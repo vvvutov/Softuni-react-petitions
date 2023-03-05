@@ -16,6 +16,9 @@ export const CatalogPetitionItem = ({ petition }) => {
                 <p>
                     <span>Описание: </span>{petition.description}
                 </p>
+                {petition.showMyFirstName.checked  && 
+                <p>{petition.authorInfo.firstName} {petition.authorInfo.lastName}</p>
+                }
             </div>
             <Link to="/details" className="btn-details"> Виж петицията</Link>
         </div>

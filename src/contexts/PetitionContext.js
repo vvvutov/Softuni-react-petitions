@@ -22,7 +22,7 @@ export const PetitionProvider = ({ children }) => {
             ...state,
             petitionData
         ]);
-        console.log(petitionData)
+        console.log(petitionData.showMyFirstName.checked)
         navigate('/')
     }
 

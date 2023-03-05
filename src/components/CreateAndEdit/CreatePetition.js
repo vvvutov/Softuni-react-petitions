@@ -55,9 +55,9 @@ export const CreatePetition = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        if (values.category === 'other'){
-           values.category = values.other
-        }
+        // if (values.category === 'other'){
+        //    values.category = values.other
+        // }
 
         create(values)
         .then(result => addPetitionHandler(result))
