@@ -20,7 +20,7 @@ export const CreatePetition = () => {
         category: 'none',
         other: '',
         goal: '',
-        authorInfo: {...user},
+        authorInfo: { ...user },
         showMyFirstName: {
             checked: true
         },
@@ -60,7 +60,7 @@ export const CreatePetition = () => {
         // }
 
         create(values)
-        .then(result => addPetitionHandler(result))
+            .then(result => addPetitionHandler(result))
     }
 
     const lengthCheck = (e, minLength, maxLength) => {
@@ -163,31 +163,31 @@ export const CreatePetition = () => {
                         />
 
                         <label htmlFor="category">Категория:</label>
-                        <select 
-                        id="category" 
-                        name="category"
-                        value={values.category}
-                        onChange={changeHandler}
+                        <select
+                            id="category"
+                            name="category"
+                            value={values.category}
+                            onChange={changeHandler}
                         >
-                            <option value="none"  disabled={true} hidden={true}>Изберете категория</option>
+                            <option value="none" disabled={true} hidden={true}>Изберете категория</option>
                             {options.map((o) => (
                                 <option value={o.value} key={o.value} >{o.label}</option>
                             ))}
                         </select>
-                        { values.category === 'other' &&  
-                        <div>
-                        <label htmlFor="other" >Дайте кратко описание на категорията<strong>&nbsp;  *</strong> </label>
-                        
-                        <input
-                        type="text"
-                        id="other"
-                        name="other"
-                        placeholder="Категория"
-                        value={values.other }
-                        onChange={changeHandler}
-                        />
-                        </div>
-                    }
+                        {values.category === 'other' &&
+                            <div>
+                                <label htmlFor="other" >Дайте кратко описание на категорията<strong>&nbsp;  *</strong> </label>
+
+                                <input
+                                    type="text"
+                                    id="other"
+                                    name="other"
+                                    placeholder="Категория"
+                                    value={values.other}
+                                    onChange={changeHandler}
+                                />
+                            </div>
+                        }
 
                         <label htmlFor="goal" >Колко подписа целите да съберете? <strong>&nbsp;  *</strong></label>
                         <input
@@ -195,6 +195,7 @@ export const CreatePetition = () => {
                             id="goal"
                             name="goal"
                             placeholder="Колко подписа целите да съберете?"
+                            onChange={changeHandler}
                         />
 
                         <ul>
@@ -203,8 +204,8 @@ export const CreatePetition = () => {
                                     <input type="checkbox"
                                         id="showMyFirstName"
                                         name="showMyFirstName"
-                                    checked={values.showMyFirstName.checked}
-                                    onChange={checkboxHandler}
+                                        checked={values.showMyFirstName.checked}
+                                        onChange={checkboxHandler}
                                     />
                                 </label>
                             </li>
@@ -214,8 +215,8 @@ export const CreatePetition = () => {
                                     <input type="checkbox"
                                         id="showMyLastName"
                                         name="showMyLastName"
-                                    checked={values.showMyLastName.checked}
-                                    onChange={checkboxHandler}
+                                        checked={values.showMyLastName.checked}
+                                        onChange={checkboxHandler}
                                     />
                                 </label>
                             </li>
@@ -225,8 +226,8 @@ export const CreatePetition = () => {
                                     <input type="checkbox"
                                         id="showMyAge"
                                         name="showMyAge"
-                                    checked={values.showMyAge.checked}
-                                    onChange={checkboxHandler}
+                                        checked={values.showMyAge.checked}
+                                        onChange={checkboxHandler}
                                     />
                                 </label>
                             </li>
@@ -236,8 +237,8 @@ export const CreatePetition = () => {
                                     <input type="checkbox"
                                         id="showMyGender"
                                         name="showMyGender"
-                                    checked={values.showMyGender.checked}
-                                    onChange={checkboxHandler}
+                                        checked={values.showMyGender.checked}
+                                        onChange={checkboxHandler}
                                     />
                                 </label>
 

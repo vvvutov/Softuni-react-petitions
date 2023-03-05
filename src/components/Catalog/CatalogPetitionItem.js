@@ -4,24 +4,34 @@ import { Link } from 'react-router-dom'
 
 export const CatalogPetitionItem = ({ petition }) => {
     return (
-        <div className="petition">
-            <div className="petition-img">
-                <img src="image" alt='alt' />
+        <article className="petition">
+            <div className="upper-container">
+
+                <div className="petition-img">
+                    <img src={petition.image} alt={petition.image} />
+                </div>
+
+                <div className="petition-info-top">
+                    <p>0/{petition.goal} подписа </p>
+                    <p>
+                        <span>Категория</span>{petition.category}
+                    </p>
+
+                    {petition.showMyFirstName.checked
+                        ? <p>Автор :{petition.authorInfo.firstName} {petition.authorInfo.lastName}</p>
+                        : <p>Автор :{petition.authorInfo.username}</p>
+                    }
+                </div>
             </div>
-            <div className="petition-info">
+            <div className="petition-info bottom">
                 <h1>{petition.title}</h1>
-                <p>
-                    <span>Категория</span>{petition.category}
-                </p>
                 <p>
                     <span>Описание: </span>{petition.description}
                 </p>
-                {petition.showMyFirstName.checked  && 
-                <p>{petition.authorInfo.firstName} {petition.authorInfo.lastName}</p>
-                }
-            </div>
             <Link to="/details" className="btn-details"> Виж петицията</Link>
-        </div>
+            </div>
+
+        </article>
 
     )
 };

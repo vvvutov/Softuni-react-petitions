@@ -22,13 +22,12 @@ export const Catalog = () => {
 
         <section className="petition-catalog-list">
             {Object.keys(groupedPetitions).map((category, index) => (
-                <h1 key={`category-${category}-${index}`}>
+                <><h1 key={`category-${category}-${index}`}>
                     {category}
-                <div className="petitions-list">
+                </h1><div className="petitions-list">
                         {groupedPetitions[category].map(p => <CatalogPetitionItem petition={p} key={p._id} />
                         )}
-                    </div>
-                    </h1>
+                    </div></>
             ))};
         </section>
 

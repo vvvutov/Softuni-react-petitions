@@ -16,7 +16,7 @@ export const PetitionItem = ({petition}) => {
                     <p>{petition.description}</p>
                 </div>
                 <div>
-                    <p>{petition.authorInfo.username}</p>
+                    <p>{petition.authorInfo.firstName}</p>
                 </div>
             </article>
         </>
