@@ -28,7 +28,7 @@ export const CatalogPetitionItem = ({ petition }) => {
                 <p>
                     <span>Описание: </span>{petition.description}
                 </p>
-            <Link to="/details" className="btn-details"> Виж петицията</Link>
+            <Link to={`/details/${petition._id}`} className="btn-details"> Виж петицията</Link>
             </div>
 
         </article>

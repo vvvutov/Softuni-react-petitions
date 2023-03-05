@@ -6,7 +6,7 @@ import { PetitionContext } from '../../contexts/PetitionContext';
 import './catalog.css'
 
 export const Catalog = () => {
-    const { petitions } = useContext(PetitionContext)
+    const { petitions } = useContext(PetitionContext);
 
     const groupedPetitions = petitions.reduce((acc, petition) => {
         const category = petition.category;

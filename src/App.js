@@ -51,7 +51,7 @@ function App() {
                             <Route path='/register' element={<Register />} />
                             <Route path='/logout' element={<Logout />} />
                             <Route path='/404' element={< NotFound />} />
-                            <Route path='/details' element={<Details />} />
+                            <Route path='/details/:petitionId' element={<Details />} />
                             <Route path='/search' element={<Search />} />
 
                             <Route path='/edit' element={<Edit />} />
