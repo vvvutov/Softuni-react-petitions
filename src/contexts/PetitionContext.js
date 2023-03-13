@@ -22,12 +22,12 @@ export const PetitionProvider = ({ children }) => {
             ...state,
             petitionData
         ]);
-        console.log(petitionData.showMyFirstName.checked)
         navigate('/')
     }
 
     return (
         <PetitionContext.Provider value={{
+            setPetitions,
             petitions,
             addPetitionHandler,
         }} >

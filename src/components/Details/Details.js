@@ -1,6 +1,6 @@
 import './details.css'
 import { useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { PetitionContext } from '../../contexts/PetitionContext';
 import { AuthContext } from '../../contexts/AuthContext';
 
@@ -8,12 +8,10 @@ import { AuthContext } from '../../contexts/AuthContext';
 export const Details = () => {
 
     const { petitions } = useContext(PetitionContext);
-    console.log("all petitions", petitions);
 
     const { petitionId } = useParams();
 
     const petition = petitions.find(p => p._id == petitionId);
-    console.log('petition', petition);
 
     const date = new Date(petition._createdOn);
 
@@ -29,9 +27,17 @@ export const Details = () => {
 
     const isAuthor = user._id == petition.authorInfo._id
 
-
+//TODO create the edit the simple way, please. redirect to create petition, pass the petitionId(useState to save the petition in the details page (getOne)), check if there is such ID in the state, 
+//use the values from the state to fill the fields
+//on submit check if petition with the id exists in the state. rewrite state redirect back to detailspage  
 
     return (
+        //getOne
+        //useState currentPetition
+        //petitionService.editPetition
+
+
+
         <main>
             <section id="details-info">
 
@@ -46,7 +52,7 @@ export const Details = () => {
                                 ? <h3>Автор :{petition.authorInfo.firstName} {petition.authorInfo.lastName}, &nbsp;</h3>
                                 : <h3>Автор :{petition.authorInfo.username},&nbsp; </h3>
                             }
-                            <h3 >{petition.category},&nbsp;</h3>
+                            <h3 >{petition.other ? petition.other : petition.category},&nbsp;</h3>
                             <h3>{formattedDateTime}&nbsp;</h3>
                         </div>
                         <div className="petition-lower">
@@ -62,8 +68,9 @@ export const Details = () => {
                         }
                         {isAuthor &&
                              <div class="author">
-                            <a href="#" class="btn-edit">Редактирай</a>
-                            <a href="#" class="btn-delete">Изтрий</a>
+                           <Link to={`/edit/${petition._id}`} className="btn-edit">Редактирай</Link>
+                           <Link to={`/delete/${petition._id}`} className="btn-delete">Изтрий</Link>
+
                             </div>
                         }
 

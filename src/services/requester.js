@@ -15,7 +15,6 @@ console.log("data sent", data)
 
         let headers = {};
 
-        console.log(auth.accessToken)
         if (auth.accessToken != undefined) {
             headers['X-Authorization'] = auth.accessToken
         }

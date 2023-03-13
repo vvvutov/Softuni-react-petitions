@@ -54,7 +54,7 @@ function App() {
                             <Route path='/details/:petitionId' element={<Details />} />
                             <Route path='/search' element={<Search />} />
 
-                            <Route path='/edit' element={<Edit />} />
+                            <Route path='/edit/:petitionId' element={<CreatePetition />} />
                             <Route path='/about' element={<About />} />
                             <Route path='*' element={<NotFound />} />
                         </Routes>
