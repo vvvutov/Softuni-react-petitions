@@ -3,15 +3,25 @@ import { useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { PetitionContext } from '../../contexts/PetitionContext';
 import { AuthContext } from '../../contexts/AuthContext';
+import { deletePetition } from '../../services/petitionService';
+import { useNavigate } from 'react-router-dom';
 
 
 export const Details = () => {
+    const navigate = useNavigate();
 
-    const { petitions } = useContext(PetitionContext);
+    const { petitions, deletePetitionHandler } = useContext(PetitionContext);
 
     const { petitionId } = useParams();
 
     const petition = petitions.find(p => p._id == petitionId);
+
+    const deleteHandler = (e) => {
+        console.log(petitionId);
+        e.preventDefault();
+        deletePetition(petitionId)
+        .then(deletePetitionHandler);
+    }
 
     const date = new Date(petition._createdOn);
 
@@ -64,12 +74,12 @@ export const Details = () => {
                     </div>
                     <div className="product-btn">
                         {isAuthenticated && !isAuthor &&
-                             <a href="#" class="btn-sign">Подпиши</a>
+                             <a href="#" className='btn-sign'>Подпиши</a>
                         }
                         {isAuthor &&
                              <div class="author">
                            <Link to={`/edit/${petition._id}`} className="btn-edit">Редактирай</Link>
-                           <Link to={`/delete/${petition._id}`} className="btn-delete">Изтрий</Link>
+                           <Link to={"/petitions"} onClick={deleteHandler} className="btn-delete">Изтрий</Link>
 
                             </div>
                         }

@@ -22,7 +22,7 @@ export const CreatePetition = () => {
                     setValues(petition)
                 })
         }
-    }, [petitionId])
+    }, [])
 
 
 
@@ -71,11 +71,12 @@ export const CreatePetition = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
+        console.log(Object.keys(currentPetition).length === 0);
         if (Object.keys(currentPetition).length === 0) {
             create(values)
                 .then(result => addPetitionHandler(result));
         };
-
+        
         edit(currentPetition._id, values)
             .then(updatedPetition => {
                 setPetitions(state => state.map(p => p._id === currentPetition._id ? updatedPetition : p))

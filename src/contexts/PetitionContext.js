@@ -25,6 +25,13 @@ export const PetitionProvider = ({ children }) => {
         navigate('/')
     }
 
+    const deletePetitionHandler = (petitionId) => {
+        setPetitions((prevState) =>
+          prevState.filter((petition) => petition._id !== petitionId)
+        );
+        navigate("/petitions");
+      };
+
 
 
     return (
@@ -32,6 +39,7 @@ export const PetitionProvider = ({ children }) => {
             setPetitions,
             petitions,
             addPetitionHandler,
+            deletePetitionHandler
         }} >
             {children}
         </PetitionContext.Provider>

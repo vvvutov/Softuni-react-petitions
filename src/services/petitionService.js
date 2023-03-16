@@ -3,19 +3,21 @@ import {request} from './requester';
 const baseUrl = 'http://localhost:3030';
 
 export const getAll = async () => {
-    return await request(`${baseUrl}/data/petitions`)
+    return await request(`${baseUrl}/data/petitions`);
 }
-
 
 export const create = async (petitionData) => {
-    return await request(`${baseUrl}/data/petitions`, 'POST', petitionData)
+    return await request(`${baseUrl}/data/petitions`, 'POST', petitionData);
 }
 
-
 export const getOne = async (petitionID) => {
-    return await request(`${baseUrl}/data/petitions/${petitionID}`, 'GET', petitionID)
+    return await request(`${baseUrl}/data/petitions/${petitionID}`, 'GET', petitionID);
 }
 
 export const edit = async (petitionID, petitionData) => {
-    return await request(`${baseUrl}/data/petitions/${petitionID}`, 'PUT', petitionData)
+    return await request(`${baseUrl}/data/petitions/${petitionID}`, 'PUT', petitionData);
+}
+
+export const deletePetition = async (petitionID) => {
+    return await request(`${baseUrl}/data/petitions/${petitionID}`, 'DELETE');
 }
