@@ -25,6 +25,8 @@ export const PetitionProvider = ({ children }) => {
         navigate('/')
     }
 
+
+
     return (
         <PetitionContext.Provider value={{
             setPetitions,

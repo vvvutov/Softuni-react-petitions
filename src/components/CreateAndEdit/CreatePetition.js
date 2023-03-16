@@ -5,28 +5,28 @@ import { create, getOne, edit } from '../../services/petitionService';
 
 import { AuthContext } from '../../contexts/AuthContext';
 import { PetitionContext } from '../../contexts/PetitionContext';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 
 export const CreatePetition = () => {
-
+    const navigate = useNavigate();
     const [currentPetition, setCurrentPetition] = useState({});
 
     const { petitionId } = useParams();
     
-  
         useEffect(() => {
             if (petitionId) {
                 getOne(petitionId)
                 .then(petition => {
                     setCurrentPetition(petition)
+                    setValues(petition)
                 })
             }
-            }, [])
+            }, [petitionId])
     
 
 
-    // console.log("currecnt",currentPetition);
+    console.log("current 2",currentPetition);
     const { setPetitions, addPetitionHandler } = useContext(PetitionContext)
     const { user } = useContext(AuthContext)
 
@@ -70,8 +70,8 @@ export const CreatePetition = () => {
         });
     }
 
-    console.log("current", currentPetition);
-    console.log( Object.keys(currentPetition).length === 0);
+    // console.log("current", currentPetition);
+    // console.log( Object.keys(currentPetition).length === 0);
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -83,6 +83,7 @@ export const CreatePetition = () => {
         edit(currentPetition._id, values)
             .then(updatedPetition => {
                 setPetitions(state => state.map(p => p._id === currentPetition._id ? updatedPetition : p))
+                navigate("/petitions")
             })
 
     }
