@@ -13,20 +13,19 @@ export const CreatePetition = () => {
     const [currentPetition, setCurrentPetition] = useState({});
 
     const { petitionId } = useParams();
-    
-        useEffect(() => {
-            if (petitionId) {
-                getOne(petitionId)
+
+    useEffect(() => {
+        if (petitionId) {
+            getOne(petitionId)
                 .then(petition => {
                     setCurrentPetition(petition)
                     setValues(petition)
                 })
-            }
-            }, [petitionId])
-    
+        }
+    }, [petitionId])
 
 
-    console.log("current 2",currentPetition);
+
     const { setPetitions, addPetitionHandler } = useContext(PetitionContext)
     const { user } = useContext(AuthContext)
 
@@ -61,32 +60,28 @@ export const CreatePetition = () => {
             ...state,
             [e.target.name]: { checked: e.target.checked },
         }))
-    }
+    };
 
     const changeHandler = (e) => {
         setValues({
             ...values,
             [e.target.name]: e.target.value,
         });
-    }
-
-    // console.log("current", currentPetition);
-    // console.log( Object.keys(currentPetition).length === 0);
+    };
 
     const onSubmit = (e) => {
         e.preventDefault();
         if (Object.keys(currentPetition).length === 0) {
             create(values)
                 .then(result => addPetitionHandler(result));
-        }
+        };
 
         edit(currentPetition._id, values)
             .then(updatedPetition => {
                 setPetitions(state => state.map(p => p._id === currentPetition._id ? updatedPetition : p))
-                navigate("/petitions")
+                navigate(`/details/${petitionId}`)
             })
-
-    }
+    };
 
     const lengthCheck = (e, minLength, maxLength) => {
 
@@ -94,8 +89,7 @@ export const CreatePetition = () => {
             ...state,
             [e.target.name]: values[e.target.name].length < minLength || values[e.target.name].length > maxLength
         }))
-
-    }
+    };
 
     const isPositive = (e) => {
         let number = Number(values[e.target.name]);
@@ -103,17 +97,16 @@ export const CreatePetition = () => {
             ...state,
             [e.target.name]: !(number > 0),
         }))
-    }
+    };
 
     const isHTML = (e) => {
         setErrors(state => ({
             ...state,
             [e.target.name]: !/(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(values[e.target.name])
         }))
-    }
+    };
 
     const options = [
-
         {
             label: "Екология",
             value: "ecology",
@@ -150,10 +143,9 @@ export const CreatePetition = () => {
                             id="title"
                             name="title"
                             placeholder="Заглавие на вашата петиция"
-                            // value={values.title}
+                            value={values.title}
                             onChange={changeHandler}
                             onBlur={(e) => lengthCheck(e, 10, 80)}
-                            defaultValue={currentPetition.title}
                         />
 
                         <label htmlFor="image">Поставете URL към изображение</label>
@@ -162,11 +154,9 @@ export const CreatePetition = () => {
                             id="image"
                             name="image"
                             placeholder="http://..."
-                            // value={values.image}
+                            value={values.image}
                             onChange={changeHandler}
                             onBlur={(e) => isHTML}
-                            defaultValue={currentPetition.image}
-
                         />
 
                         <label htmlFor="description">Кратко описание <strong>  *</strong></label>
@@ -175,11 +165,9 @@ export const CreatePetition = () => {
                             name="description"
                             placeholder="Кратко описание"
                             rows="3"
+                            value={values.description}
                             onChange={changeHandler}
                             onBlur={(e) => { lengthCheck(e, 10, 100) }}
-                            defaultValue={currentPetition.description}
-
-
                         />
 
                         <label htmlFor="petition-text">Вашия текст <strong>  *</strong></label>
@@ -188,10 +176,9 @@ export const CreatePetition = () => {
                             name="petitionText"
                             placeholder="Вашия текст"
                             rows="10"
+                            value={values.petitionText}
                             onChange={changeHandler}
                             onBlur={(e) => { lengthCheck(e, 10, 1000) }}
-                            defaultValue={currentPetition.petitionText}
-
                         />
 
                         <label htmlFor="category">Категория:</label>
@@ -200,8 +187,6 @@ export const CreatePetition = () => {
                             name="category"
                             value={values.category}
                             onChange={changeHandler}
-                            defaultValue={currentPetition.category}
-
                         >
                             <option value="none" disabled={true} hidden={true}>Изберете категория</option>
                             {options.map((o) => (
@@ -216,11 +201,9 @@ export const CreatePetition = () => {
                                     type="text"
                                     id="other"
                                     name="other"
-                                    placeholder="Категория"
                                     value={values.other}
+                                    placeholder="Категория"
                                     onChange={changeHandler}
-                                    defaultValue={currentPetition.other}
-
                                 />
                             </div>
                         }
@@ -230,10 +213,9 @@ export const CreatePetition = () => {
                             type="number"
                             id="goal"
                             name="goal"
+                            value={values.goal}
                             placeholder="Колко подписа целите да съберете?"
                             onChange={changeHandler}
-                            defaultValue={currentPetition.goal}
-
                         />
 
                         <ul>
