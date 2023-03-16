@@ -8,7 +8,7 @@ export const PetitionContext = createContext()
 
 export const PetitionProvider = ({ children }) => {
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const [petitions, setPetitions] = useState([]);
 
