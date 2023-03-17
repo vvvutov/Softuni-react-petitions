@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import * as petitionService from '../services/petitionService'
 
 
-export const PetitionContext = createContext()
+export const PetitionContext = createContext();
 
 export const PetitionProvider = ({ children }) => {
 
@@ -21,15 +21,15 @@ export const PetitionProvider = ({ children }) => {
         setPetitions(state => [
             ...state,
             petitionData
-        ])
-        .then(navigate('/petitions'));
+        ]);
+        navigate('/petitions')
     };
 
     const deletePetitionHandler = (petitionId) => {
         setPetitions(state => state.filter((petition) => petition._id !== petitionId))
       };
 
-
+      
     return (
         <PetitionContext.Provider value={{
             setPetitions,

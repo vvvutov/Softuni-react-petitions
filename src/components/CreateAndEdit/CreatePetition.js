@@ -24,7 +24,7 @@ export const CreatePetition = () => {
                     setValues(petition)
                 })
         }
-    }, [])
+    }, [petitionId])
 
 
 
@@ -77,14 +77,13 @@ export const CreatePetition = () => {
         if (Object.keys(currentPetition).length === 0) {
             create(values)
                 .then(result => addPetitionHandler(result));
-        };
-
-        edit(currentPetition._id, values)
-            .then(updatedPetition => {
-                setPetitions(state => state.map(p => p._id === currentPetition._id ? updatedPetition : p))
-                navigate("/petitions")
-            })
-
+        } else {
+            edit(currentPetition._id, values)
+                .then(updatedPetition => {
+                    setPetitions(state => state.map(p => p._id === currentPetition._id ? updatedPetition : p))
+                    navigate("/petitions")
+                })
+        }
     }
 
     const lengthCheck = (e, minLength, maxLength) => {
