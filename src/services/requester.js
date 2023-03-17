@@ -2,10 +2,11 @@ export const request = async (url, method = 'GET' , data) => {
     let response = '';
     let result = '';
     let auth = '';
-console.log("data sent: ",url, method, data)
+console.log("data sent", data)
     try {
         const user = localStorage.getItem('auth')
         if ((user !== null || undefined)  && (user !== "[object Object]") ) {
+            console.log(user);
              auth = JSON.parse(user)
         } else {
             auth = {}
@@ -34,7 +35,7 @@ console.log("data sent: ",url, method, data)
             })
             result = await response.json()
         }
-        console.log("data received: ", result);
+        console.log("data received", result);
         return result
     } catch (error) {
         console.error(error)

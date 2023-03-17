@@ -15,19 +15,20 @@ export const CreatePetition = () => {
     const [currentPetition, setCurrentPetition] = useState({});
 
     const { petitionId } = useParams();
-    
-        useEffect(() => {
-            if (petitionId) {
-                getOne(petitionId)
+
+    useEffect(() => {
+        if (petitionId) {
+            getOne(petitionId)
                 .then(petition => {
                     setCurrentPetition(petition)
+                    setValues(petition)
                 })
-            }
-            }, [petitionId])
-    
+        }
+    }, [petitionId])
 
 
-    console.log("current 2",currentPetition);
+
+    console.log("current 2", currentPetition);
     const { setPetitions, addPetitionHandler } = useContext(PetitionContext)
     const { user } = useContext(AuthContext)
 
@@ -62,7 +63,7 @@ export const CreatePetition = () => {
             ...state,
             [e.target.name]: { checked: e.target.checked },
         }))
-    };
+    }
 
     const changeHandler = (e) => {
         setValues({
@@ -71,9 +72,6 @@ export const CreatePetition = () => {
         });
     }
 
-    // console.log("current", currentPetition);
-    // console.log( Object.keys(currentPetition).length === 0);
-
     const onSubmit = (e) => {
         e.preventDefault();
         console.log(Object.keys(currentPetition).length === 0);
@@ -81,13 +79,14 @@ export const CreatePetition = () => {
             create(values)
                 .then(result => addPetitionHandler(result));
         };
-        
+
         edit(currentPetition._id, values)
             .then(updatedPetition => {
                 setPetitions(state => state.map(p => p._id === currentPetition._id ? updatedPetition : p))
                 navigate("/petitions")
             })
-    };
+
+    }
 
     const lengthCheck = (e, minLength, maxLength) => {
 
@@ -95,7 +94,8 @@ export const CreatePetition = () => {
             ...state,
             [e.target.name]: values[e.target.name].length < minLength || values[e.target.name].length > maxLength
         }))
-    };
+
+    }
 
     const isPositive = (e) => {
         let number = Number(values[e.target.name]);
@@ -103,16 +103,17 @@ export const CreatePetition = () => {
             ...state,
             [e.target.name]: !(number > 0),
         }))
-    };
+    }
 
     const isHTML = (e) => {
         setErrors(state => ({
             ...state,
             [e.target.name]: !/(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(values[e.target.name])
         }))
-    };
+    }
 
     const options = [
+
         {
             label: "Екология",
             value: "ecology",
@@ -193,6 +194,7 @@ export const CreatePetition = () => {
                             name="category"
                             value={values.category}
                             onChange={changeHandler}
+                            defaultValue={currentPetition.category}
                         >
                             <option value="none" disabled={true} hidden={true}>Изберете категория</option>
                             {options.map((o) => (
@@ -207,8 +209,8 @@ export const CreatePetition = () => {
                                     type="text"
                                     id="other"
                                     name="other"
-                                    value={values.other}
                                     placeholder="Категория"
+                                    value={values.other}
                                     onChange={changeHandler}
                                 />
                             </div>
@@ -219,9 +221,10 @@ export const CreatePetition = () => {
                             type="number"
                             id="goal"
                             name="goal"
-                            value={values.goal}
                             placeholder="Колко подписа целите да съберете?"
+                            value={values.goal}
                             onChange={changeHandler}
+
                         />
 
                         <ul>
@@ -267,11 +270,8 @@ export const CreatePetition = () => {
                                         onChange={checkboxHandler}
                                     />
                                 </label>
-
                             </li>
                         </ul>
-
-
                         <input type="submit" id="btn" value="submit" />
                     </form>
                 </div>
