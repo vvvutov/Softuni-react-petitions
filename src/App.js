@@ -13,10 +13,8 @@ import { Logout } from './components/Authentication/Logout'
 import { Details } from './components/Details/Details';
 import { About } from './components/AboutAndNotFound/About';
 import { NotFound } from './components/AboutAndNotFound/NotFound';
-import { Edit } from './components/CreateAndEdit/Edit';
 import { Search } from './components/Search/Search';
 import { PetitionProvider } from './contexts/PetitionContext';
-
 
 
 function App() {

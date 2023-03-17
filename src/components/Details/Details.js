@@ -16,11 +16,11 @@ export const Details = () => {
 
     const petition = petitions.find(p => p._id == petitionId);
 
-    const deleteHandler = (e) => {
-        console.log(petitionId);
+    const onDelete = (e) => {
         e.preventDefault();
         deletePetition(petitionId)
-        .then(deletePetitionHandler);
+            .then(deletePetitionHandler(petitionId))
+            .then(navigate("/petitions"));
     }
 
     const date = new Date(petition._createdOn);
@@ -37,16 +37,8 @@ export const Details = () => {
 
     const isAuthor = user._id == petition.authorInfo._id
 
-//TODO create the edit the simple way, please. redirect to create petition, pass the petitionId(useState to save the petition in the details page (getOne)), check if there is such ID in the state, 
-//use the values from the state to fill the fields
-//on submit check if petition with the id exists in the state. rewrite state redirect back to detailspage  
 
     return (
-        //getOne
-        //useState currentPetition
-        //petitionService.editPetition
-
-
 
         <main>
             <section id="details-info">
@@ -74,13 +66,17 @@ export const Details = () => {
                     </div>
                     <div className="product-btn">
                         {isAuthenticated && !isAuthor &&
-                             <a href="#" className='btn-sign'>Подпиши</a>
+                            <a href="#" className='btn-sign'>Подпиши</a>
                         }
                         {isAuthor &&
-                             <div class="author">
-                           <Link to={`/edit/${petition._id}`} className="btn-edit">Редактирай</Link>
-                           <Link to={"/petitions"} onClick={deleteHandler} className="btn-delete">Изтрий</Link>
-
+                            <div className="author">
+                                <Link to={`/edit/${petition._id}`} className="btn-edit">Редактирай</Link>
+                                <input
+                                    type="button"
+                                    onClick={onDelete}
+                                    className="btn-delete"
+                                    value="Изтрий"
+                            />
                             </div>
                         }
 

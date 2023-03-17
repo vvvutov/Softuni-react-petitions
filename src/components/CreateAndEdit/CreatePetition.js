@@ -24,7 +24,7 @@ export const CreatePetition = () => {
                     setValues(petition)
                 })
         }
-    }, [petitionId])
+    }, [])
 
 
 
@@ -74,7 +74,6 @@ export const CreatePetition = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(Object.keys(currentPetition).length === 0);
         if (Object.keys(currentPetition).length === 0) {
             create(values)
                 .then(result => addPetitionHandler(result));
@@ -224,7 +223,6 @@ export const CreatePetition = () => {
                             placeholder="Колко подписа целите да съберете?"
                             value={values.goal}
                             onChange={changeHandler}
-
                         />
 
                         <ul>

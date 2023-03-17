@@ -2,7 +2,7 @@ export const request = async (url, method = 'GET' , data) => {
     let response = '';
     let result = '';
     let auth = '';
-console.log("data sent", data)
+console.log(`Data sent: ${url} \n ${method} \n ${data}`)
     try {
         const user = localStorage.getItem('auth')
         if ((user !== null || undefined)  && (user !== "[object Object]") ) {

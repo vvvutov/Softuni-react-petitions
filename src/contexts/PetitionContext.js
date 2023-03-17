@@ -21,17 +21,13 @@ export const PetitionProvider = ({ children }) => {
         setPetitions(state => [
             ...state,
             petitionData
-        ]);
-        navigate('/')
-    }
+        ])
+        .then(navigate('/petitions'));
+    };
 
     const deletePetitionHandler = (petitionId) => {
-        setPetitions((prevState) =>
-          prevState.filter((petition) => petition._id !== petitionId)
-        );
-        navigate("/petitions");
+        setPetitions(state => state.filter((petition) => petition._id !== petitionId))
       };
-
 
 
     return (
