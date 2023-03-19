@@ -21,7 +21,7 @@ export const AuthProvider = ({children}) => {
             user: auth,
             userLogin,
             userLogout,
-            isAuthenticated: Boolean(auth.accessToken) 
+            isAuthenticated: Boolean(auth.user.uid) 
         }}>
             {children}
         </AuthContext.Provider>  

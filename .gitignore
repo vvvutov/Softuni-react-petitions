@@ -42,6 +42,9 @@ build/Release
 node_modules/
 jspm_packages/
 
+#Firebase config
+firebase/
+
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 

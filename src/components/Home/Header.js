@@ -5,7 +5,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 
 export const Header = () => {
 
-    const {user} = useContext(AuthContext)
+    const {isAuthenticated} = useContext(AuthContext)
     
     return (
             <div>
@@ -23,17 +23,17 @@ export const Header = () => {
                         <li>
                             <Link to="/search">Търсене</Link>
                         </li>
-                        {user.accessToken && <li>
+                        {isAuthenticated && <li>
                             <Link to="/create">Създай петиция</Link>
                         </li>}
                         <li>
                             <Link to="/about">About</Link>
                         </li>
                         
-                        {!user.accessToken && <li>
+                        {!isAuthenticated && <li>
                             <Link to="/register">Регистрация</Link>
                         </li>}
-                       {user.accessToken ? 
+                       {isAuthenticated ? 
                         <li>
                             <Link to="/logout">Logout</Link>
                         </li>

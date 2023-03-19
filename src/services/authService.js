@@ -1,7 +1,44 @@
-import { request } from "./requester";
 import { auth, googleProvider } from "../firebase/firebase"
-import { createUserWithEmailAndPassword, signInWithPopup, signInWithEmailAndPassword, signOut} from "firebase/auth";
-const baseUrl = 'http://localhost:3030';
+import { createUserWithEmailAndPassword, signInWithPopup, signInWithEmailAndPassword, getAuth, signOut} from "firebase/auth";
+
+
+export const login = async (userData) => {
+    try {
+        return await signInWithEmailAndPassword(auth, userData.email, userData.password)
+    } catch(error) {
+        console.error(error);
+    }
+}
+
+export const googleSignIn = async () => {
+    try {
+        return await signInWithPopup(auth, googleProvider)
+    } catch (error) {
+        console.error(error)
+    }
+};
+
+export const register = async (userData) => {
+    try {
+        return await createUserWithEmailAndPassword(auth, userData.email, userData.password)
+    } catch (error) {
+        console.error(error)
+    }
+};
+
+
+export const logout= async () => {
+    try {
+        console.log(auth);
+
+        const logoutData =  await signOut(auth);
+        console.log(logoutData);
+    } catch (error) {
+        console.error(error)
+    }
+};
+
+
 
 //OLD AUTH FUNCTIONS JUST IN CASE FIREBASE FAILS
 // export const login = async (userData) => {
@@ -23,35 +60,3 @@ const baseUrl = 'http://localhost:3030';
 //         console.log(error);
 //     }
 // };
-export const login = async (userData) => {
-    try {
-        return await signInWithEmailAndPassword(auth, userData.email, userData.password)
-    } catch(error) {
-        console.error(error);
-    }
-}
-
-
-export const googleSignIn = async () => {
-    try {
-        return await signInWithPopup(auth, googleProvider)
-    } catch (error) {
-        console.error(error)
-    }
-};
-
-export const register = async (userData) => {
-    try {
-        return await createUserWithEmailAndPassword(auth, userData.email, userData.password)
-    } catch (error) {
-        console.error(error)
-    }
-};
-
-export const logout= async () => {
-    try {
-        return await signOut(auth);
-    } catch (error) {
-        console.error(error)
-    }
-};
