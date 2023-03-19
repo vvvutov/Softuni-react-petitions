@@ -43,7 +43,7 @@ node_modules/
 jspm_packages/
 
 #Firebase config
-firebase/firebase.js
+src/firebase/
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
