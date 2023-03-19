@@ -7,7 +7,7 @@ import './catalog.css'
 
 export const Catalog = () => {
     const { petitions } = useContext(PetitionContext);
-
+console.log(petitions);
     const groupedPetitions = petitions.reduce((acc, petition) => {
         const category = petition.category;
         if (!acc[category]) {

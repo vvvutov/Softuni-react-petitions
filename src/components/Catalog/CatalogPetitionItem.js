@@ -12,7 +12,7 @@ export const CatalogPetitionItem = ({ petition }) => {
                 </div>
 
                 <div className="petition-info-top">
-                    <p>0/{petition.goal} подписа </p>
+                    <p>{petition.signed ? petition.signed : 0}/{petition.goal} подписа </p>
                     <p>
                         <span>Категория</span>{petition.category}
                     </p>

@@ -15,15 +15,15 @@ export const CreatePetition = () => {
     const [currentPetition, setCurrentPetition] = useState({});
 
     const { petitionId } = useParams();
-
+console.log("logged from the create", petitionId);
     useEffect(() => {
-        if (petitionId) {
+        // if (petitionId) {
             getOne(petitionId)
                 .then(petition => {
                     setCurrentPetition(petition)
                     setValues(petition)
                 })
-        }
+        // }
     }, [petitionId])
 
 
@@ -52,7 +52,9 @@ export const CreatePetition = () => {
         },
         showMyGender: {
             checked: false
-        }
+        },
+        signed: '',
+        signedBy: [],
     });
 
     const [errors, setErrors] = useState({});
@@ -78,7 +80,8 @@ export const CreatePetition = () => {
             create(values)
                 .then(result => addPetitionHandler(result));
         } else {
-            edit(currentPetition._id, values)
+            console.log(petitionId);
+            edit(petitionId, values)
                 .then(updatedPetition => {
                     setPetitions(state => state.map(p => p._id === currentPetition._id ? updatedPetition : p))
                     navigate("/petitions")
@@ -134,6 +137,8 @@ export const CreatePetition = () => {
         },
 
     ];
+
+    console.log("values: ",values);
 
     return (
         <>

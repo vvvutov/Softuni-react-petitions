@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { PetitionContext } from '../../contexts/PetitionContext';
 import { AuthContext } from '../../contexts/AuthContext';
-import { deletePetition } from '../../services/petitionService';
+import { deletePetition, edit } from '../../services/petitionService';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -14,13 +14,20 @@ export const Details = () => {
 
     const { petitionId } = useParams();
 
-    const petition = petitions.find(p => p._id == petitionId);
+    const petition = petitions.find(p => p._id === petitionId);
 
     const onDelete = (e) => {
         e.preventDefault();
         deletePetition(petitionId)
             .then(deletePetitionHandler(petitionId))
             .then(navigate("/petitions"));
+    }
+
+    const onSign = (e) => {
+        e.preventDefault();
+        edit(petitionId, {...petition, 
+            signed: Number(petition.signed) +1} )
+
     }
 
     const date = new Date(petition._createdOn);
@@ -35,7 +42,7 @@ export const Details = () => {
 
     const { user, isAuthenticated } = useContext(AuthContext)
 
-    const isAuthor = user._id == petition.authorInfo._id
+    const isAuthor = user._id === petition.authorInfo._id
 
 
     return (
@@ -56,6 +63,7 @@ export const Details = () => {
                             }
                             <h3 >{petition.other ? petition.other : petition.category},&nbsp;</h3>
                             <h3>{formattedDateTime}&nbsp;</h3>
+                            <p>{petition.signed ? petition.signed : 0}/{petition.goal}</p>
                         </div>
                         <div className="petition-lower">
                             <p id="description">
@@ -66,7 +74,12 @@ export const Details = () => {
                     </div>
                     <div className="product-btn">
                         {isAuthenticated && !isAuthor &&
-                            <a href="#" className='btn-sign'>Подпиши</a>
+                            <input
+                            type="button"
+                            onClick={onSign}
+                            className="btn-delete"
+                            value="Подпиши"
+                    />
                         }
                         {isAuthor &&
                             <div className="author">

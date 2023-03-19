@@ -30,7 +30,6 @@ export const Search = () => {
                 <div className="petitions-list">
                    <CatalogPetitionItem/>
                    <CatalogPetitionItem/>
-
                    <CatalogPetitionItem/>
                    <CatalogPetitionItem/>
 

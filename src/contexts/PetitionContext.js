@@ -29,13 +29,25 @@ export const PetitionProvider = ({ children }) => {
         setPetitions(state => state.filter((petition) => petition._id !== petitionId))
       };
 
-      
+      const signPetitionHandler = (petitionId) => {
+        setPetitions(state => {
+            const currentPetition = state.find(petition =>petition._id === petitionId)
+            
+            return [
+                ...state.filter(petition => petition._id !== petitionId),
+                {...currentPetition, 
+                    signed: Number(currentPetition.signed) +1}
+            ]
+        })
+      }
+
     return (
         <PetitionContext.Provider value={{
             setPetitions,
             petitions,
             addPetitionHandler,
-            deletePetitionHandler
+            deletePetitionHandler,
+            signPetitionHandler
         }} >
             {children}
         </PetitionContext.Provider>
