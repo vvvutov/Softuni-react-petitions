@@ -11,11 +11,11 @@ export const Logout = () => {
     const { userLogin, user } = useContext(AuthContext);
 
     useEffect(() => {
-        if (user.user.uid) {
-            logout(user.user.uid)
-                .then(userLogin({}))
-                .then(navigate('/'))
+        if (user) {
+            logout()
+            userLogin({})
+            navigate('/')
         }
-    })
+    }, [])
     return null;
 };

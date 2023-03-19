@@ -8,6 +8,8 @@ export const AuthProvider = ({children}) => {
    
     const [auth, setAuth] = useLocalStorage('auth', {});
 
+    let isAuthenticated;
+
     const userLogin = (authData) => {
         setAuth(authData, {});
     };
@@ -16,12 +18,19 @@ export const AuthProvider = ({children}) => {
         setAuth({});
     };
 
+    if (auth?.user?.accessToken === undefined) {
+        isAuthenticated = false
+    } else {
+        isAuthenticated = true
+    }
+    console.log(isAuthenticated);
     return (
+
         <AuthContext.Provider value={{
             user: auth,
             userLogin,
             userLogout,
-            isAuthenticated: Boolean(auth.user.uid) 
+            isAuthenticated
         }}>
             {children}
         </AuthContext.Provider>  

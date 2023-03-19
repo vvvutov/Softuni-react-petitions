@@ -32,7 +32,7 @@ export const logout= async () => {
         console.log(auth);
 
         const logoutData =  await signOut(auth);
-        console.log(logoutData);
+        console.log( "Logout Data", logoutData);
     } catch (error) {
         console.error(error)
     }
