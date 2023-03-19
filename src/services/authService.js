@@ -26,7 +26,6 @@ export const register = async (userData) => {
     }
 };
 
-
 export const logout= async () => {
     try {
         console.log(auth);
