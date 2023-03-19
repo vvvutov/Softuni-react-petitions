@@ -15,15 +15,12 @@ export const CreatePetition = () => {
     const [currentPetition, setCurrentPetition] = useState({});
 
     const { petitionId } = useParams();
-console.log("logged from the create", petitionId);
     useEffect(() => {
-        // if (petitionId) {
             getOne(petitionId)
                 .then(petition => {
                     setCurrentPetition(petition)
                     setValues(petition)
                 })
-        // }
     }, [petitionId])
 
 
