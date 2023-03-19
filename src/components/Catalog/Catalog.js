@@ -1,20 +1,18 @@
 import { CatalogPetitionItem } from "./CatalogPetitionItem";
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { PetitionContext } from '../../contexts/PetitionContext';
-import { getAll } from "../../services/petitionService";
 
 
 import './catalog.css'
 
 export const Catalog = () => {
     useEffect(() => {
-        getAll()
+       getAll()
             .then(res => { setPetitions(res) })
     }, []);
 
     const { petitions, setPetitions } = useContext(PetitionContext);
-    console.log(petitions);
-
+console.log(petitions);
     const groupedPetitions = petitions.reduce((acc, petition) => {
         const category = petition.category;
         if (!acc[category]) {
