@@ -15,7 +15,9 @@ export const CreatePetition = () => {
     const [currentPetition, setCurrentPetition] = useState({});
 
     const { petitionId } = useParams();
-console.log("logged from the create", petitionId);
+
+    
+
     useEffect(() => {
         // if (petitionId) {
             getOne(petitionId)
@@ -80,6 +82,7 @@ console.log("logged from the create", petitionId);
             create(values)
                 .then(result => addPetitionHandler(result));
         } else {
+            //investigate why currentPetition._id is missing
             console.log(petitionId);
             edit(petitionId, values)
                 .then(updatedPetition => {

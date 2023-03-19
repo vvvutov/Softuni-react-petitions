@@ -47,7 +47,8 @@ export const getOne = async (petitionId) => {
     try {
         console.log("ID", petitionId);
         const petitionDoc = doc(petitionCollectionRef, petitionId);
-        return await getDoc(petitionDoc);
+        const docSnap = await getDoc(petitionDoc);
+        return docSnap.data()
     } catch (error) {
         console.error(error);
     }
@@ -55,36 +56,7 @@ export const getOne = async (petitionId) => {
 
 
 
-// export const crudOperations = {
-//     getAll: async () => {
-//       try {
-//         return await getAll();
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     },
-//     create: async (petitionData) => {
-//       try {
-//         await create(petitionData);
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     },
-//     remove: async (petitionId) => {
-//       try {
-//         await remove(petitionId);
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     },
-//     update: async (petitionId, petitionData) => {
-//       try {
-//         await update(petitionId, petitionData);
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     },
-//   };
+
 
 
 // const baseUrl = 'http://localhost:3030';
