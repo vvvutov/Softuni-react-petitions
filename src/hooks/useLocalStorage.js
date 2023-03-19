@@ -7,7 +7,7 @@ export const useLocalStorage = (key, defaultValue) => {
         if ( (storedData !== null || undefined) && (storedData !== "[object Object]") ) {
             if (storedData.length !==0){
 
-                console.log(storedData)
+                // console.log(storedData)
                 return JSON.parse(storedData)
             }
         }
