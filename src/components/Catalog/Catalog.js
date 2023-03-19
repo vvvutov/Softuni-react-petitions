@@ -6,12 +6,7 @@ import { PetitionContext } from '../../contexts/PetitionContext';
 import './catalog.css'
 
 export const Catalog = () => {
-    useEffect(() => {
-       getAll()
-            .then(res => { setPetitions(res) })
-    }, []);
-
-    const { petitions, setPetitions } = useContext(PetitionContext);
+    const { petitions } = useContext(PetitionContext);
 console.log(petitions);
     const groupedPetitions = petitions.reduce((acc, petition) => {
         const category = petition.category;
