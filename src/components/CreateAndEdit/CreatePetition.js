@@ -16,11 +16,13 @@ export const CreatePetition = () => {
 
     const { petitionId } = useParams();
     useEffect(() => {
+        if (petitionId) {
             getOne(petitionId)
-                .then(petition => {
-                    setCurrentPetition(petition)
-                    setValues(petition)
-                })
+            .then(petition => {
+                setCurrentPetition(petition)
+                setValues(petition)
+            })
+        }
     }, [petitionId])
 
 
@@ -75,7 +77,7 @@ export const CreatePetition = () => {
         e.preventDefault();
         if (Object.keys(currentPetition).length === 0) {
             create(values)
-                .then(result => addPetitionHandler(result));
+                .then(addPetitionHandler(values));
         } else {
             console.log(petitionId);
             edit(petitionId, values)

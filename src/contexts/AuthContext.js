@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useEffect } from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
 
@@ -8,7 +8,7 @@ export const AuthProvider = ({children}) => {
    
     const [auth, setAuth] = useLocalStorage('auth', {});
 
-    let isAuthenticated;
+    console.log("auth", auth);
 
     const userLogin = (authData) => {
         setAuth(authData, {});
@@ -18,19 +18,15 @@ export const AuthProvider = ({children}) => {
         setAuth({});
     };
 
-    if (auth?.user?.accessToken === undefined) {
-        isAuthenticated = false
-    } else {
-        isAuthenticated = true
-    }
-    console.log(isAuthenticated);
+ 
+    console.log("authenticated", Boolean(auth?.user?.stsTokenManager?.accessToken));
     return (
 
         <AuthContext.Provider value={{
             user: auth,
             userLogin,
             userLogout,
-            isAuthenticated
+            isAuthenticated: Boolean(auth?.user?.stsTokenManager?.accessToken)
         }}>
             {children}
         </AuthContext.Provider>  

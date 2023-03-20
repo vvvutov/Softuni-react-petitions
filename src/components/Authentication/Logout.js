@@ -13,8 +13,8 @@ export const Logout = () => {
     useEffect(() => {
         if (user) {
             logout()
-            userLogin({})
-            navigate('/')
+            .then(userLogin({}))
+            .then(navigate('/'))
         }
     }, [])
     return null;
