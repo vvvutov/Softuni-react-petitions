@@ -23,16 +23,20 @@ export const Catalog = () => {
 
 
         <section className="petition-catalog-list">
+
             {Object.keys(groupedPetitions).map((category, index) => (
-                
-                <><h1 key={`${category}-list`}>
-                    {category}
-                </h1>
-                    <div className="petitions-list" key={category}>
-                        {groupedPetitions[category].map(p => <CatalogPetitionItem petition={p} key={p._id} />
-                        )}
-                    </div></>
-            ))};
+                <div key={`${category}-${index}`}>
+                    <h1>{category}</h1>
+                    {groupedPetitions[category].length > 0 && (
+                        <div className="petitions-list">
+                            {groupedPetitions[category].map((p) => (
+                                <CatalogPetitionItem petition={p} key={p._id} />
+                            ))}
+                        </div>
+                    )}
+                </div>
+            ))}
+
         </section>
 
     )
