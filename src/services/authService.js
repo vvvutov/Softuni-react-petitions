@@ -4,7 +4,9 @@ import { createUserWithEmailAndPassword, signInWithPopup, signInWithEmailAndPass
 
 export const login = async (userData) => {
     try {
-        return await signInWithEmailAndPassword(auth, userData.email, userData.password)
+        const googleStuff =  await signInWithEmailAndPassword(auth, userData.email, userData.password)
+        console.log("Google cred",  googleStuff);
+        return googleStuff
     } catch(error) {
         console.error(error);
     }

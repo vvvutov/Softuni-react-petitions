@@ -6,13 +6,13 @@ import { getFirestore} from 'firebase/firestore'
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 const firebaseConfig = {
-  apiKey: `${process.env.REACT_APP_API_KEY}`,
-  authDomain: `${process.env.REACT_APP_AUTH_DOMAIN}`,
+  apiKey: "AIzaSyD1t9usMmzBBo7TMeIFbOUgCPy8Ilg_M8w",
+  authDomain:  "petitions-2f2b0.firebaseapp.com",
   projectId: "petitions-2f2b0",
-  storageBucket: `${process.env.REACT_APP_STORAGE_BUCKET}`,
-  messagingSenderId: `${process.env.REACT_APP_MESSAGING_SENDER_ID}`,
-  appId: `${process.env.REACT_APP_APP_ID}`,
-  measurementId: `${process.env.REACT_APP_MEASURMENT_ID}`
+  storageBucket: "petitions-2f2b0.appspot.com",
+  messagingSenderId: "460242636813",
+  appId: "1:460242636813:web:2abc63e98ccc7f52334544",
+  measurementId: "G-1EC893TLMM"
 };
 
 // Initialize Firebase

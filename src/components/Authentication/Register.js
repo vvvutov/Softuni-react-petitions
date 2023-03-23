@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useState, useContext} from "react";
+import { useState, useContext } from "react";
 
 import { AuthContext } from '../../contexts/AuthContext';
 
@@ -13,7 +13,7 @@ import { About } from '../AboutAndNotFound/About';
 export const Register = () => {
 
 
-    const {userLogin} = useContext(AuthContext)
+    const { userLogin } = useContext(AuthContext)
 
     const [values, setValues] = useState({
         username: '',
@@ -44,24 +44,12 @@ export const Register = () => {
         setValues({
             ...values,
             [e.target.name]: e.target.value,
-    });
+        });
     }
-   
 
-    const onSubmit = (e) => {
-        e.preventDefault();
-        
-        register({ ...values })
-            .then(authData => {
-                console.log(authData);
-                userLogin(authData)
-                navigate('/')
-            })
-    }
-     
-    
-    
-    
+
+
+
     const lenghtCheck = (e, minLength, maxLength) => {
 
         setErrors(state => ({
@@ -95,10 +83,21 @@ export const Register = () => {
         }))
     }
 
-    const handleGoogleSignIn = (e) =>{
+    const handleGoogleSignIn = (e) => {
         e.preventDefault();
-        
-       googleSignIn()
+
+        googleSignIn()
+            .then(authData => {
+                console.log(authData);
+                userLogin(authData)
+                navigate('/')
+            })
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+
+        register({ ...values })
             .then(authData => {
                 console.log(authData);
                 userLogin(authData)
@@ -111,7 +110,7 @@ export const Register = () => {
 
         <div className="register-box">
             <h1>Регистрация</h1>
-            <input type = "button"onClick={handleGoogleSignIn} value ="SignInWithGoogle"/>
+            <input type="button" onClick={handleGoogleSignIn} value="SignInWithGoogle" />
             <form onSubmit={onSubmit} >
                 <label htmlFor="username">Потребителско име</label>
                 <input type="text"
@@ -121,7 +120,7 @@ export const Register = () => {
                     // defaultValue={values.username}
                     value={values.username}
                     onChange={changeHandler}
-                    onBlur={(e) =>{ (lenghtCheck(e, 3, 12))}}
+                    onBlur={(e) => { (lenghtCheck(e, 3, 12)) }}
                 />
                 {errors.username &&
                     <p className="error">
@@ -185,7 +184,7 @@ export const Register = () => {
                         name="gender"
                         // value = {values.gender.checked}
                         checked={values.gender.checked}
-                        onChange={changeHandler }
+                        onChange={changeHandler}
                         onBlur={(e) => lenghtCheck(e, 3, 7)}
                     /> Мъж
 
@@ -198,7 +197,7 @@ export const Register = () => {
                         onChange={changeHandler}
                         onBlur={(e) => lenghtCheck(e, 3, 7)}
                     />
-                        Жена
+                    Жена
                 </div>
                 {errors.gender &&
                     <p className="error">
