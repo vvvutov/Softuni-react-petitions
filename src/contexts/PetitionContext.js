@@ -24,7 +24,7 @@ export const PetitionProvider = ({ children }) => {
         console.error(error);
         setIsLoading(false);
       });
-  }, [isLoading]);
+  }, []);
 
   const addPetitionHandler = (petitionData) => {
     setPetitions((state) => [...state, petitionData]);

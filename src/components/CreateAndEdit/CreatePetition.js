@@ -18,10 +18,10 @@ export const CreatePetition = () => {
     useEffect(() => {
         if (petitionId) {
             getOne(petitionId)
-            .then(petition => {
-                setCurrentPetition(petition)
-                setValues(petition)
-            })
+                .then(petition => {
+                    setCurrentPetition(petition)
+                    setValues(petition)
+                })
         }
     }, [petitionId])
 
@@ -31,7 +31,6 @@ export const CreatePetition = () => {
     const { setPetitions, addPetitionHandler } = useContext(PetitionContext)
     const { user } = useContext(AuthContext)
 
-    //TODO too many thing attached as authorInfo in values!!!!!!!!!!!!!!!!
     const [values, setValues] = useState({
         title: '',
         image: '',
@@ -79,12 +78,12 @@ export const CreatePetition = () => {
             create(values)
                 .then(addPetitionHandler(values));
         } else {
-            console.log(petitionId);
+            console.log("currentPetition", currentPetition);
+            setPetitions(state => state.map(p => p._id === currentPetition._id ? values : p))
             edit(petitionId, values)
-                .then(updatedPetition => {
-                    setPetitions(state => state.map(p => p._id === currentPetition._id ? updatedPetition : p))
-                    navigate("/petitions")
-                })
+
+            navigate("/petitions")
+
         }
     }
 
@@ -137,7 +136,7 @@ export const CreatePetition = () => {
 
     ];
 
-    console.log("values: ",values);
+    console.log("values: ", values);
 
     return (
         <>

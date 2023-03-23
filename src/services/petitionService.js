@@ -17,6 +17,21 @@ export const getAll = async () => {
     }
 };
 
+export const getOne = async (petitionId) => {
+    try {
+        console.log("ID", petitionId);
+        const petitionDoc = doc(petitionCollectionRef, petitionId);
+        const petitionSnap = await getDoc(petitionDoc);
+        const petitionWithId = {
+            ...petitionSnap.data(),
+            _id: petitionSnap.id
+        }
+        return petitionWithId
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 export const create = async (petitionData) => {
     try {
         return await addDoc(petitionCollectionRef, petitionData)
@@ -42,71 +57,3 @@ export const edit = async (petitionId, petitionData) => {
         console.error(error);
     }
 };
-
-export const getOne = async (petitionId) => {
-    try {
-        console.log("ID", petitionId);
-        const petitionDoc = doc(petitionCollectionRef, petitionId);
-        return await getDoc(petitionDoc);
-    } catch (error) {
-        console.error(error);
-    }
-};
-
-
-
-// export const crudOperations = {
-//     getAll: async () => {
-//       try {
-//         return await getAll();
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     },
-//     create: async (petitionData) => {
-//       try {
-//         await create(petitionData);
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     },
-//     remove: async (petitionId) => {
-//       try {
-//         await remove(petitionId);
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     },
-//     update: async (petitionId, petitionData) => {
-//       try {
-//         await update(petitionId, petitionData);
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     },
-//   };
-
-
-// const baseUrl = 'http://localhost:3030';
-
-// export const getAll = async () => {
-//     return await request(`${baseUrl}/data/petitions`);
-// }
-
-// export const getOne = async (petitionID) => {
-//     return await request(`${baseUrl}/data/petitions/${petitionID}`, 'GET', petitionID);
-// }
-
-// export const create = async (petitionData) => {
-//     return await request(`${baseUrl}/data/petitions`, 'POST', petitionData);
-// }
-
-
-// export const edit = async (petitionID, petitionData) => {
-//     return await request(`${baseUrl}/data/petitions/${petitionID}`, 'PUT', petitionData);
-// }
-
-// export const deletePetition = async (petitionID) => {
-//     return await request(`${baseUrl}/data/petitions/${petitionID}`, 'DELETE');
-// }
-
