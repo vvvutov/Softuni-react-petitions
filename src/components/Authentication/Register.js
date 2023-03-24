@@ -9,7 +9,6 @@ import { register, googleSignIn } from '../../services/authService'
 import { About } from '../AboutAndNotFound/About';
 
 
-
 export const Register = () => {
 
 
@@ -26,7 +25,7 @@ export const Register = () => {
         rePassword: '',
         confirmation: {
             checked: false
-        }
+        },
     });
 
     const [errors, setErrors] = useState({});
