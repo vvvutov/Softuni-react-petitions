@@ -34,7 +34,9 @@ export const getOne = async (petitionId) => {
 
 export const create = async (petitionData) => {
     try {
-        return await addDoc(petitionCollectionRef, petitionData)
+        const timestamp = new Date(Date.now());
+
+        return await addDoc(petitionCollectionRef, {...petitionData, createdAt: timestamp.toString() })
     } catch (error) {
         console.error(error);
     }

@@ -11,6 +11,7 @@ export const Details = () => {
     const navigate = useNavigate();
 
     const { petitions, deletePetitionHandler } = useContext(PetitionContext);
+    const { user, isAuthenticated } = useContext(AuthContext)
 
     const { petitionId } = useParams();
 
@@ -30,17 +31,18 @@ export const Details = () => {
 
     }
 
-    const date = new Date(petition._createdOn);
 
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear().toString().slice(-2);
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const timestamp = new Date(petition.createdAt);
 
-    const formattedDateTime = `${day}/${month}/${year} ${hours}:${minutes}`;
+    const formattedDate = timestamp.toLocaleString('en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
 
-    const { user, isAuthenticated } = useContext(AuthContext)
+
 
     const isAuthor = user._id === petition.authorInfo._id
 
@@ -62,7 +64,7 @@ export const Details = () => {
                                 : <h3>Автор :{petition.authorInfo.username},&nbsp; </h3>
                             }
                             <h3 >{petition.other ? petition.other : petition.category},&nbsp;</h3>
-                            <h3>{formattedDateTime}&nbsp;</h3>
+                            <h3>{formattedDate}&nbsp;</h3>
                             <p>{petition.signed ? petition.signed : 0}/{petition.goal}</p>
                         </div>
                         <div className="petition-lower">
