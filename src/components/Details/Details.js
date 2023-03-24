@@ -11,7 +11,7 @@ export const Details = () => {
     const navigate = useNavigate();
 
     const { petitions, deletePetitionHandler } = useContext(PetitionContext);
-    const { user, isAuthenticated } = useContext(AuthContext)
+    const { user, isAuthenticated } = useContext(AuthContext);
 
     const { petitionId } = useParams();
 
@@ -31,9 +31,7 @@ export const Details = () => {
 
     }
 
-
     const timestamp = new Date(petition.createdAt);
-
     const formattedDate = timestamp.toLocaleString('en-GB', {
       day: '2-digit',
       month: '2-digit',

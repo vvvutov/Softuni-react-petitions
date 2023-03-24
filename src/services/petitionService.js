@@ -1,8 +1,9 @@
-import { request } from './requester';
 import { db } from '../firebase/firebase';
-import { addDoc, getDocs, getDoc, collection, doc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { setDoc, getDocs, getDoc, collection, doc, deleteDoc, updateDoc } from 'firebase/firestore';
+
 
 const petitionCollectionRef = collection(db, "petitions");
+
 
 export const getAll = async () => {
     try {
@@ -16,6 +17,7 @@ export const getAll = async () => {
         console.error(error);
     }
 };
+
 
 export const getOne = async (petitionId) => {
     try {
@@ -32,11 +34,17 @@ export const getOne = async (petitionId) => {
     }
 };
 
+
 export const create = async (petitionData) => {
     try {
         const timestamp = new Date(Date.now());
 
-        return await addDoc(petitionCollectionRef, {...petitionData, createdAt: timestamp.toString() })
+        await setDoc(doc(db, "petitions", petitionData._id), { ...petitionData, createdAt: timestamp.toString() });
+        const petition = { ...petitionData, createdAt: timestamp.toString() }
+
+
+        console.log(petition);
+        return petition;
     } catch (error) {
         console.error(error);
     }

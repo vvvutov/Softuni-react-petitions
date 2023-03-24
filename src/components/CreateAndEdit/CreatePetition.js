@@ -7,6 +7,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { PetitionContext } from '../../contexts/PetitionContext';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { generateRandomId } from '../../services/helpers';
 
 
 export const CreatePetition = () => {
@@ -53,6 +54,7 @@ export const CreatePetition = () => {
         },
         signed: '',
         signedBy: [],
+        _id: currentPetition._id || generateRandomId(20)
     });
 
     const [errors, setErrors] = useState({});

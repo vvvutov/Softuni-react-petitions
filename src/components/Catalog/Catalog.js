@@ -2,6 +2,7 @@ import { CatalogPetitionItem } from "./CatalogPetitionItem";
 import { useContext } from 'react';
 import { PetitionContext } from '../../contexts/PetitionContext';
 
+import { generateRandomId } from "../../services/helpers";
 
 import './catalog.css'
 
@@ -18,14 +19,14 @@ export const Catalog = () => {
         acc[category].push(petition);
         return acc;
     }, {});
-
+console.log(generateRandomId());
     return (
 
 
         <section className="petition-catalog-list">
 
             {Object.keys(groupedPetitions).map((category, index) => (
-                <div key={`${category}-${index}`}>
+                <div key={`${category}-${generateRandomId(5)}`}>
                     <h1>{category}</h1>
                     {groupedPetitions[category].length > 0 && (
                         <div className="petitions-list">
