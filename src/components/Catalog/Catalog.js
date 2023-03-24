@@ -19,9 +19,9 @@ export const Catalog = () => {
         acc[category].push(petition);
         return acc;
     }, {});
-console.log(generateRandomId());
-    return (
 
+
+    return (
 
         <section className="petition-catalog-list">
 

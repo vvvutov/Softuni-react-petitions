@@ -10,25 +10,28 @@ import { useNavigate } from 'react-router-dom';
 export const Details = () => {
     const navigate = useNavigate();
 
-    const { petitions, deletePetitionHandler } = useContext(PetitionContext);
+    const {signPetitionHandler , petitions, deletePetitionHandler } = useContext(PetitionContext);
     const { user, isAuthenticated } = useContext(AuthContext);
 
     const { petitionId } = useParams();
 
     const petition = petitions.find(p => p._id === petitionId);
 
-    const onDelete = (e) => {
+    const onDeleteHandler = (e) => {
         e.preventDefault();
         deletePetition(petitionId)
             .then(deletePetitionHandler(petitionId))
             .then(navigate("/petitions"));
     }
 
-    const onSign = (e) => {
+    const onSignHandler = (e) => {
+
         e.preventDefault();
+        e.target.value = "Готово"
+        e.target.disabled = true;
+        signPetitionHandler(petitionId);
         edit(petitionId, {...petition, 
             signed: Number(petition.signed) +1} )
-
     }
 
     const timestamp = new Date(petition.createdAt);
@@ -76,7 +79,7 @@ export const Details = () => {
                         {isAuthenticated && !isAuthor &&
                             <input
                             type="button"
-                            onClick={onSign}
+                            onClick={onSignHandler}
                             className="btn-delete"
                             value="Подпиши"
                     />
@@ -86,7 +89,7 @@ export const Details = () => {
                                 <Link to={`/edit/${petition._id}`} className="btn-edit">Редактирай</Link>
                                 <input
                                     type="button"
-                                    onClick={onDelete}
+                                    onClick={onDeleteHandler}
                                     className="btn-delete"
                                     value="Изтрий"
                             />

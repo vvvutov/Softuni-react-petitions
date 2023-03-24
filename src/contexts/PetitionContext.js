@@ -42,11 +42,11 @@ export const PetitionProvider = ({ children }) => {
       const currentPetition = state.find((petition) => petition._id === petitionId);
 
       return [
-        ...state.filter((petition) => petition._id !== petitionId),
         {
           ...currentPetition,
           signed: Number(currentPetition.signed) + 1,
         },
+        ...state.filter((petition) => petition._id !== petitionId),
       ];
     });
   };

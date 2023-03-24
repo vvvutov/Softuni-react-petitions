@@ -19,3 +19,11 @@ export const generateRandomId = (length) => {
   
     return shuffledId;
   }
+
+  
+  export const generatePetitionId = (title) => {
+    const words = title.trim().split(' ');
+    const firstFiveWords = words.slice(0, 5);
+    const customId = firstFiveWords.join('-');
+    return customId;
+  }

@@ -54,7 +54,7 @@ export const CreatePetition = () => {
         },
         signed: '',
         signedBy: [],
-        _id: currentPetition._id || generateRandomId(20)
+        _id: currentPetition._id ||  generateRandomId(20)
     });
 
     const [errors, setErrors] = useState({});
