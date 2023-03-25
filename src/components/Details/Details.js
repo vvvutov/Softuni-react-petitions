@@ -1,5 +1,5 @@
 import './details.css'
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { PetitionContext } from '../../contexts/PetitionContext';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -10,10 +10,11 @@ import { useNavigate } from 'react-router-dom';
 export const Details = () => {
     const navigate = useNavigate();
 
-    const {signPetitionHandler , petitions, deletePetitionHandler } = useContext(PetitionContext);
-    const { user, isAuthenticated } = useContext(AuthContext);
-
+    const { signPetitionHandler, petitions, deletePetitionHandler } = useContext(PetitionContext);
+    const { user, isAuthenticated, userUpdate } = useContext(AuthContext);
     const { petitionId } = useParams();
+    
+    const [buttonText, setButtonText] = useState('Подпиши');
 
     const petition = petitions.find(p => p._id === petitionId);
 
@@ -25,22 +26,26 @@ export const Details = () => {
     }
 
     const onSignHandler = (e) => {
-
         e.preventDefault();
-        e.target.value = "Готово"
+        setButtonText('Готово');
         e.target.disabled = true;
-        signPetitionHandler(petitionId);
-        edit(petitionId, {...petition, 
-            signed: Number(petition.signed) +1} )
+        signPetitionHandler(petitionId, `${user.firstName} ${user.lastName}`);
+        userUpdate({...user, signedPetitions: user.signedPetions.push(petitionId)});
+        edit(petitionId, {
+            ...petition,
+            signed: Number(petition.signed) + 1,
+            signedBy: [...petition.signedBy, `${user.firstName} ${user.lastName}`],
+          
+        })
     }
 
     const timestamp = new Date(petition.createdAt);
     const formattedDate = timestamp.toLocaleString('en-GB', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
     });
 
 
@@ -56,6 +61,14 @@ export const Details = () => {
                 <div className="petition-image">
                     <img src={petition.image} alt="alt" />
                 </div>
+                <p className="progress-bar">
+                    <span style={{
+                        width: (petition.signed / petition.goal) * 100,
+                        height: '10px',
+                        backgroundColor: '#4568dc',
+                        borderRadius: '5px',
+                    }}></span>
+                </p>
                 <div className="petition-info">
                     <div className="petition-text">
                         <h1 id="title">{petition.title}</h1>
@@ -78,11 +91,11 @@ export const Details = () => {
                     <div className="product-btn">
                         {isAuthenticated && !isAuthor &&
                             <input
-                            type="button"
-                            onClick={onSignHandler}
-                            className="btn-delete"
-                            value="Подпиши"
-                    />
+                                type="button"
+                                onClick={onSignHandler}
+                                className="btn-delete"
+                                value={buttonText}
+                            />
                         }
                         {isAuthor &&
                             <div className="author">
@@ -91,8 +104,8 @@ export const Details = () => {
                                     type="button"
                                     onClick={onDeleteHandler}
                                     className="btn-delete"
-                                    value="Изтрий"
-                            />
+                                    value="Изтрий" 
+                                />
                             </div>
                         }
 

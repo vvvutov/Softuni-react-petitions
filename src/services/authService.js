@@ -18,7 +18,8 @@ export const register = async (userData) => {
             lastName: userData.lastName,
             age: userData.age,
             gender: userData.gender,
-            signedPetions: []
+            signedPetions: [],
+            ownPetitions: [],
         }
         await setDoc(userDocRef, desiredData);
 
@@ -39,7 +40,8 @@ export const login = async (userData) => {
     } catch (error) {
         console.error(error);
     }
-}
+};
+
 
 export const googleSignIn = async () => {
     try {
@@ -48,6 +50,7 @@ export const googleSignIn = async () => {
         console.error(error)
     }
 };
+
 
 export const logout = async () => {
     try {

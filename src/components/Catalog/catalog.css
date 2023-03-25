@@ -43,75 +43,225 @@ main {
     border-radius: 20px;
 }
 
+
+/* asdasd */
 .petition-catalog-list .petition {
-    /* display: flex;
-    flex-direction: column; */
-    position:relative;
-    padding:10px;
+    position: relative;
+    padding: 10px;
     width: 500px;
     height: 360px;
     margin: 10px;
+    flex: 0 0 500px;
     border: 2px solid whitesmoke;
     border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.633) 100%;
-
-}
-.petition .upper-container{
-    display:flex;
+    background-color: rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .petition-catalog-list .petition .upper-container {
+    display: flex;
     flex-direction: row;
-    justify-content: space-around;
-}
-
-.petition-catalog-list .petition-img img {
-    float: left;
-    border: 2px solid rgba(191, 221, 213, 0.781);
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .petition-catalog-list .petition-img img {
+    border: 2px solid #ddd;
     border-radius: 2px;
     width: 200px;
     height: 160px;
-    margin: 5px;
-}
-
-.petition-catalog-list .petition-info {
-    margin-bottom: 20px;
-
-}
-
-.petition-catalog-list .petition-info h1 {
-    font-size: 20px;
-    margin-top: 10px;
-    color: black;
-}
-
-.petition-catalog-list .petition-info p {
-    color: white;
-    margin-top: 5px;
-}
-
-.petition-catalog-list .petition-info span {
+  }
+  
+  .petition-catalog-list .petition-info-top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+  }
+  
+  .petition-catalog-list .petition-info-top p {
+    color: #666;
+    margin: 5px 0;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  .petition-catalog-list .petition-info-top span {
     color: #f8ab46;
-    font-weight: bolder;
-}
-
-.petition-catalog-list .petition .btn-details {
-    position: absolute;
-    right: 1px;
-    bottom: 1px;
-    border: 5px;
+    font-weight: bold;
+  }
+  
+  .petition-catalog-list .petition-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 20px;
+  }
+  
+  .petition-catalog-list .petition-info h1 {
+    font-size: 24px;
+    margin: 0;
+    color: #333;
+  }
+  
+  .petition-catalog-list .petition-info p {
+    color: #666;
+    margin-top: 5px;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  .petition-catalog-list .petition-info span {
+    color: #f8ab46;
+    font-weight: bold;
+  }
+  
+  .petition-catalog-list .petition .btn-details {
+    margin-top: auto;
+    padding: 10px 20px;
+    border: none;
     cursor: pointer;
     outline: none;
-    font-size: 12px;
+    font-size: 16px;
     background-image: linear-gradient(45deg, #8f98b9, #dafac7);
     border-radius: 5px;
-    box-shadow: 5px 5px 10px rgba(33, 23, 23, 0.236);
-    -webkit-transition: box-shadow 0.25s;
-    transition: box-shadow 0.25s;
-    color: rgb(0, 0, 0);
-    width: 80px;
-    margin-bottom: 10px;
-    margin-left: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    color: #fff;
     text-decoration: none;
-}
+    position: absolute;
+    bottom: 10px;
+  }
+  
+  .petition-catalog-list .petition .btn-details:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
 
-.petition-catalog-list .petition .btn-details:hover {
-    box-shadow: 0 12px 24px rgba(128, 128, 128, 0.1);
-}
+
+  @media only screen and (max-width: 768px) {
+    /* styles for phones and small tablets */
+    .petition-catalog-list h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    }
+    
+    .petitions-list {
+    height: auto;
+    margin-top: 20px;
+    }
+    
+    .petition-catalog-list .petition {
+    width: 100%;
+    flex: 0 0 100%;
+    margin: 10px 0;
+    padding: 20px;
+    height: auto;
+    }
+    
+    .petition-catalog-list .petition-img img {
+    width: 100%;
+    height: auto;
+    }
+    
+    .petition-catalog-list .petition .upper-container {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    }
+    
+    .petition-catalog-list .petition-info-top {
+    align-items: flex-start;
+    text-align: left;
+    }
+    
+    .petition-catalog-list .petition-info-top p {
+    margin: 10px 0;
+    font-size: 14px;
+    line-height: 1.2;
+    }
+    
+    .petition-catalog-list .petition-info {
+    padding-bottom: 10px;
+    }
+    
+    .petition-catalog-list .petition-info h1 {
+    font-size: 20px;
+    margin: 0;
+    }
+    
+    .petition-catalog-list .petition-info p {
+    font-size: 14px;
+    line-height: 1.2;
+    }
+    
+    .petition-catalog-list .petition .btn-details {
+    position: static;
+    margin-top: 10px;
+    }
+    }
+    
+    @media only screen and (max-width: 1024px) {
+    /* styles for larger tablets */
+    .petition-catalog-list h1 {
+    font-size: 26px;
+    margin-bottom: 10px;
+    }
+    
+    .petition-catalog-list .petition {
+    width: 100%;
+    flex: 0 0 100%;
+    margin: 10px 0;
+    padding: 20px;
+    height: auto;
+    }
+    
+    .petition-catalog-list .petition-img img {
+    width: 100%;
+    height: auto;
+    }
+    
+    .petition-catalog-list .petition-info-top {
+    text-align: left;
+    }
+    
+    .petition-catalog-list .petition-info-top p {
+    margin: 10px 0;
+    font-size: 16px;
+    line-height: 1.5;
+    }
+    
+    .petition-catalog-list .petition-info h1 {
+    font-size: 24px;
+    margin: 0;
+    }
+    
+    .petition-catalog-list .petition-info p {
+    font-size: 16px;
+    line-height: 1.5;
+    }
+    }
+
+    @media (max-width: 767px) {
+        .petition-catalog-list .petition .btn-details {
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            font-size: 16px;
+            background-image: linear-gradient(45deg, #8f98b9, #dafac7);
+            border-radius: 5px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            color: #fff;
+            text-decoration: none;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+      }

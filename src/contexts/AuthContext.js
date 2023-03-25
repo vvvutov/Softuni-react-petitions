@@ -22,12 +22,17 @@ export const AuthProvider = ({ children }) => {
         setAuth({});
     };
 
+    const userUpdate = (updatedInfo) => {
+        setAuth(updatedInfo)
+    };
+
 
     return (
         <AuthContext.Provider value={{
             user: auth,
             userLogin,
             userLogout,
+            userUpdate,
             isAuthenticated: Boolean(auth?._id)
         }}>
             {children}
