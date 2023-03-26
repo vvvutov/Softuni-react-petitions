@@ -34,9 +34,7 @@ export const register = async (userData) => {
 
 export const login = async (userData) => {
     try {
-        const googleStuff = await signInWithEmailAndPassword(auth, userData.email, userData.password)
-        console.log("Google cred", googleStuff);
-        return googleStuff
+        return await signInWithEmailAndPassword(auth, userData.email, userData.password)
     } catch (error) {
         console.error(error);
     }
@@ -49,6 +47,16 @@ export const googleSignIn = async () => {
     } catch (error) {
         console.error(error)
     }
+};
+
+
+export const updateFirebaseUser = async (userID, updateInfo) => {
+   try {
+       const userDocRef = doc(usersCollectionRef, userID);
+       await setDoc(userDocRef, updateInfo);
+   } catch (error) {
+    console.log(error);
+   }
 };
 
 

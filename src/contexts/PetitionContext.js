@@ -41,7 +41,7 @@ export const PetitionProvider = ({ children }) => {
     setPetitions((state) => {
       const currentPetition = state.find((petition) => petition._id === petitionId);
       currentPetition.signedBy.push(userThatSigned);
-      
+
       return [
         {
           ...currentPetition,

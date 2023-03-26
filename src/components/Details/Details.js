@@ -5,6 +5,7 @@ import { PetitionContext } from '../../contexts/PetitionContext';
 import { AuthContext } from '../../contexts/AuthContext';
 import { deletePetition, edit } from '../../services/petitionService';
 import { useNavigate } from 'react-router-dom';
+import { updateFirebaseUser } from '../../services/authService';
 
 
 export const Details = () => {
@@ -23,21 +24,29 @@ export const Details = () => {
         deletePetition(petitionId)
             .then(deletePetitionHandler(petitionId))
             .then(navigate("/petitions"));
-    }
+    };
 
     const onSignHandler = (e) => {
         e.preventDefault();
         setButtonText('Готово');
         e.target.disabled = true;
+
+        //updates the petition in state
         signPetitionHandler(petitionId, `${user.firstName} ${user.lastName}`);
+
+        //updates the user authentication state
         userUpdate({...user, signedPetitions: user.signedPetions.push(petitionId)});
+
+        //updates the firebase collection
+        updateFirebaseUser(user._id, {...user, signedPetitions: user.signedPetions.push(petitionId)});
+        
+        //edits the petition in firebase collection
         edit(petitionId, {
             ...petition,
             signed: Number(petition.signed) + 1,
             signedBy: [...petition.signedBy, `${user.firstName} ${user.lastName}`],
-          
-        })
-    }
+        });
+    };
 
     const timestamp = new Date(petition.createdAt);
     const formattedDate = timestamp.toLocaleString('en-GB', {
@@ -50,7 +59,7 @@ export const Details = () => {
 
 
 
-    const isAuthor = user._id === petition.authorInfo._id
+    const isAuthor = user._id === petition.authorInfo._id;
 
 
     return (
