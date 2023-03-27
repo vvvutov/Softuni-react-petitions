@@ -1,7 +1,7 @@
 import { auth, googleProvider } from "../firebase/firebase"
 import { createUserWithEmailAndPassword, signInWithPopup, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { db } from '../firebase/firebase';
-import { doc, setDoc, collection } from "firebase/firestore";
+import { getDoc, doc, setDoc, collection } from "firebase/firestore";
 
 
 const usersCollectionRef = collection(db, "users");
@@ -18,9 +18,9 @@ export const register = async (userData) => {
             lastName: userData.lastName,
             age: userData.age,
             gender: userData.gender,
-            signedPetions: [],
+            signedPetitions: [],
             ownPetitions: [],
-        }
+        };
         await setDoc(userDocRef, desiredData);
 
         return { _id: user.uid, ...desiredData };
@@ -34,9 +34,11 @@ export const register = async (userData) => {
 //too much info is being returned !!! Pick what you need
 export const login = async (userData) => {
     try {
-        const loginInfo =  await signInWithEmailAndPassword(auth, userData.email, userData.password)
-        console.log(loginInfo, loginInfo.user.uid);
-        return {...loginInfo, _id: loginInfo.user.uid}
+        const loginInfo = await signInWithEmailAndPassword(auth, userData.email, userData.password)
+        const userDocRef = doc(usersCollectionRef, loginInfo.user.uid);
+        const userSnap = await getDoc(userDocRef);
+        const userSnapData = userSnap.data();
+        return { ...userSnapData, _id: loginInfo.user.uid }
     } catch (error) {
         console.error(error);
     }
@@ -53,12 +55,12 @@ export const googleSignIn = async () => {
 
 
 export const updateFirebaseUser = async (userID, updateInfo) => {
-   try {
-       const userDocRef = doc(usersCollectionRef, userID);
-       await setDoc(userDocRef, updateInfo);
-   } catch (error) {
-    console.log(error);
-   }
+    try {
+        const userDocRef = doc(usersCollectionRef, userID);
+        await setDoc(userDocRef, updateInfo);
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 

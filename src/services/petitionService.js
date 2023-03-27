@@ -37,13 +37,12 @@ export const getOne = async (petitionId) => {
 
 export const create = async (petitionData) => {
     try {
+        //providing my own timestamp, because working with the one generated from Firebase is weird
         const timestamp = new Date(Date.now());
 
         await setDoc(doc(db, "petitions", petitionData._id), { ...petitionData, createdAt: timestamp.toString() });
         const petition = { ...petitionData, createdAt: timestamp.toString() }
 
-
-        console.log(petition);
         return petition;
     } catch (error) {
         console.error(error);

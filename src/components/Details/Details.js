@@ -35,11 +35,11 @@ export const Details = () => {
         signPetitionHandler(petitionId, `${user.firstName} ${user.lastName}`);
 
         //updates the user authentication state
-        userUpdate({...user, signedPetitions: user.signedPetions.push(petitionId)});
+        userUpdate(petitionId);
 
         //updates the firebase collection
-        updateFirebaseUser(user._id, {...user, signedPetitions: user.signedPetions.push(petitionId)});
-        
+        updateFirebaseUser(user._id, {...user, signedPetitions: user.signedPetitions.push(petitionId)});
+
         //edits the petition in firebase collection
         edit(petitionId, {
             ...petition,
@@ -60,6 +60,7 @@ export const Details = () => {
 
 
     const isAuthor = user._id === petition.authorInfo._id;
+    const didTheUserSignThePetition = user.signedPetitions.includes(petitionId);
 
 
     return (
@@ -97,6 +98,9 @@ export const Details = () => {
                             <p id="text">{petition.petitionText}</p>
                         </div>
                     </div>
+                    { didTheUserSignThePetition && 
+                    <p>Вече сте подписали тази петиция!</p>
+                    }
                     <div className="product-btn">
                         {isAuthenticated && !isAuthor &&
                             <input

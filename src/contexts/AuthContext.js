@@ -23,8 +23,9 @@ export const AuthProvider = ({ children }) => {
         setAuth({});
     };
 
-    const userUpdate = (updatedInfo) => {
-        setAuth(updatedInfo)
+    const userUpdate = (petitionId) => {
+        auth.signedPetitions.push(petitionId)
+      setAuth(auth)
     };
 
     console.log("isAuthenticated", Boolean(auth?._id));
