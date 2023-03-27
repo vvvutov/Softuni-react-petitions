@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
 
     const userLogin = (authData) => {
         if (authData !== undefined) {
+            console.log(authData);
             setAuth(authData, {});
         } else {
             setAuth({})
@@ -26,6 +27,7 @@ export const AuthProvider = ({ children }) => {
         setAuth(updatedInfo)
     };
 
+    console.log("isAuthenticated", Boolean(auth?._id));
 
     return (
         <AuthContext.Provider value={{

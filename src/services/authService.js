@@ -31,10 +31,12 @@ export const register = async (userData) => {
     }
 };
 
-
+//too much info is being returned !!! Pick what you need
 export const login = async (userData) => {
     try {
-        return await signInWithEmailAndPassword(auth, userData.email, userData.password)
+        const loginInfo =  await signInWithEmailAndPassword(auth, userData.email, userData.password)
+        console.log(loginInfo, loginInfo.user.uid);
+        return {...loginInfo, _id: loginInfo.user.uid}
     } catch (error) {
         console.error(error);
     }
