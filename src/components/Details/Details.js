@@ -14,7 +14,7 @@ export const Details = () => {
     const { signPetitionHandler, petitions, deletePetitionHandler } = useContext(PetitionContext);
     const { user, isAuthenticated, userUpdate } = useContext(AuthContext);
     const { petitionId } = useParams();
-    
+
     const [buttonText, setButtonText] = useState('Подпиши');
 
     const petition = petitions.find(p => p._id === petitionId);
@@ -38,7 +38,7 @@ export const Details = () => {
         userUpdate(petitionId);
 
         //updates the firebase collection
-        updateFirebaseUser(user._id, {...user, signedPetitions: user.signedPetitions.push(petitionId)});
+        updateFirebaseUser(user._id, { ...user, signedPetitions: user.signedPetitions.push(petitionId) });
 
         //edits the petition in firebase collection
         edit(petitionId, {
@@ -60,8 +60,15 @@ export const Details = () => {
 
 
     const isAuthor = user._id === petition.authorInfo._id;
-    const didTheUserSignThePetition = user.signedPetitions.includes(petitionId);
 
+    let didTheUserSignThePetition = false;
+    if (Object.keys(user).length) {
+        didTheUserSignThePetition = user?.signedPetitions?.includes(petitionId);
+    };
+
+    console.log(Object.keys(user).length);
+    console.log(user?.signedPetitions);
+    console.log(petitionId);
 
     return (
 
@@ -117,7 +124,7 @@ export const Details = () => {
                                     type="button"
                                     onClick={onDeleteHandler}
                                     className="btn-delete"
-                                    value="Изтрий" 
+                                    value="Изтрий"
                                 />
                             </div>
                         }

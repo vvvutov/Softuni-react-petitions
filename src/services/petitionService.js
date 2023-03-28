@@ -41,7 +41,7 @@ export const create = async (petitionData) => {
         const timestamp = new Date(Date.now());
 
         await setDoc(doc(db, "petitions", petitionData._id), { ...petitionData, createdAt: timestamp.toString() });
-        const petition = { ...petitionData, createdAt: timestamp.toString() }
+        const petition = { ...petitionData, createdAt: timestamp.toString() };
 
         return petition;
     } catch (error) {

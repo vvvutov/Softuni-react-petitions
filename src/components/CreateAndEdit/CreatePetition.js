@@ -54,6 +54,7 @@ export const CreatePetition = () => {
         },
         signed: '',
         signedBy: [],
+        //in case of EDIT petition, it takes the current petition ID to overwrite it instead of generating new id for CREATE petition
         _id: currentPetition._id ||  generateRandomId(20)
     });
 

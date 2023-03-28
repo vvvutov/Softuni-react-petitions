@@ -19,7 +19,7 @@ export const register = async (userData) => {
             age: userData.age,
             gender: userData.gender,
             signedPetitions: [],
-            ownPetitions: [],
+            ownPetitions: {},
         };
         await setDoc(userDocRef, desiredData);
 
