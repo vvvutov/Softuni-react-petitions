@@ -46,6 +46,8 @@ export const Details = () => {
             signed: Number(petition.signed) + 1,
             signedBy: [...petition.signedBy, `${user.firstName} ${user.lastName}`],
         });
+
+
     };
 
     const timestamp = new Date(petition.createdAt);
@@ -62,13 +64,12 @@ export const Details = () => {
     const isAuthor = user._id === petition.authorInfo._id;
 
     let didTheUserSignThePetition = false;
-    if (Object.keys(user).length) {
-        didTheUserSignThePetition = user?.signedPetitions?.includes(petitionId);
+    if (isAuthenticated) {
+        if (user?.signedPetitions?.includes(petitionId)) {
+            didTheUserSignThePetition = true
+        }
     };
 
-    console.log(Object.keys(user).length);
-    console.log(user?.signedPetitions);
-    console.log(petitionId);
 
     return (
 
@@ -105,8 +106,11 @@ export const Details = () => {
                             <p id="text">{petition.petitionText}</p>
                         </div>
                     </div>
-                    { didTheUserSignThePetition && 
-                    <p>Вече сте подписали тази петиция!</p>
+
+                    {/* create a new component for the buttons, pass whatever they need in it as props and useEffect in it to deal with rendering them */}
+
+                    {didTheUserSignThePetition &&
+                        <p>Вече сте подписали тази петиция!</p>
                     }
                     <div className="product-btn">
                         {isAuthenticated && !isAuthor &&
@@ -117,6 +121,8 @@ export const Details = () => {
                                 value={buttonText}
                             />
                         }
+
+
                         {isAuthor &&
                             <div className="author">
                                 <Link to={`/edit/${petition._id}`} className="btn-edit">Редактирай</Link>

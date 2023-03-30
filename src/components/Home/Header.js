@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../../contexts/AuthContext';
+import logo from './logo.png'
 
 
 export const Header = () => {
@@ -12,7 +13,8 @@ export const Header = () => {
         <header className="header">
 
                 <nav>
-                    <img src="../../public/images/logo.png" className="logo" alt='logo' />
+                    <img src={logo} className="logo" alt='logo' />
+                    
                     <ul>
                         <li>
                             <Link to="/">Home</Link>

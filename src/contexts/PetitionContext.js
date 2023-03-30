@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import  logo  from "../components/Catalog/logo.gif"
 
 import * as petitionService from '../services/petitionService'
 
