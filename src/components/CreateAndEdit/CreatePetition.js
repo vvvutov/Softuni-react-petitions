@@ -34,7 +34,7 @@ export const CreatePetition = () => {
 
     const [values, setValues] = useState({
         title: '',
-        image: '',
+        // image: '',
         petitionText: '',
         category: 'none',
         other: '',
@@ -55,10 +55,19 @@ export const CreatePetition = () => {
         signed: '',
         signedBy: [],
         //in case of EDIT petition, it takes the current petition ID to overwrite it instead of generating new id for CREATE petition
-        _id: currentPetition._id ||  generateRandomId(20)
+        _id: currentPetition._id || generateRandomId(20),
+        petitionImage: '',
     });
 
     const [errors, setErrors] = useState({});
+
+    const uploadImageHandler = (e) => {
+        setValues( state => ({
+            ...state,
+            [e.target.name]: e.target.files[0]
+        })
+        )
+    }
 
 
     const checkboxHandler = (e) => {
@@ -143,11 +152,11 @@ export const CreatePetition = () => {
 
     return (
         <>
-
             <section id="create-container">
                 <div className="create-container-info">
                     <h1>Създай петиция</h1>
                     <form onSubmit={onSubmit} >
+
                         <label htmlFor="title" >Заглавие <strong>  *</strong></label>
                         <input
                             type="text"
@@ -158,7 +167,7 @@ export const CreatePetition = () => {
                             onChange={changeHandler}
                             onBlur={(e) => lengthCheck(e, 10, 80)}
                         />
-
+{/* 
                         <label htmlFor="image">Поставете URL към изображение</label>
                         <input
                             type="text"
@@ -168,6 +177,15 @@ export const CreatePetition = () => {
                             value={values.image}
                             onChange={changeHandler}
                             onBlur={(e) => isHTML}
+                        /> */}
+                           <label htmlFor="petition-image">Качете изображение </label>
+                        <input
+                            type="file"
+                            id="petitioн-image"
+                            name="petitionImage"
+                            placeholder="Изберете фаил"
+                            // value={values.petitionImage}
+                            onChange={uploadImageHandler}
                         />
 
                         <label htmlFor="description">Кратко описание <strong>  *</strong></label>
@@ -219,6 +237,9 @@ export const CreatePetition = () => {
                                 />
                             </div>
                         }
+
+                     
+
 
                         <label htmlFor="goal" >Колко подписа целите да съберете? <strong>&nbsp;  *</strong></label>
                         <input

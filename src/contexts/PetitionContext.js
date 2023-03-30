@@ -54,7 +54,7 @@ export const PetitionProvider = ({ children }) => {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div><img src={logo} alt="logo"/></div>;
   }
 
   return (
