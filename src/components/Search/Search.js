@@ -1,4 +1,3 @@
-import { CatalogPetitionItem } from '../Catalog/CatalogPetitionItem';
 import './search.css'
 import '../Catalog/catalog.css'
 
@@ -6,7 +5,6 @@ import '../Catalog/catalog.css'
 export const Search = () => {
     return (
         <section className="petition-search">
-            <h1>Search</h1>
             <form className="search-form" action="#" method="">
                 <input
                     type="text"
@@ -26,19 +24,6 @@ export const Search = () => {
                     Search
                 </button>
             </form>
-            <div className="petition-catalog-list">
-                <div className="petitions-list">
-                   <CatalogPetitionItem/>
-                   <CatalogPetitionItem/>
-                   <CatalogPetitionItem/>
-                   <CatalogPetitionItem/>
-
-                </div>
-            </div>
-            {/* <div class="no-match">
-                <p>No match was found!</p>
-            </div> */}
         </section>
-
     )
 };

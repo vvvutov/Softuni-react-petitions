@@ -47,7 +47,19 @@ export const login = async (userData) => {
 
 export const googleSignIn = async () => {
     try {
-        return await signInWithPopup(auth, googleProvider)
+        const googleSignInInfo = await signInWithPopup(auth, googleProvider);
+
+        return {
+            username: googleSignInInfo.user.email.split('@')[0],
+            firstName: googleSignInInfo.user.displayName.split(' ')[0],
+            lastName: googleSignInInfo.user.displayName.split(' ')[1],
+            _id: googleSignInInfo.user.uid,
+            email: googleSignInInfo.user.email,
+            confirmation: {
+                checked: true
+            },
+            photo: googleSignInInfo.user.photoURL,
+        }
     } catch (error) {
         console.error(error)
     }

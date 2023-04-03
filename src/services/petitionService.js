@@ -40,15 +40,25 @@ export const getOne = async (petitionId) => {
 };
 
 export const uploadPetitionImage = async (petitionImage) => {
-
-    const userPetitionImagesRef = ref(storage, `user-petition-images/${generateRandomId(4) + petitionImage.name}`);
-
-    const imageUpload = await uploadBytes(userPetitionImagesRef, petitionImage);
-    return await getDownloadURL(imageUpload.ref)
+    //TODO make sure the user uploads an image
+    // https://firebase.google.com/docs/storage/web/upload-files
+    
+    // if (!petitionImage){
+    //     console.log(ref(storage, 'default-petition-photo.jpg'));
+    //     const downloadURL =  await getDownloadURL(ref(storage, 'default-petition-photo.jpg'));
+    //     return downloadURL
+    // }
+   
+    if (petitionImage){
+     const userPetitionImagesRef = ref(storage, `user-petition-images/${generateRandomId(4) + petitionImage.name}`);
+     const imageUpload = await uploadBytes(userPetitionImagesRef, petitionImage);
+     return await getDownloadURL(imageUpload.ref)
+    }
 };
 
 
 export const create = async (petitionData) => {
+
     console.log(petitionData.petitionImage);
     try {
         //providing my own timestamp, because working with the one generated from Firebase is awkward
