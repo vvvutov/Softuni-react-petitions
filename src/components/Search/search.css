@@ -1,16 +1,21 @@
 
 
 main {
-    padding-top: 30px;
+    padding-top: 50px;
 }
 
+
 .petition-search h1 {
+    padding-top: 0px;
+
     text-align: center;
     font-size: 30px;
     margin-bottom: 20px;
 }
 
 .search-form {
+    padding-top: 0px;
+
     display: inline;
     width: 500px;
     height: 40px;
