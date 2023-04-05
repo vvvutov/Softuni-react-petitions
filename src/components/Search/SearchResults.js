@@ -3,7 +3,6 @@ import './searchResults.css'
 export const SearchResults = ({ searchResults }) => {
     console.log(searchResults);
   return (
-    // <div className="search-results-container">
     <ul className="search-results">
       {searchResults.map((petition) => (
         
@@ -18,7 +17,6 @@ export const SearchResults = ({ searchResults }) => {
         </li>
       ))}
     </ul>
-    // </div>
   );
 };
 
