@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { AuthContext } from '../../contexts/AuthContext';
 
 import { Search } from '../Search/Search';
@@ -25,31 +25,31 @@ export const Header = () => {
 
                     <ul>
                         <li>
-                            <Link to="/">Home</Link>
+                            <NavLink to="/">Home</NavLink>
                         </li>
                         <li>
-                            <Link to="/petitions">Всички петиции</Link>
+                            <NavLink to="/petitions">Всички петиции</NavLink>
                         </li>
                         <li className='search'>
                             <button id="search" onClick={handleSearchClick}>Търсене</button>
                         </li>
                         {isAuthenticated && <li>
-                            <Link to="/create">Създай петиция</Link>
+                            <NavLink to="/create">Създай петиция</NavLink>
                         </li>}
                         <li>
-                            <Link to="/about">About</Link>
+                            <NavLink to="/about">About</NavLink>
                         </li>
 
                         {!isAuthenticated && <li>
-                            <Link to="/register">Регистрация</Link>
+                            <NavLink to="/register">Регистрация</NavLink>
                         </li>}
                         {isAuthenticated ?
                             <li>
-                                <Link to="/logout">Logout</Link>
+                                <NavLink to="/logout">Logout</NavLink>
                             </li>
                             :
                             <li>
-                                <Link to="/login">Вход</Link>
+                                <NavLink to="/login" >Вход</NavLink>
                             </li>
                         }
                     </ul>

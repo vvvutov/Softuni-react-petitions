@@ -40,21 +40,22 @@ export const getOne = async (petitionId) => {
 };
 
 export const uploadPetitionImage = async (petitionImage) => {
-    //TODO make sure the user uploads an image
-    // https://firebase.google.com/docs/storage/web/upload-files
-    
-    // if (!petitionImage){
-    //     console.log(ref(storage, 'default-petition-photo.jpg'));
-    //     const downloadURL =  await getDownloadURL(ref(storage, 'default-petition-photo.jpg'));
-    //     return downloadURL
-    // }
-   
-    if (petitionImage){
-     const userPetitionImagesRef = ref(storage, `user-petition-images/${generateRandomId(4) + petitionImage.name}`);
-     const imageUpload = await uploadBytes(userPetitionImagesRef, petitionImage);
-     return await getDownloadURL(imageUpload.ref)
+    if (!petitionImage) {
+      // Get download URL of default image file
+      const defaultImageRef = ref(storage, 'default-petition-photo.jpg');
+      const downloadURL = await getDownloadURL(defaultImageRef);
+      console.log("download URL:",  downloadURL);
+      return downloadURL;
     }
-};
+    // Check if input is an image file
+    if (!petitionImage.type.startsWith('image/')) {
+      throw new Error('Selected file is not an image');
+    }
+    // Upload image file
+    const userPetitionImagesRef = ref(storage, `user-petition-images/${generateRandomId(4) + petitionImage.name}`);
+    const imageUpload = await uploadBytes(userPetitionImagesRef, petitionImage);
+    return await getDownloadURL(imageUpload.ref);
+  };
 
 
 export const create = async (petitionData) => {
