@@ -15,7 +15,7 @@ main {
 
 .search-form {
     padding-top: 0px;
-
+    position: relative;
     display: inline;
     width: 500px;
     height: 40px;

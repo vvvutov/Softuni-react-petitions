@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { PetitionContext } from '../../contexts/PetitionContext';
 import { AuthContext } from '../../contexts/AuthContext';
-import { deletePetition, edit } from '../../services/petitionService';
+import { deletePetition, editPetition } from '../../services/petitionService';
 import { useNavigate } from 'react-router-dom';
 import { updateFirebaseUser } from '../../services/authService';
 
@@ -41,7 +41,7 @@ export const Details = () => {
         updateFirebaseUser(user._id, { ...user, signedPetitions: user.signedPetitions.push(petitionId) });
 
         //edits the petition in firebase collection
-        edit(petitionId, {
+        editPetition(petitionId, {
             ...petition,
             signed: Number(petition.signed) + 1,
             signedBy: [...petition.signedBy, `${user.firstName} ${user.lastName}`],

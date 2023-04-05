@@ -1,5 +1,5 @@
 import { db } from '../firebase/firebase';
-import { setDoc, getDocs, getDoc, collection, doc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { query, where, setDoc, getDocs, getDoc, collection, doc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { storage } from '../firebase/firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
@@ -41,24 +41,24 @@ export const getOne = async (petitionId) => {
 
 export const uploadPetitionImage = async (petitionImage) => {
     if (!petitionImage) {
-      // Get download URL of default image file
-      const defaultImageRef = ref(storage, 'default-petition-photo.jpg');
-      const downloadURL = await getDownloadURL(defaultImageRef);
-      console.log("download URL:",  downloadURL);
-      return downloadURL;
+        // Get download URL of default image file
+        const defaultImageRef = ref(storage, 'default-petition-photo.jpg');
+        const downloadURL = await getDownloadURL(defaultImageRef);
+        console.log("download URL:", downloadURL);
+        return downloadURL;
     }
     // Check if input is an image file
     if (!petitionImage.type.startsWith('image/')) {
-      throw new Error('Selected file is not an image');
+        throw new Error('Selected file is not an image');
     }
     // Upload image file
     const userPetitionImagesRef = ref(storage, `user-petition-images/${generateRandomId(4) + petitionImage.name}`);
     const imageUpload = await uploadBytes(userPetitionImagesRef, petitionImage);
     return await getDownloadURL(imageUpload.ref);
-  };
+};
 
 
-export const create = async (petitionData) => {
+export const createPetition = async (petitionData) => {
 
     console.log(petitionData.petitionImage);
     try {
@@ -71,16 +71,16 @@ export const create = async (petitionData) => {
         // and pass its value later from the resolved firestore url
         const { petitionImage, ...petitionDataWithoutImage } = petitionData;
 
-        await setDoc(doc(db, "petitions", petitionData._id), { 
+        await setDoc(doc(db, "petitions", petitionData._id), {
             ...petitionDataWithoutImage,
-            image: petitionImageUrl, 
-            createdAt: timestamp.toString(), 
+            image: petitionImageUrl,
+            createdAt: timestamp.toString(),
         });
         //TODO Add default image or await the setDoc response  for the image
-        const petition = { 
+        const petition = {
             ...petitionDataWithoutImage,
-            image: petitionImageUrl, 
-            createdAt: timestamp.toString(), 
+            image: petitionImageUrl,
+            createdAt: timestamp.toString(),
         };
         console.log(petition);
 
@@ -99,11 +99,20 @@ export const deletePetition = async (petitionId) => {
     }
 };
 
-export const edit = async (petitionId, petitionData) => {
+export const editPetition = async (petitionId, petitionData) => {
     try {
         const petitionDoc = doc(petitionCollectionRef, petitionId);
         return await updateDoc(petitionDoc, petitionData);
     } catch (error) {
         console.error(error);
     }
+};
+
+
+export const searchPetitions = async (searchQuery) => {
+    const q = query(collection(db, 'petitions'),
+        where('title', '>=', searchQuery), where('title', '<', searchQuery + '\uf8ff') );
+        // where('description', '>=', searchQuery), where('description', '<', searchQuery + '\uf8ff') );
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 };

@@ -1,7 +1,7 @@
 import './create.css'
 
 import { useState, useContext, useEffect } from 'react';
-import { create, getOne, edit } from '../../services/petitionService';
+import { createPetition, getOne, editPetition } from '../../services/petitionService';
 
 import { AuthContext } from '../../contexts/AuthContext';
 import { PetitionContext } from '../../contexts/PetitionContext';
@@ -87,12 +87,12 @@ export const CreatePetition = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         if (Object.keys(currentPetition).length === 0) {
-            create(values)
+            createPetition(values)
                 .then(addPetitionHandler(values));
         } else {
             console.log("currentPetition", currentPetition);
             setPetitions(state => state.map(p => p._id === currentPetition._id ? values : p))
-            edit(petitionId, values)
+            editPetition(petitionId, values)
 
             navigate("/petitions")
 
