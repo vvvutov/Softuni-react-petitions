@@ -1,63 +1,87 @@
 import { useState, useEffect, useRef } from "react";
 import { searchPetitions } from "../../services/petitionService";
 import { SearchResults } from "./SearchResults";
-
+import { useDebounce } from "../../hooks/useDebounce";
 import "./search.css";
 import "../Catalog/catalog.css";
 
 export const Search = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const searchResultsRef = useRef(null);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const searchResultsRef = useRef(null);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setIsLoading(true);
-    searchPetitions(searchQuery).then((result) => {
-      setSearchResults(result);
-      setIsLoading(false);
-    });
-  };
+    const debouncedSearchQuery = useDebounce(searchQuery, 800); 
 
-  const handleSearchQueryChange = (e) => {
-    e.preventDefault();
-    setSearchQuery(e.target.value);
-  };
+    useEffect(() => {
+        if (debouncedSearchQuery) {
+            setIsLoading(true);
+            searchPetitions(debouncedSearchQuery).then((result) => {
+                setSearchResults(result);
+                setIsLoading(false);
+            });
+        } else {
+            setSearchResults([]);
+            setIsLoading(false);
+        }
+    }, [debouncedSearchQuery]);
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (searchResultsRef.current && !searchResultsRef.current.contains(event.target)) {
-        setSearchResults([]);
-      }
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setIsLoading(true);
+        searchPetitions(searchQuery).then((result) => {
+            setSearchResults(result);
+            setIsLoading(false);
+        });
+        setSearchQuery(""); 
     };
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, []);
 
-  return (
-    <section className="petition-search">
-      <form className="search-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          className="search-petition"
-          name=""
-          placeholder="Търси петиция"
-          value={searchQuery}
-          onChange={handleSearchQueryChange}
-        />
+    const handleSearchQueryChange = (e) => {
+        e.preventDefault();
+        setSearchQuery(e.target.value);
+    };
 
-        <button type="submit" className="btn-search">
-          Search
-        </button>
-      </form>
-      <div className="search-results-container" ref={searchResultsRef}>
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          <SearchResults searchResults={searchResults} />
-        )}
-      </div>
-    </section>
-  );
+    const handleClick = () => {
+        setSearchResults([]); 
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (searchResultsRef.current && !searchResultsRef.current.contains(event.target)) {
+                setSearchResults([]);
+                setSearchQuery("");
+            }
+        };
+        document.addEventListener("click", handleClickOutside);
+        return () => document.removeEventListener("click", handleClickOutside);
+    }, []);
+
+    return (
+        <section className="petition-search" onClick={handleClick}>
+            <form className="search-form" onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    className="search-petition"
+                    name=""
+                    placeholder="Търси петиция"
+                    value={searchQuery}
+                    onChange={handleSearchQueryChange}
+                />
+
+                <button type="submit" className="btn-search">
+                    Search
+                </button>
+            </form>
+            <div className="search-results-container" ref={searchResultsRef}>
+                {isLoading ? (
+                    <p>Loading...</p>
+                ) : (
+                    <SearchResults
+                        searchResults={searchResults}
+                        onClick={() => setSearchResults([])}
+                    />
+                )}
+            </div>
+        </section>
+    );
 };

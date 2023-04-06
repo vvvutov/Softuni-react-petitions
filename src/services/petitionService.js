@@ -75,6 +75,7 @@ export const createPetition = async (petitionData) => {
             ...petitionDataWithoutImage,
             image: petitionImageUrl,
             createdAt: timestamp.toString(),
+            splittedTitle: petitionData.title.toLowerCase().split(" "),
         });
         //TODO Add default image or await the setDoc response  for the image
         const petition = {
@@ -110,9 +111,12 @@ export const editPetition = async (petitionId, petitionData) => {
 
 
 export const searchPetitions = async (searchQuery) => {
-    const q = query(collection(db, 'petitions'),
-        where('title', '>=', searchQuery), where('title', '<', searchQuery + '\uf8ff') );
-        // where('description', '>=', searchQuery), where('description', '<', searchQuery + '\uf8ff') );
+    const q = query(
+      collection(db, "petitions"),
+      where("splittedTitle", "array-contains", searchQuery.toLowerCase()),
+   
+    );
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-};
+  };
+
