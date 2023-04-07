@@ -28,13 +28,11 @@ export const CreatePetition = () => {
 
 
 
-    console.log("current 2", currentPetition);
     const { setPetitions, addPetitionHandler } = useContext(PetitionContext)
     const { user } = useContext(AuthContext)
 
     const [values, setValues] = useState({
         title: '',
-        // image: '',
         petitionText: '',
         category: 'none',
         other: '',
@@ -57,12 +55,13 @@ export const CreatePetition = () => {
         //in case of EDIT petition, it takes the current petition ID to overwrite it instead of generating new id for CREATE petition
         _id: currentPetition._id || generateRandomId(20),
         petitionImage: '',
+        hasFinished: false,
     });
 
     const [errors, setErrors] = useState({});
 
     const uploadImageHandler = (e) => {
-        setValues( state => ({
+        setValues(state => ({
             ...state,
             [e.target.name]: e.target.files[0]
         })
@@ -90,7 +89,6 @@ export const CreatePetition = () => {
             createPetition(values)
                 .then(addPetitionHandler(values));
         } else {
-            console.log("currentPetition", currentPetition);
             setPetitions(state => state.map(p => p._id === currentPetition._id ? values : p))
             editPetition(petitionId, values)
 
@@ -148,7 +146,6 @@ export const CreatePetition = () => {
 
     ];
 
-    console.log("values: ", values);
 
     return (
         <>
@@ -167,24 +164,13 @@ export const CreatePetition = () => {
                             onChange={changeHandler}
                             onBlur={(e) => lengthCheck(e, 10, 80)}
                         />
-{/* 
-                        <label htmlFor="image">Поставете URL към изображение</label>
-                        <input
-                            type="text"
-                            id="image"
-                            name="image"
-                            placeholder="http://..."
-                            value={values.image}
-                            onChange={changeHandler}
-                            onBlur={(e) => isHTML}
-                        /> */}
-                           <label htmlFor="petition-image">Качете изображение </label>
+
+                        <label htmlFor="petition-image">Качете изображение </label>
                         <input
                             type="file"
                             id="petitioн-image"
                             name="petitionImage"
                             placeholder="Изберете фаил"
-                            // value={values.petitionImage}
                             onChange={uploadImageHandler}
                         />
 
@@ -238,7 +224,7 @@ export const CreatePetition = () => {
                             </div>
                         }
 
-                     
+
 
 
                         <label htmlFor="goal" >Колко подписа целите да съберете? <strong>&nbsp;  *</strong></label>

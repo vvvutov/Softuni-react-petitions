@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import './searchResults.css'
 
 export const SearchResults = ({ searchResults }) => {
-    console.log(searchResults);
     return (
         <ul className="search-results">
             {searchResults.map((petition) => (

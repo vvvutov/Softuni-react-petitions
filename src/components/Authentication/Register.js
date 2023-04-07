@@ -8,6 +8,7 @@ import './register.css'
 
 import { register, googleSignIn } from '../../services/authService'
 import { About } from '../AboutAndNotFound/About';
+import * as validate from '../../services/validators';
 
 import { toast } from 'react-toastify';
 
@@ -16,7 +17,7 @@ export const Register = () => {
 
     const { errors, setErrors } = useContext(ErrorsContext)
     const { userLogin } = useContext(AuthContext)
-
+    
     const [values, setValues] = useState({
         username: '',
         firstName: '',
@@ -30,9 +31,7 @@ export const Register = () => {
             checked: false
         },
     });
-
-    // const [errors, setErrors] = useState({});
-
+    
     const navigate = useNavigate();
 
     const checkboxHandler = (e) => {
@@ -40,74 +39,36 @@ export const Register = () => {
             ...state,
             [e.target.name]: { checked: e.target.checked },
         }))
-    }
+    };
 
     const changeHandler = (e) => {
         setValues({
             ...values,
             [e.target.name]: e.target.value,
         });
-    }
-
-
-
-
-    const lenghtCheck = (e, minLength, maxLength) => {
-
-        setErrors(state => ({
-            ...state,
-            [e.target.name]: values[e.target.name].length < minLength || values[e.target.name].length > maxLength
-        }))
-
-    }
-
-    const isPositive = (e) => {
-        let number = Number(values[e.target.name]);
-        setErrors(state => ({
-            ...state,
-            [e.target.name]: !(number > 0),
-        }))
-    }
-
-    const validateEmail = (e) => {
-
-        setErrors(state => ({
-            ...state,
-            [e.target.name]: !(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(values[e.target.name]))
-        }));
-    }
-
-    const validateRePass = (e) => {
-
-        setErrors(state => ({
-            ...state,
-            [e.target.name]: [e.target.value] != values.password
-        }))
-    }
+    };
 
     const handleGoogleSignIn = (e) => {
         e.preventDefault();
 
         googleSignIn()
             .then(authData => {
-                console.log(authData);
                 userLogin(authData)
                 navigate('/')
             })
-    }
+    };
 
     const onSubmit = (e) => {
         e.preventDefault();
 
         register({ ...values })
             .then(authData => {
-                console.log(authData);
                 userLogin(authData)
                 navigate('/')
             }).catch((error) => {
-                toast.error(error.message)
-            } )
-    }
+                toast.error("Потребител с тази електронна поща вече съществува")
+            })
+    };
 
 
     return (
@@ -121,14 +82,13 @@ export const Register = () => {
                     id="username"
                     name="username"
                     placeholder="Потребителско име"
-                    // defaultValue={values.username}
                     value={values.username}
                     onChange={changeHandler}
-                    onBlur={(e) => { (lenghtCheck(e, 3, 12)) }}
+                    onBlur={(e) => { (validate.lengthCheck(e, 3, 15, setErrors, values)) }}
                 />
                 {errors.username &&
                     <p className="error">
-                        Потребителското име трябва да е между 3 и 12 символа
+                        Потребителското име трябва да е между 3 и 15 символа
                     </p>
                 }
                 <label htmlFor="firstName">Име</label>
@@ -137,10 +97,9 @@ export const Register = () => {
                     id="firstName"
                     name="firstName"
                     placeholder="Име"
-                    // defaultValue={values.firstName}
                     value={values.firstName}
                     onChange={changeHandler}
-                    onBlur={(e) => lenghtCheck(e, 3, 15)}
+                    onBlur={(e) => validate.lengthCheck(e, 3, 15, setErrors, values)}
                 />
                 {errors.firstName &&
                     <p className="error">
@@ -153,10 +112,9 @@ export const Register = () => {
                     id="lastName"
                     name="lastName"
                     placeholder="Фамилия"
-                    // defaultValue={values.lastName}
                     value={values.lastName}
                     onChange={changeHandler}
-                    onBlur={(e) => lenghtCheck(e, 3, 15)}
+                    onBlur={(e) => validate.lengthCheck(e, 3, 15, setErrors, values)}
                 />
                 {errors.lastName &&
                     <p className="error">
@@ -169,10 +127,9 @@ export const Register = () => {
                     id="age"
                     name="age"
                     placeholder="Възраст"
-                    // defaultValue={values.age}
                     value={values.age}
                     onChange={changeHandler}
-                    onBlur={isPositive}
+                    onBlur={(e) => validate.isPositive(e, setErrors, values)}
                 />
                 {errors.age &&
                     <p className="error">
@@ -186,20 +143,18 @@ export const Register = () => {
                         type="radio"
                         value="male"
                         name="gender"
-                        // value = {values.gender.checked}
                         checked={values.gender.checked}
                         onChange={changeHandler}
-                        onBlur={(e) => lenghtCheck(e, 3, 7)}
+                        onBlur={(e) => validate.lengthCheck(e, 3, 7, setErrors, values)}
                     /> Мъж
 
                     <input
                         type="radio"
                         value="female"
                         name="gender"
-                        // value = {values.gender.checked}
                         checked={values.gender.checked}
                         onChange={changeHandler}
-                        onBlur={(e) => lenghtCheck(e, 3, 7)}
+                        onBlur={(e) => validate.lengthCheck(e, 3, 7, setErrors, values)}
                     />
                     Жена
                 </div>
@@ -216,9 +171,8 @@ export const Register = () => {
                     name="email"
                     placeholder="Електронна поща"
                     value={values.email}
-                    // defaultValue = {values.email}
                     onChange={changeHandler}
-                    onBlur={validateEmail}
+                    onBlur={(e) => validate.validateEmail(e, setErrors, values)}
                 />
                 {errors.email &&
                     <p className="error">
@@ -231,10 +185,9 @@ export const Register = () => {
                     id="password"
                     name="password"
                     placeholder="Парола"
-                    // defaultValue = {values.password}
                     value={values.password}
                     onChange={changeHandler}
-                    onBlur={(e) => lenghtCheck(e, 6, 20)}
+                    onBlur={(e) => validate.lengthCheck(e, 6, 20, setErrors, values)}
                 />
                 {errors.password &&
                     <p className="error">
@@ -247,10 +200,9 @@ export const Register = () => {
                     id="rePassword"
                     name="rePassword"
                     placeholder="Повторете паролата"
-                    // defaultValue = {values.rePassword}
                     value={values.rePassword}
                     onChange={changeHandler}
-                    onBlur={validateRePass}
+                    onBlur={(e) => validate.validateRePass(e, setErrors, values)}
                 />
                 {errors.rePassword &&
                     <p className="error">

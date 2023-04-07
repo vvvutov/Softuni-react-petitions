@@ -18,12 +18,13 @@ export const generateRandomId = (length) => {
     }
   
     return shuffledId;
-  }
+  };
 
   
+  //To be used for creating a petition ID from the title of the petition, so it looks better in the URL
   export const generatePetitionId = (title) => {
     const words = title.trim().split(' ');
     const firstFiveWords = words.slice(0, 5);
     const customId = firstFiveWords.join('-');
     return customId;
-  }
+  };

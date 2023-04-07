@@ -26,7 +26,6 @@ export const getAll = async () => {
 
 export const getOne = async (petitionId) => {
     try {
-        console.log("ID", petitionId);
         const petitionDoc = doc(petitionCollectionRef, petitionId);
         const petitionSnap = await getDoc(petitionDoc);
         const petitionWithId = {
@@ -44,7 +43,6 @@ export const uploadPetitionImage = async (petitionImage) => {
         // Get download URL of default image file
         const defaultImageRef = ref(storage, 'default-petition-photo.jpg');
         const downloadURL = await getDownloadURL(defaultImageRef);
-        console.log("download URL:", downloadURL);
         return downloadURL;
     }
     // Check if input is an image file
@@ -60,12 +58,10 @@ export const uploadPetitionImage = async (petitionImage) => {
 
 export const createPetition = async (petitionData) => {
 
-    console.log(petitionData.petitionImage);
     try {
         //providing my own timestamp, because working with the one generated from Firebase is awkward
         const timestamp = new Date(Date.now());
         const petitionImageUrl = await uploadPetitionImage(petitionData.petitionImage);
-        console.log("petitionImageUrl", petitionImageUrl);
 
         //petitionImage is file object not accepted by firestore, so I use petition data without it,
         // and pass its value later from the resolved firestore url
@@ -75,15 +71,15 @@ export const createPetition = async (petitionData) => {
             ...petitionDataWithoutImage,
             image: petitionImageUrl,
             createdAt: timestamp.toString(),
+            nativeTimestamp: Date.now(),
             splittedTitle: petitionData.title.toLowerCase().split(" "),
         });
-        //TODO Add default image or await the setDoc response  for the image
+
         const petition = {
             ...petitionDataWithoutImage,
             image: petitionImageUrl,
             createdAt: timestamp.toString(),
         };
-        console.log(petition);
 
         return petition;
     } catch (error) {

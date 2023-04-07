@@ -61,7 +61,7 @@ export const googleSignIn = async () => {
             photo: googleSignInInfo.user.photoURL,
         }
     } catch (error) {
-        console.error(error)
+        throw new Error(error.message)
     }
 };
 
@@ -71,19 +71,16 @@ export const updateFirebaseUser = async (userID, updateInfo) => {
         const userDocRef = doc(usersCollectionRef, userID);
         await setDoc(userDocRef, updateInfo);
     } catch (error) {
-        console.log(error);
+        throw new Error(error.message);
     }
 };
 
 
 export const logout = async () => {
     try {
-        console.log(auth);
-
-        const logoutData = await signOut(auth);
-        console.log("Logout Data", logoutData);
+        await signOut(auth);
     } catch (error) {
-        console.error(error)
+        throw new Error(error.message);
     }
 };
 
