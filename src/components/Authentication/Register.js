@@ -2,16 +2,19 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useState, useContext } from "react";
 
 import { AuthContext } from '../../contexts/AuthContext';
+import { ErrorsContext } from '../../contexts/ErrorsContext';
 
 import './register.css'
 
 import { register, googleSignIn } from '../../services/authService'
 import { About } from '../AboutAndNotFound/About';
 
+import { toast } from 'react-toastify';
+
 
 export const Register = () => {
 
-
+    const { errors, setErrors } = useContext(ErrorsContext)
     const { userLogin } = useContext(AuthContext)
 
     const [values, setValues] = useState({
@@ -28,7 +31,7 @@ export const Register = () => {
         },
     });
 
-    const [errors, setErrors] = useState({});
+    // const [errors, setErrors] = useState({});
 
     const navigate = useNavigate();
 
@@ -101,7 +104,9 @@ export const Register = () => {
                 console.log(authData);
                 userLogin(authData)
                 navigate('/')
-            })
+            }).catch((error) => {
+                toast.error(error.message)
+            } )
     }
 
 

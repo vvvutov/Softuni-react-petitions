@@ -3,6 +3,8 @@ import { createUserWithEmailAndPassword, signInWithPopup, signInWithEmailAndPass
 import { db } from '../firebase/firebase';
 import { getDoc, doc, setDoc, collection } from "firebase/firestore";
 
+// import { toast } from "react-toastify";
+
 
 const usersCollectionRef = collection(db, "users");
 
@@ -26,12 +28,10 @@ export const register = async (userData) => {
         return { _id: user.uid, ...desiredData };
 
     } catch (error) {
-        console.error(error);
-        throw error;
+        throw new Error(error.message);
     }
 };
 
-//too much info is being returned !!! Pick what you need
 export const login = async (userData) => {
     try {
         const loginInfo = await signInWithEmailAndPassword(auth, userData.email, userData.password)
@@ -40,7 +40,7 @@ export const login = async (userData) => {
         const userSnapData = userSnap.data();
         return { ...userSnapData, _id: loginInfo.user.uid }
     } catch (error) {
-        console.error(error);
+        throw new Error("Грешен потребител или парола");
     }
 };
 
