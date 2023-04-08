@@ -7,6 +7,7 @@ import { deletePetition, editPetition } from '../../services/petitionService';
 import { useNavigate } from 'react-router-dom';
 import { updateFirebaseUser } from '../../services/authService';
 
+import { Comments } from './Comments';
 
 export const Details = () => {
     const navigate = useNavigate();
@@ -34,10 +35,10 @@ export const Details = () => {
         //updates the petition in state
         signPetitionHandler(petitionId, `${user.firstName} ${user.lastName}`);
 
-        //updates the user authentication state
+        //updates the user auth state
         userUpdate(petitionId);
 
-        //updates the firebase collection
+        //updates the user in the firebase collection
         updateFirebaseUser(user._id, { ...user, signedPetitions: user.signedPetitions.push(petitionId) });
 
         //edits the petition in firebase collection
@@ -46,8 +47,6 @@ export const Details = () => {
             signed: Number(petition.signed) + 1,
             signedBy: [...petition.signedBy, `${user.firstName} ${user.lastName}`],
         });
-
-
     };
 
     const timestamp = new Date(petition.createdAt);
@@ -58,8 +57,6 @@ export const Details = () => {
         hour: '2-digit',
         minute: '2-digit',
     });
-
-
 
     const isAuthor = user._id === petition.authorInfo._id;
 
@@ -72,7 +69,6 @@ export const Details = () => {
 
 
     return (
-
         <main>
             <section id="details-info">
 
@@ -107,7 +103,7 @@ export const Details = () => {
                         </div>
                     </div>
 
-                    {/* create a new component for the buttons, pass whatever they need in it as props and useEffect in it to deal with rendering them */}
+                    {/* !!! create a new component for the buttons, pass whatever they need in it as props and useEffect in it to deal with rendering them */}
 
                     {didTheUserSignThePetition &&
                         <p>Вече сте подписали тази петиция!</p>
@@ -121,7 +117,6 @@ export const Details = () => {
                                 value={buttonText}
                             />
                         }
-
 
                         {isAuthor &&
                             <div className="author">
@@ -138,7 +133,7 @@ export const Details = () => {
                     </div>
                 </div>
             </section>
+            <Comments user={user} comments={petition.comments} petitionId={petitionId} />
         </main>
-
     )
 };

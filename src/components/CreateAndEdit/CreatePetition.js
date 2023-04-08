@@ -56,6 +56,7 @@ export const CreatePetition = () => {
         _id: currentPetition._id || generateRandomId(20),
         petitionImage: '',
         hasFinished: false,
+        comments: [],
     });
 
     const [errors, setErrors] = useState({});
@@ -67,7 +68,6 @@ export const CreatePetition = () => {
         })
         )
     }
-
 
     const checkboxHandler = (e) => {
         setValues(state => ({
@@ -91,9 +91,7 @@ export const CreatePetition = () => {
         } else {
             setPetitions(state => state.map(p => p._id === currentPetition._id ? values : p))
             editPetition(petitionId, values)
-
             navigate("/petitions")
-
         }
     }
 

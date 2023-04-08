@@ -1,13 +1,11 @@
-import { db } from '../firebase/firebase';
+import { db, storage } from '../firebase/firebase';
 import { query, where, setDoc, getDocs, getDoc, collection, doc, deleteDoc, updateDoc } from 'firebase/firestore';
-import { storage } from '../firebase/firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 import { generateRandomId } from './helpers';
 
 
 const petitionCollectionRef = collection(db, "petitions",);
-
 
 
 export const getAll = async () => {
@@ -22,7 +20,6 @@ export const getAll = async () => {
         console.error(error);
     }
 };
-
 
 export const getOne = async (petitionId) => {
     try {
@@ -55,9 +52,7 @@ export const uploadPetitionImage = async (petitionImage) => {
     return await getDownloadURL(imageUpload.ref);
 };
 
-
 export const createPetition = async (petitionData) => {
-
     try {
         //providing my own timestamp, because working with the one generated from Firebase is awkward
         const timestamp = new Date(Date.now());
@@ -105,14 +100,28 @@ export const editPetition = async (petitionId, petitionData) => {
     }
 };
 
-
 export const searchPetitions = async (searchQuery) => {
     const q = query(
-      collection(db, "petitions"),
-      where("splittedTitle", "array-contains", searchQuery.toLowerCase()),
-   
+        collection(db, "petitions"),
+        where("splittedTitle", "array-contains", searchQuery.toLowerCase()),
+
     );
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-  };
+};
+
+export const addComment = async (petitionId, comment) => {
+    try {
+        const petitionDoc = doc(petitionCollectionRef, petitionId);
+        const petitionData = await getDoc(petitionDoc);
+
+        const existingComments = petitionData.data()?.comments || [];
+
+       return await updateDoc(petitionDoc, {
+            comments: [...existingComments, comment],
+        });
+    } catch (error) {
+        console.error("Error adding comment:", error);
+    }
+};
 
