@@ -9,6 +9,8 @@ import { updateFirebaseUser } from '../../services/authService';
 
 import { Comments } from './Comments';
 
+import { toast } from 'react-toastify';
+
 export const Details = () => {
     const navigate = useNavigate();
 
@@ -39,7 +41,10 @@ export const Details = () => {
         userUpdate(petitionId);
 
         //updates the user in the firebase collection
-        updateFirebaseUser(user._id, { ...user, signedPetitions: user.signedPetitions.push(petitionId) });
+        updateFirebaseUser(user._id, { 
+            ...user, 
+            signedPetitions:[...user.signedPetitions, petitionId] 
+        });
 
         //edits the petition in firebase collection
         editPetition(petitionId, {
@@ -47,6 +52,7 @@ export const Details = () => {
             signed: Number(petition.signed) + 1,
             signedBy: [...petition.signedBy, `${user.firstName} ${user.lastName}`],
         });
+        toast.success("Успешно подписахте петицията");
     };
 
     const timestamp = new Date(petition.createdAt);
@@ -60,10 +66,13 @@ export const Details = () => {
 
     const isAuthor = user._id === petition.authorInfo._id;
 
-    let didTheUserSignThePetition = false;
+
+    let didTheUserSignThePetition;
     if (isAuthenticated) {
         if (user?.signedPetitions?.includes(petitionId)) {
-            didTheUserSignThePetition = true
+            didTheUserSignThePetition = true;
+        } else {
+            didTheUserSignThePetition = false;
         }
     };
 
@@ -103,24 +112,24 @@ export const Details = () => {
                         </div>
                     </div>
 
-                    {/* !!! create a new component for the buttons, pass whatever they need in it as props and useEffect in it to deal with rendering them */}
-
-                    {didTheUserSignThePetition &&
-                        <p>Вече сте подписали тази петиция!</p>
-                    }
                     <div className="product-btn">
-                        {isAuthenticated && !isAuthor &&
-                            <input
-                                type="button"
-                                onClick={onSignHandler}
-                                className="btn-delete"
-                                value={buttonText}
-                            />
-                        }
-
-                        {isAuthor &&
+                        {didTheUserSignThePetition ? (
+                            <h4>Вече сте подписали тази петиция!</h4>
+                        ) : (
+                            isAuthenticated && !isAuthor && (
+                                <input
+                                    type="button"
+                                    onClick={onSignHandler}
+                                    className="btn-delete"
+                                    value={buttonText}
+                                />
+                            )
+                        )}
+                        {isAuthor && (
                             <div className="author">
-                                <Link to={`/edit/${petition._id}`} className="btn-edit">Редактирай</Link>
+                                <Link to={`/edit/${petition._id}`} className="btn-edit">
+                                    Редактирай
+                                </Link>
                                 <input
                                     type="button"
                                     onClick={onDeleteHandler}
@@ -128,8 +137,7 @@ export const Details = () => {
                                     value="Изтрий"
                                 />
                             </div>
-                        }
-
+                        )}
                     </div>
                 </div>
             </section>

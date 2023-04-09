@@ -38,9 +38,14 @@ export const login = async (userData) => {
         const userDocRef = doc(usersCollectionRef, loginInfo.user.uid);
         const userSnap = await getDoc(userDocRef);
         const userSnapData = userSnap.data();
-        return { ...userSnapData, _id: loginInfo.user.uid }
+        console.log(userSnapData);
+        return {
+            ...userSnapData,
+            _id: loginInfo.user.uid,
+            signedPetitions: userSnapData.signedPetitions || [],
+        }
     } catch (error) {
-        throw new Error("Грешен потребител или парола");
+        throw new Error(error);
     }
 };
 
@@ -49,7 +54,7 @@ export const googleSignIn = async () => {
     try {
         const googleSignInInfo = await signInWithPopup(auth, googleProvider);
 
-        return {
+        const googleInfo = {
             username: googleSignInInfo.user.email.split('@')[0],
             firstName: googleSignInInfo.user.displayName.split(' ')[0],
             lastName: googleSignInInfo.user.displayName.split(' ')[1],
@@ -60,6 +65,12 @@ export const googleSignIn = async () => {
             },
             photo: googleSignInInfo.user.photoURL,
         }
+        //After signing in with google, the functions gets the full user info from db
+        const userDocRef = doc(usersCollectionRef, googleInfo._id);
+        const userSnap = await getDoc(userDocRef);
+        const userSnapData = userSnap.data();
+        return userSnapData
+
     } catch (error) {
         throw new Error(error.message)
     }

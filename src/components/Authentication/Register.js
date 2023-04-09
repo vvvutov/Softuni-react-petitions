@@ -6,7 +6,7 @@ import { ErrorsContext } from '../../contexts/ErrorsContext';
 
 import './register.css'
 
-import { register, googleSignIn } from '../../services/authService'
+import { register, googleSignIn, login } from '../../services/authService'
 import { About } from '../AboutAndNotFound/About';
 import * as validate from '../../services/validators';
 
@@ -53,6 +53,7 @@ export const Register = () => {
 
         googleSignIn()
             .then(authData => {
+                console.log(authData);
                 userLogin(authData)
                 navigate('/')
             })
