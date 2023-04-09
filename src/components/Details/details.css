@@ -1,9 +1,7 @@
-/* Main section */
 main {
     padding: 20px;
   }
   
-  /* Petition details container */
   #details-info {
     background-color: rgba(158, 185, 179, 0.13);
     border-radius: 1px;
@@ -13,14 +11,12 @@ main {
     padding: 30px;
   }
   
-  /* Petition title */
   #details-info h1 {
     font-size: 28px;
     margin-top: 0;
     text-align: center;
   }
   
-  /* Petition image */
   #details-info .petition-image {
     height: calc(100% - 30px);
     overflow: hidden;
@@ -33,7 +29,6 @@ main {
     object-position: center;
 }
   
-  /* Petition info container */
   #details-info .petition-info {
     display: flex;
     flex-direction: column;
@@ -41,34 +36,29 @@ main {
     margin-top: 30px;
   }
   
-  /* Petition category */
   #details-info .petition-category {
     font-style: italic;
     text-align: center;
     opacity: 0.6;
   }
   
-  /* Petition summary */
   #details-info .petition-summary {
     font-size: 18px;
     font-weight: bold;
     margin: 0;
   }
   
-  /* Petition description */
   #details-info .petition-description {
     font-size: 16px;
     margin: 20px 0;
   }
   
-  /* Petition author */
   #details-info .petition-author {
     font-style: italic;
     text-align: center;
     margin-top: 30px;
   }
   
-  /* Button group */
   #details-info .button-group {
     display: flex;
     justify-content: space-around;

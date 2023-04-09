@@ -51,9 +51,9 @@ export const Details = () => {
         userUpdate(petitionId);
 
         //updates the user in the firebase collection
-        updateFirebaseUser(user._id, { 
-            ...user, 
-            signedPetitions:[...user.signedPetitions, petitionId] 
+        updateFirebaseUser(user._id, {
+            ...user,
+            signedPetitions: [...user.signedPetitions, petitionId]
         });
 
         //edits the petition in firebase collection
@@ -96,10 +96,11 @@ export const Details = () => {
                 </div>
                 <p className="progress-bar">
                     <span style={{
-                        width: (petition.signed / petition.goal) * 100,
+                        width: `${(petition.signed / petition.goal) * 100}%`,
                         height: '10px',
                         backgroundColor: '#4568dc',
                         borderRadius: '5px',
+                        transition: 'width 0.5s ease-in-out',
                     }}></span>
                 </p>
                 <div className="petition-info">
@@ -123,17 +124,17 @@ export const Details = () => {
                     </div>
 
                     <div className="buttons">
-                        {!isAuthenticated && 
-                        (  <button
-                            className="google-sign-in-button"
-                            onClick={handleGoogleSignIn}
-                        >
-                            <img
-                                src="https://developers.google.com/identity/images/g-logo.png"
-                                alt="Google sign-in"
-                            />
-                            Подпиши петицията с Google
-                        </button>)
+                        {!isAuthenticated &&
+                            (<button
+                                className="google-sign-in-button"
+                                onClick={handleGoogleSignIn}
+                            >
+                                <img
+                                    src="https://developers.google.com/identity/images/g-logo.png"
+                                    alt="Google sign-in"
+                                />
+                                Подпиши петицията с Google
+                            </button>)
                         }
 
                         {didTheUserSignThePetition ? (
