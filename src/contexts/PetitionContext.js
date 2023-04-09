@@ -47,6 +47,7 @@ export const PetitionProvider = ({ children }) => {
         {
           ...currentPetition,
           signed: Number(currentPetition.signed) + 1,
+          hasFinished: Boolean(currentPetition.signed >= currentPetition.goal),
         },
         ...state.filter((petition) => petition._id !== petitionId),
       ];
@@ -56,7 +57,7 @@ export const PetitionProvider = ({ children }) => {
   if (isLoading) {
     return <div><img src={logo} alt="logo"/></div>;
   }
-
+console.log(petitions);
   return (
     <PetitionContext.Provider
       value={{

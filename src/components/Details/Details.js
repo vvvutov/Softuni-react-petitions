@@ -59,6 +59,7 @@ export const Details = () => {
         //edits the petition in firebase collection
         editPetition(petitionId, {
             ...petition,
+            hasFinished: Boolean(petition.signed >= petition.goal),
             signed: Number(petition.signed) + 1,
             signedBy: [...petition.signedBy, `${user.firstName} ${user.lastName}`],
         });
@@ -124,43 +125,51 @@ export const Details = () => {
                     </div>
 
                     <div className="buttons">
-                        {!isAuthenticated &&
-                            (<button
-                                className="google-sign-in-button"
-                                onClick={handleGoogleSignIn}
-                            >
-                                <img
-                                    src="https://developers.google.com/identity/images/g-logo.png"
-                                    alt="Google sign-in"
-                                />
-                                Подпиши петицията с Google
-                            </button>)
+                        {petition.hasFinished &&
+                            <h4>Тази петиция е приключила</h4>
                         }
+                        {!petition.hasFinished && (
+                            <>
+                                {!isAuthenticated && (
+                                    <button
+                                        className="google-sign-in-button"
+                                        onClick={handleGoogleSignIn}
+                                    >
+                                        <img
+                                            src="https://developers.google.com/identity/images/g-logo.png"
+                                            alt="Google sign-in"
+                                        />
+                                        Подпиши петицията с Google
+                                    </button>
+                                )}
 
-                        {didTheUserSignThePetition ? (
-                            <h4>Вече сте подписали тази петиция!</h4>
-                        ) : (
-                            isAuthenticated && !isAuthor && (
-                                <input
-                                    type="button"
-                                    onClick={onSignHandler}
-                                    className="btn-delete"
-                                    value={buttonText}
-                                />
-                            )
-                        )}
-                        {isAuthor && (
-                            <div className="author">
-                                <Link to={`/edit/${petition._id}`} className="btn-edit">
-                                    Редактирай
-                                </Link>
-                                <input
-                                    type="button"
-                                    onClick={onDeleteHandler}
-                                    className="btn-delete"
-                                    value="Изтрий"
-                                />
-                            </div>
+                                {didTheUserSignThePetition ? (
+                                    <h4>Вече сте подписали тази петиция!</h4>
+                                ) : (
+                                    isAuthenticated && !isAuthor && (
+                                        <input
+                                            type="button"
+                                            onClick={onSignHandler}
+                                            className="btn-delete"
+                                            value={buttonText}
+                                        />
+                                    )
+                                )}
+
+                                {isAuthor && (
+                                    <div className="author">
+                                        <Link to={`/edit/${petition._id}`} className="btn-edit">
+                                            Редактирай
+                                        </Link>
+                                        <input
+                                            type="button"
+                                            onClick={onDeleteHandler}
+                                            className="btn-delete"
+                                            value="Изтрий"
+                                        />
+                                    </div>
+                                )}
+                            </>
                         )}
                     </div>
                 </div>
