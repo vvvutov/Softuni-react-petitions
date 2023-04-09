@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import  logo  from "../components/Catalog/logo.gif"
 
 import * as petitionService from '../services/petitionService'
@@ -9,7 +8,6 @@ export const PetitionContext = createContext();
 
 export const PetitionProvider = ({ children }) => {
 
-  const navigate = useNavigate();
 
   const [petitions, setPetitions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -29,7 +27,6 @@ export const PetitionProvider = ({ children }) => {
 
   const addPetitionHandler = (petitionData) => {
     setPetitions((state) => [...state, petitionData]);
-    navigate("/petitions");
   };
 
   const deletePetitionHandler = (petitionId) => {
@@ -57,7 +54,7 @@ export const PetitionProvider = ({ children }) => {
   if (isLoading) {
     return <div><img src={logo} alt="logo"/></div>;
   }
-console.log(petitions);
+  
   return (
     <PetitionContext.Provider
       value={{

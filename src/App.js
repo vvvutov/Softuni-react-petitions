@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary'
 import { AuthProvider } from './contexts/AuthContext';
 
-// import { Footer } from './components/Home/Footer';
+import { Footer } from './components/Home/Footer';
 import { Header } from './components/Home/Header';
 import { Home } from './components/Home/Home';
 import { Catalog } from './components/Catalog/Catalog';
@@ -53,7 +53,7 @@ function App() {
                             </Routes>
                         </PetitionProvider>
                     </ErrorsProvider>
-                    {/* < Footer /> */}
+                    < Footer />
                     <ToastContainer {...toastOptions} />
                 </main>
             </AuthProvider>

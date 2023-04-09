@@ -50,11 +50,15 @@ export const Register = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-
+        const submitBtn = e.target.querySelector('input[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.value = "Изчакайте";
+        
         register({ ...values })
             .then(authData => {
                 userLogin(authData)
                 navigate('/')
+                toast.success("Успешна регистрация")
             }).catch((error) => {
                 toast.error("Потребител с тази електронна поща вече съществува")
             })
@@ -216,7 +220,7 @@ export const Register = () => {
                     && !Object.values(values).some((v) => v.length === 0)
                     && values.gender !== ''
                     && values.confirmation.checked)
-                    ? <input type="submit" value="Регистрирай ме" />
+                    ? <input type="submit" value="Регистрирай ме"/>
                     : <input type="submit" value="Всички полета са задължителни" disabled={true} />
 
                 }

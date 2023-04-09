@@ -19,12 +19,16 @@ export const Login = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
+        const submitBtn = e.target.querySelector('input[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.value = "Изчакайте";
 
         const loginData = Object.fromEntries(new FormData(e.target));
         try {
             const userData = await login(loginData);
-            userLogin(userData);
-            navigate('/');
+            userLogin(userData)
+            navigate('/')
+            toast.success(`Добре дошли, ${userData.username} !`)
         } catch (error) {
             toast.error("Грешен потребител/парола");
         }
@@ -37,20 +41,21 @@ export const Login = () => {
             .then(authData => {
                 userLogin(authData)
                 navigate('/')
+                toast.success(`Добре дошли, ${authData.username} !`)
             })
     };
 
 
     return (
 
-        <div className="login-box">
+        <div className="login-box" onSubmit={onSubmit}>
             <h1>Вход</h1>
-            <form onSubmit={onSubmit} >
+            <form >
                 <label>Потребителско име</label>
                 <input type="text" name="email" placeholder="Потребителско име" />
                 <label>Парола</label>
                 <input type="password" name="password" placeholder="Парола" />
-                <input type="submit" value="Submit" />
+                <input type="submit" value="Вход" />
             </form>
             <p>
                 Нямате акаунт? <Link to="/register">Регистрирай се</Link>

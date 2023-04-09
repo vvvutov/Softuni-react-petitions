@@ -1,9 +1,10 @@
 import { useContext, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom'
+import {  NavLink } from 'react-router-dom'
 import { AuthContext } from '../../contexts/AuthContext';
 
 import { Search } from '../Search/Search';
 import logo from './logo.png'
+import './header.css'
 
 
 export const Header = () => {

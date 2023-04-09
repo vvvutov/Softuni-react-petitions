@@ -8,6 +8,7 @@ import { PetitionContext } from '../../contexts/PetitionContext';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { generateRandomId } from '../../services/helpers';
+import { toast } from 'react-toastify';
 
 
 export const CreatePetition = () => {
@@ -85,13 +86,21 @@ export const CreatePetition = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
+        const submitBtn = e.target.querySelector('input[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.value = "Изчакайте";
+
         if (Object.keys(currentPetition).length === 0) {
             createPetition(values)
-                .then(addPetitionHandler(values));
+                .then(addPetitionHandler(values))
+                .then
+            (navigate("/petitions"))
+            toast.success("Успешно публикувахте петиция")
         } else {
             setPetitions(state => state.map(p => p._id === currentPetition._id ? values : p))
             editPetition(petitionId, values)
-            navigate("/petitions")
+            navigate(`/details/${petitionId}`)
+            toast.success("Успешно променихте петицията си")
         }
     }
 

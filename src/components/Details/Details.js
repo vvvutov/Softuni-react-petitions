@@ -28,6 +28,7 @@ export const Details = () => {
         deletePetition(petitionId)
             .then(deletePetitionHandler(petitionId))
             .then(navigate("/petitions"));
+        toast.success("Петицията беше изтрита")
     };
 
     const handleGoogleSignIn = (e) => {
@@ -37,6 +38,8 @@ export const Details = () => {
             .then(authData => {
                 userLogin(authData)
             })
+            .then
+        (toast.success("Вече може да подпишете петицията"))
     };
 
     const onSignHandler = (e) => {
@@ -76,7 +79,6 @@ export const Details = () => {
     });
 
     const isAuthor = user._id === petition.authorInfo._id;
-
 
     let didTheUserSignThePetition;
     if (isAuthenticated) {
