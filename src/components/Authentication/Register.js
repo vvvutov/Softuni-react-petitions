@@ -6,7 +6,7 @@ import { ErrorsContext } from '../../contexts/ErrorsContext';
 
 import './register.css'
 
-import { register, googleSignIn, login } from '../../services/authService'
+import { register } from '../../services/authService'
 import { About } from '../AboutAndNotFound/About';
 import * as validate from '../../services/validators';
 
@@ -48,17 +48,6 @@ export const Register = () => {
         });
     };
 
-    const handleGoogleSignIn = (e) => {
-        e.preventDefault();
-
-        googleSignIn()
-            .then(authData => {
-                console.log(authData);
-                userLogin(authData)
-                navigate('/')
-            })
-    };
-
     const onSubmit = (e) => {
         e.preventDefault();
 
@@ -76,7 +65,6 @@ export const Register = () => {
 
         <div className="register-box">
             <h1>Регистрация</h1>
-            <input type="button" onClick={handleGoogleSignIn} value="SignInWithGoogle" />
             <form onSubmit={onSubmit} >
                 <label htmlFor="username">Потребителско име</label>
                 <input type="text"

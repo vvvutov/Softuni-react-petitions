@@ -22,6 +22,7 @@ export const register = async (userData) => {
             gender: userData.gender,
             signedPetitions: [],
             ownPetitions: {},
+            signedWithGoogle: false,
         };
         await setDoc(userDocRef, desiredData);
 
@@ -43,12 +44,12 @@ export const login = async (userData) => {
             ...userSnapData,
             _id: loginInfo.user.uid,
             signedPetitions: userSnapData.signedPetitions || [],
+            signedWithGoogle: false,
         }
     } catch (error) {
         throw new Error(error);
     }
 };
-
 
 export const googleSignIn = async () => {
     try {
@@ -69,13 +70,14 @@ export const googleSignIn = async () => {
         const userDocRef = doc(usersCollectionRef, googleInfo._id);
         const userSnap = await getDoc(userDocRef);
         const userSnapData = userSnap.data();
-        return userSnapData
-
+        return {
+            ...userSnapData, 
+            signedWithGoogle: true,
+        }
     } catch (error) {
         throw new Error(error.message)
     }
 };
-
 
 export const updateFirebaseUser = async (userID, updateInfo) => {
     try {
@@ -85,7 +87,6 @@ export const updateFirebaseUser = async (userID, updateInfo) => {
         throw new Error(error.message);
     }
 };
-
 
 export const logout = async () => {
     try {

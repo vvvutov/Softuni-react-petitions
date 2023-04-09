@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 
 import { AuthContext } from '../../contexts/AuthContext';
-import { login } from '../../services/authService';
+import { login, googleSignIn } from '../../services/authService';
 
 import { toast } from 'react-toastify';
 
@@ -26,15 +26,25 @@ export const Login = () => {
             userLogin(userData);
             navigate('/');
         } catch (error) {
-            toast.error(error.message);
+            toast.error("Грешен потребител/парола");
         }
+    };
+
+    const handleGoogleSignIn = (e) => {
+        e.preventDefault();
+
+        googleSignIn()
+            .then(authData => {
+                userLogin(authData)
+                navigate('/')
+            })
     };
 
 
     return (
 
         <div className="login-box">
-            <h1>Login</h1>
+            <h1>Вход</h1>
             <form onSubmit={onSubmit} >
                 <label>Потребителско име</label>
                 <input type="text" name="email" placeholder="Потребителско име" />
@@ -44,6 +54,20 @@ export const Login = () => {
             </form>
             <p>
                 Нямате акаунт? <Link to="/register">Регистрирай се</Link>
+            </p>
+            <p>Или</p>
+            <p>
+                <button
+                    className="google-sign-in-button"
+                    onClick={handleGoogleSignIn}
+                >
+
+                    <img
+                        src="https://developers.google.com/identity/images/g-logo.png"
+                        alt="Google sign-in"
+                    />
+                    Sign in with Google
+                </button>
             </p>
         </div>
 

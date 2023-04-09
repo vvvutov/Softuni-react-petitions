@@ -6,6 +6,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { deletePetition, editPetition } from '../../services/petitionService';
 import { useNavigate } from 'react-router-dom';
 import { updateFirebaseUser } from '../../services/authService';
+import { googleSignIn } from '../../services/authService';
 
 import { Comments } from './Comments';
 
@@ -15,7 +16,7 @@ export const Details = () => {
     const navigate = useNavigate();
 
     const { signPetitionHandler, petitions, deletePetitionHandler } = useContext(PetitionContext);
-    const { user, isAuthenticated, userUpdate } = useContext(AuthContext);
+    const { user, isAuthenticated, userUpdate, userLogin } = useContext(AuthContext);
     const { petitionId } = useParams();
 
     const [buttonText, setButtonText] = useState('Подпиши');
@@ -27,6 +28,15 @@ export const Details = () => {
         deletePetition(petitionId)
             .then(deletePetitionHandler(petitionId))
             .then(navigate("/petitions"));
+    };
+
+    const handleGoogleSignIn = (e) => {
+        e.preventDefault();
+
+        googleSignIn()
+            .then(authData => {
+                userLogin(authData)
+            })
     };
 
     const onSignHandler = (e) => {
@@ -112,7 +122,20 @@ export const Details = () => {
                         </div>
                     </div>
 
-                    <div className="product-btn">
+                    <div className="buttons">
+                        {!isAuthenticated && 
+                        (  <button
+                            className="google-sign-in-button"
+                            onClick={handleGoogleSignIn}
+                        >
+                            <img
+                                src="https://developers.google.com/identity/images/g-logo.png"
+                                alt="Google sign-in"
+                            />
+                            Подпиши петицията с Google
+                        </button>)
+                        }
+
                         {didTheUserSignThePetition ? (
                             <h4>Вече сте подписали тази петиция!</h4>
                         ) : (

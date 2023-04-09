@@ -8,7 +8,7 @@ import logo from './logo.png'
 
 export const Header = () => {
 
-    const { isAuthenticated } = useContext(AuthContext)
+    const { isAuthenticated, isSignedWithGoogle } = useContext(AuthContext)
 
     const [isSearchVisible, setIsSearchVisible] = useState(false);
 
@@ -33,7 +33,10 @@ export const Header = () => {
                         <li className='search'>
                             <button id="search" onClick={handleSearchClick}>Търсене</button>
                         </li>
-                        {isAuthenticated && <li>
+                        
+                        {/* users signed in with google can not create petitions, 
+                        because more user info is needed to create a petition */}
+                        {isAuthenticated && !isSignedWithGoogle && <li>
                             <NavLink to="/create">Създай петиция</NavLink>
                         </li>}
                         <li>

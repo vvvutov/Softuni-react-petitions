@@ -33,7 +33,8 @@ export const AuthProvider = ({ children }) => {
             userLogin,
             userLogout,
             userUpdate,
-            isAuthenticated: Boolean(auth?._id)
+            isAuthenticated: Boolean(auth?._id),
+            isSignedWithGoogle: auth.signedWithGoogle,
         }}>
             {children}
         </AuthContext.Provider>
