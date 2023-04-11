@@ -65,7 +65,7 @@ body {
 
 .latest-petitions {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   background-color: rgba(158, 185, 179, 0.13);
   padding: 20px;
   border-radius: 10px;
@@ -73,37 +73,13 @@ body {
 }
 
 
- article.petition {
-  border-top: 5px solid whitesmoke;
-  border-bottom: 5px solid whitesmoke;
-    width: 400px;
-    height: 300px;
-    align-items: center;
-    font-size: 14px;
-    margin: 0 15px;
-    color: #ff960b;
-    border: 1px solid #fff;
-    padding: 20px 30px;
-    border-radius: 8px;
+
+
+
+
+footer {
+  margin-top: 80px;
+  width: 100%;
+  color: rgb(0, 0, 0);
+  text-align: center;
 }
-
-.petition img {
-    width: 100px;
-    height: 100px;
-    margin-right: 10px;
-}
-
-.petition h3 {
-    color: black;
-    margin-bottom: 5px;
-}
-
-footer  {
-    margin-top: 80px;
-    width: 100%;
-    color: rgb(0, 0, 0);
-    text-align:center;
-}
-
-
-

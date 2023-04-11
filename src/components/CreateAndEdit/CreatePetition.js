@@ -132,19 +132,23 @@ export const CreatePetition = () => {
 
         {
             label: "Екология",
-            value: "ecology",
+            value: "Екология",
         },
         {
             label: "Социална тематика",
-            value: "social",
+            value: "Социална тематика",
         },
         {
             label: "Политика",
-            value: "politics",
+            value: "Политика",
         },
         {
             label: "Благотворителност",
-            value: "charity",
+            value: "Благотворителност",
+        },
+        {
+            label: "Регионални",
+            value: "Регионални",
         },
         {
             label: "Друго",

@@ -1,4 +1,4 @@
-import './catalog.css'
+import './catalogPetitionItem.css'
 import { Link } from 'react-router-dom'
 
 

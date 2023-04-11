@@ -1,0 +1,31 @@
+.petition-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .petition-item-left {
+    width: 20%;
+    margin-right: 20px;
+  }
+  
+  .petition-item-right {
+    width: 80%;
+  }
+  
+  .petition-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .petition-title {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .petition-description {
+    font-size: 14px;
+    line-height: 1.5;
+  }

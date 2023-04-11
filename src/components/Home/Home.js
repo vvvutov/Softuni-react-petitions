@@ -1,16 +1,19 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom'
 import { PetitionContext } from '../../contexts/PetitionContext';
+import { AuthContext } from '../../contexts/AuthContext';
 
 import './home.css'
 
 import { PetitionItem } from './PetitionItem';
+import { CatalogPetitionItem } from '../Catalog/CatalogPetitionItem';
 
 
 
 export const Home = () => {
 
     const { petitions } = useContext(PetitionContext)
+    const { isAuthenticated, isSignedWithGoogle } = useContext(AuthContext)
 
     const finishedPetitions = petitions.filter(p => p.hasFinished === true);
 
@@ -27,15 +30,20 @@ export const Home = () => {
                 <p>
                     Имаш силата да направиш промяна
                 </p>
-                <Link to="/create" className="create-petition">
-                    Създай петиция
-                </Link>
+                {!isAuthenticated || isSignedWithGoogle
+                    ? <Link to="/login" className="create-petition">
+                        Създай петиция
+                    </Link>
+                    : <Link to="/create" className="create-petition">
+                        Създай петиция
+                    </Link>
+                }
             </div>
             <div className="petition-list">
                 <h3>Завършили петиции</h3>
                 <div className="finished-petitions">
                     {finishedPetitions.map(p =>
-                        <PetitionItem petition={p} key={p.title} />
+                        <CatalogPetitionItem petition={p} key={p._id} />
                     )}
                 </div>
                 <h3>Последни петиции</h3>

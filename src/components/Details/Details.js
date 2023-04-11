@@ -9,6 +9,7 @@ import { updateFirebaseUser } from '../../services/authService';
 import { googleSignIn } from '../../services/authService';
 
 import { Comments } from './Comments';
+import { ProgressBar } from './ProgressBar';
 
 import { toast } from 'react-toastify';
 
@@ -97,15 +98,7 @@ export const Details = () => {
                 <div className="petition-image">
                     <img src={petition.image} alt="alt" />
                 </div>
-                <p className="progress-bar">
-                    <span style={{
-                        width: `${(petition.signed / petition.goal) * 100}%`,
-                        height: '10px',
-                        backgroundColor: '#4568dc',
-                        borderRadius: '5px',
-                        transition: 'width 0.5s ease-in-out',
-                    }}></span>
-                </p>
+             <ProgressBar petition={petition}/>
                 <div className="petition-info">
                     <div className="petition-text">
                         <h1 id="title">{petition.title}</h1>
