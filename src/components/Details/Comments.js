@@ -41,26 +41,33 @@ export const Comments = ({ user, petitionId, comments }) => {
             <ul>
                 {commentsState.map(renderComment)}
             </ul>
-            {showForm 
-            ? (
-                <form onSubmit={handleCommentSubmit}>
-                    <div>
-                        <label htmlFor="comment">Оставете коментар:</label>
+            {showForm
+                ? (
+                    <form onSubmit={handleCommentSubmit}>
+                        <div>
+                            <label htmlFor="comment">Оставете коментар:</label>
+                            <br />
+                            <textarea
+                                id="comment"
+                                value={newComment}
+                                onChange={(e) => setNewComment(e.target.value)}
+                                rows={5}
+                                cols={50}
+                            />
+                        </div>
                         <br />
-                        <textarea
-                            id="comment"
-                            value={newComment}
-                            onChange={(e) => setNewComment(e.target.value)}
-                            rows={5}
-                            cols={50}
-                        />
-                    </div>
-                    <br />
-                    <button className="btn-submit-comment" type="submit">Submit</button>
-                </form>
-            )
-            : ( <h4> Успешно добавихте коментар</h4>) 
-        }
+
+                        {user.username
+                            ? <button className="btn-submit-comment" type="submit">Изпрати</button>
+                            : <>
+                                <span> Трябва да сте логнат за да коментирате</span>
+                                <button className="btn-submit-comment" type="submit" disabled>Изпрати</button>
+                            </>
+                        }
+                    </form>
+                )
+                : (<h4> Успешно добавихте коментар</h4>)
+            }
         </div>
     );
 };
