@@ -7,8 +7,9 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { PetitionContext } from '../../contexts/PetitionContext';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { generateRandomId } from '../../services/helpers';
+import { generateRandomId, generatePetitionId } from '../../services/helpers';
 import { toast } from 'react-toastify';
+
 
 
 export const CreatePetition = () => {
@@ -32,6 +33,7 @@ export const CreatePetition = () => {
     const { setPetitions, addPetitionHandler } = useContext(PetitionContext)
     const { user } = useContext(AuthContext)
 
+
     const [values, setValues] = useState({
         title: '',
         petitionText: '',
@@ -54,11 +56,13 @@ export const CreatePetition = () => {
         signed: '',
         signedBy: [],
         //in case of EDIT petition, it takes the current petition ID to overwrite it instead of generating new id for CREATE petition
-        _id: currentPetition._id || generateRandomId(20),
+        // _id: currentPetition._id || generatedID,
         petitionImage: '',
         hasFinished: false,
         comments: [],
     });
+
+    const generatedID = generatePetitionId(values.title);
 
     const [errors, setErrors] = useState({});
 
@@ -91,10 +95,18 @@ export const CreatePetition = () => {
         submitBtn.value = "Изчакайте";
 
         if (Object.keys(currentPetition).length === 0) {
-            createPetition(values)
-                .then(addPetitionHandler(values))
+            createPetition({
+                ...values,
+                _id: generatedID,
+
+            })
+                .then(addPetitionHandler({
+                    ...values,
+                    _id: generatedID,
+
+                }))
                 .then
-            (navigate("/petitions"))
+                (navigate("/petitions"))
             toast.success("Успешно публикувахте петиция")
         } else {
             setPetitions(state => state.map(p => p._id === currentPetition._id ? values : p))
@@ -113,20 +125,7 @@ export const CreatePetition = () => {
 
     }
 
-    const isPositive = (e) => {
-        let number = Number(values[e.target.name]);
-        setErrors(state => ({
-            ...state,
-            [e.target.name]: !(number > 0),
-        }))
-    }
 
-    const isHTML = (e) => {
-        setErrors(state => ({
-            ...state,
-            [e.target.name]: !/(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(values[e.target.name])
-        }))
-    }
 
     const options = [
 
@@ -156,7 +155,7 @@ export const CreatePetition = () => {
         },
 
     ];
-    
+
 
     return (
         <>
@@ -173,7 +172,7 @@ export const CreatePetition = () => {
                             placeholder="Заглавие на вашата петиция"
                             value={values.title}
                             onChange={changeHandler}
-                            onBlur={(e) => lengthCheck(e, 10, 80)}
+                            onBlur={(e) => lengthCheck(e, 10, 80, errors, setErrors)}
                         />
 
                         <label htmlFor="petition-image">Качете изображение </label>

@@ -26,8 +26,10 @@ export const PetitionProvider = ({ children }) => {
   }, []);
 
   const addPetitionHandler = (petitionData) => {
+    console.log(petitionData);
     setPetitions((state) => [...state, petitionData]);
   };
+  console.log(petitions);
 
   const deletePetitionHandler = (petitionId) => {
     setPetitions((state) =>

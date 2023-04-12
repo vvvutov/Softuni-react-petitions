@@ -23,6 +23,7 @@ export const Details = () => {
     const [buttonText, setButtonText] = useState('Подпиши');
 
     const petition = petitions.find(p => p._id === petitionId);
+    console.log(petition);
 
     const onDeleteHandler = (e) => {
         e.preventDefault();
@@ -109,7 +110,8 @@ export const Details = () => {
                             }
                             <h3 >{petition.other ? petition.other : petition.category},&nbsp;</h3>
                             <h3>{formattedDate}&nbsp;</h3>
-                            <p>{petition.signed ? petition.signed : 0}/{petition.goal}</p>
+                            {/* <p>{petition.signed ? petition.signed : 0}/{petition.goal}</p> */}
+                            <span title={petition.signedBy.join(', ')}>{petition.signed}/{petition.goal}</span> подписа
                         </div>
                         <div className="petition-lower">
                             <p id="description">
@@ -166,6 +168,7 @@ export const Details = () => {
                                 )}
                             </>
                         )}
+                        
                     </div>
                 </div>
             </section>
