@@ -25,6 +25,7 @@ This application was built using the following technologies:
 - Firebase Authentication
 - Firebase Firestore
 - Firebase database
+- Sentry error logging
 
 
 ## TO-DOs:
