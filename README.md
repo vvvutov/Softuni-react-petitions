@@ -30,10 +30,10 @@ This application was built using the following technologies:
 
 ## TO-DOs:
 
--Design fixes 
--Firebase analytics for displaying website visits and single petition visits
--Admin panel
--User account edit
--New domain name (hopefully Petition.one, once it expires)
+- Design fixes 
+- Firebase analytics for displaying website visits and single petition visits
+- Admin panel
+- User account edit
+- New domain name (hopefully Petition.one, once it expires)
 
 
