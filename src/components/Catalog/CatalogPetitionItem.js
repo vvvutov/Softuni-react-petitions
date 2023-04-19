@@ -9,7 +9,14 @@ export const CatalogPetitionItem = ({ petition }) => {
             <article className="petition">
                 <div className="upper-container">
                     <div className="petition-img">
-                        <img src={petition.image} alt={petition.image} />
+                        <img 
+                        src={petition.image}
+                        onError={(e) => {
+                            console.log('Error loading image:', e.target.src);
+                            e.target.onerror = null; 
+                            e.target.src = '../../assets/default-petition-photo.jpg';
+                          }}
+                         alt="petition img" />
                     </div>
                     <div className="petition-info-top">
                         <p>

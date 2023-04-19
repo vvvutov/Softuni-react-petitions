@@ -125,3 +125,11 @@ export const addComment = async (petitionId, comment) => {
     }
 };
 
+export const getSignedPetitions = async (userFullName) => {
+    const signedPetitionsQuery = query(
+      petitionCollectionRef,
+      where('signedBy', 'array-contains', userFullName)
+    );
+    const signedPetitionsSnapshot = await getDocs(signedPetitionsQuery);
+    return signedPetitionsSnapshot.docs.map((doc) => doc.data()._id);
+  };

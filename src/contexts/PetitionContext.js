@@ -29,7 +29,6 @@ export const PetitionProvider = ({ children }) => {
     console.log(petitionData);
     setPetitions((state) => [...state, petitionData]);
   };
-  console.log(petitions);
 
   const deletePetitionHandler = (petitionId) => {
     setPetitions((state) =>
@@ -52,6 +51,8 @@ export const PetitionProvider = ({ children }) => {
       ];
     });
   };
+
+  
 
   if (isLoading) {
     return <div><img src={logo} alt="logo"/></div>;

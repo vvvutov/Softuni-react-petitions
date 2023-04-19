@@ -18,26 +18,27 @@ export const Catalog = () => {
         acc[category].push(petition);
         return acc;
     }, {});
-
+    console.log(Object.keys(groupedPetitions).length);
 
     return (
-
         <section className="petition-catalog-list">
-
-            {Object.keys(groupedPetitions).map((category, index) => (
-                <div key={`${category}-${generateRandomId(5)}`}>
-                    <h1>{category}</h1>
-                    {groupedPetitions[category].length > 0 && (
-                        <div className="petitions-list">
-                            {groupedPetitions[category].map((p) => (
-                                <CatalogPetitionItem petition={p} key={p._id} />
-                            ))}
-                        </div>
-                    )}
-                </div>
-            ))}
-
+            {Object.keys(groupedPetitions).length > 0 ? (
+                Object.keys(groupedPetitions).map((category, index) => (
+                    <div key={`${category}-${generateRandomId(5)}`}>
+                        <h1>{category}</h1>
+                        {groupedPetitions[category].length > 0 && (
+                            <div className="petitions-list">
+                                {groupedPetitions[category].map((p) => (
+                                    <CatalogPetitionItem petition={p} key={p._id} />
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                ))
+            ) : (
+                <div>Все още няма петиции. </div>
+            )}
         </section>
+    );
 
-    )
-};
+}

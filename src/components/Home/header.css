@@ -17,6 +17,28 @@
     font-weight: bold;
     display: inline-block;
   }
+
+  .menu {
+    display: none;
+    margin-left: auto;
+  }
+  
+  .menu button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+  }
+  
+  .menu button:focus {
+    outline: none;
+  }
+  
+  .menu svg {
+    display: block;
+    width: 24px;
+    height: 24px;
+  }
   
   nav {
     display: flex;
@@ -80,16 +102,39 @@
     cursor: pointer;
   }
   
-  @media screen and (max-width: 768px) {
-    nav {
+
+  @media only screen and (max-width: 768px) {
+    @media only screen and (max-width: 768px) {
+      .menu {
+        display: block;
+      }
+    
+      .header.visible nav {
+        display: block;
+        width: 100%;
+      }
+    }
+
+    .header {
       flex-direction: column;
-      height: auto;
+      align-items: flex-start;
     }
+  
+    .logo {
+      margin-bottom: 1rem;
+    }
+  
     nav ul {
-      margin-left: 0;
-      flex-direction: row;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
     }
-    nav ul li {
-      margin: 10px 0;
+  
+    nav li {
+      margin: 0.5rem 0;
+    }
+  
+    .search button {
+      margin-top: 1rem;
     }
   }

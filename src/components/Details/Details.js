@@ -97,7 +97,13 @@ export const Details = () => {
             <section id="details-info">
 
                 <div className="petition-image">
-                    <img src={petition.image} alt="alt" />
+                    <img 
+                    src={petition.image} 
+                    onError={(e) => {
+                        e.target.onerror = null; 
+                        e.target.src = '../../assets/default-petition-photo.jpg';
+                      }}
+                    alt="alt" />
                 </div>
              <ProgressBar petition={petition}/>
                 <div className="petition-info">
@@ -110,8 +116,7 @@ export const Details = () => {
                             }
                             <h3 >{petition.other ? petition.other : petition.category},&nbsp;</h3>
                             <h3>{formattedDate}&nbsp;</h3>
-                            {/* <p>{petition.signed ? petition.signed : 0}/{petition.goal}</p> */}
-                            <span title={petition.signedBy.join(', ')}>{petition.signed}/{petition.goal}</span> подписа
+                            <span title={petition.signedBy.join(', ')}> {petition.signed ? petition.signed : 0}/{petition.goal}</span> подписа
                         </div>
                         <div className="petition-lower">
                             <p id="description">

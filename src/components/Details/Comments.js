@@ -61,7 +61,7 @@ export const Comments = ({ user, petitionId, comments }) => {
                             ? <button className="btn-submit-comment" type="submit">Изпрати</button>
                             : <>
                                 <span> Трябва да сте логнат за да коментирате</span>
-                                <button className="btn-submit-comment" type="submit" disabled>Изпрати</button>
+                                <button className="btn-submit-comment" type="submit" disabled>- - - - - - -</button>
                             </>
                         }
                     </form>

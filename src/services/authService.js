@@ -3,6 +3,8 @@ import { createUserWithEmailAndPassword, signInWithPopup, signInWithEmailAndPass
 import { db } from '../firebase/firebase';
 import { getDoc, doc, setDoc, collection } from "firebase/firestore";
 
+import { getSignedPetitions } from "./petitionService";
+
 // import { toast } from "react-toastify";
 
 
@@ -11,8 +13,9 @@ const usersCollectionRef = collection(db, "users");
 export const register = async (userData) => {
     try {
         const { user } = await createUserWithEmailAndPassword(auth, userData.email, userData.password);
-
+        console.log(user);
         const userDocRef = doc(usersCollectionRef, user.uid);
+        console.log(userDocRef);
 
         const desiredData = {
             username: userData.username,
@@ -24,6 +27,7 @@ export const register = async (userData) => {
             ownPetitions: {},
             signedWithGoogle: false,
         };
+
         await setDoc(userDocRef, desiredData);
 
         return { _id: user.uid, ...desiredData };
@@ -51,33 +55,46 @@ export const login = async (userData) => {
     }
 };
 
-export const googleSignIn = async () => {
-    try {
-        const googleSignInInfo = await signInWithPopup(auth, googleProvider);
 
-        const googleInfo = {
-            username: googleSignInInfo.user.email.split('@')[0],
-            firstName: googleSignInInfo.user.displayName.split(' ')[0],
-            lastName: googleSignInInfo.user.displayName.split(' ')[1],
-            _id: googleSignInInfo.user.uid,
-            email: googleSignInInfo.user.email,
-            confirmation: {
-                checked: true
-            },
-            photo: googleSignInInfo.user.photoURL,
-        }
-        //After signing in with google, the functions gets the full user info from db
-        const userDocRef = doc(usersCollectionRef, googleInfo._id);
-        const userSnap = await getDoc(userDocRef);
-        const userSnapData = userSnap.data();
-        return {
-            ...userSnapData, 
-            signedWithGoogle: true,
-        }
+  
+  export const googleSignIn = async () => {
+    try {
+      const googleSignInInfo = await signInWithPopup(auth, googleProvider);
+        console.log(googleSignInInfo);
+      const googleInfo = {
+        username: googleSignInInfo.user.email.split('@')[0],
+        firstName: googleSignInInfo.user.displayName.split(' ')[0],
+        lastName: googleSignInInfo.user.displayName.split(' ')[1],
+        _id: googleSignInInfo.user.uid,
+        email: googleSignInInfo.user.email,
+        confirmation: {
+          checked: true
+        },
+        photo: googleSignInInfo.user.photoURL,
+      };
+  
+      const userDocRef = doc(usersCollectionRef, googleInfo._id);
+  
+      // Set the user info in the database if it doesn't exist yet
+      await setDoc(userDocRef, googleInfo);
+  
+      // Get the full user info from the database
+      const userSnap = await getDoc(userDocRef);
+      const userSnapData = userSnap.data();
+  
+      // Fetch the signed petitions for the user and include them in the returned user object
+      const signedPetitions = await getSignedPetitions(googleSignInInfo.user.displayName);
+      return {
+        ...userSnapData,
+        signedPetitions: signedPetitions || [],
+        signedWithGoogle: true,
+      };
     } catch (error) {
-        throw new Error(error.message)
+      throw new Error(error.message);
     }
-};
+  };
+  
+  
 
 export const updateFirebaseUser = async (userID, updateInfo) => {
     try {
