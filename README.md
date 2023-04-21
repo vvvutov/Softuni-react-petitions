@@ -1,6 +1,6 @@
 # Petitions React App
 
-This is a React web application for my Softuni React course assignment. It allows users to create, sign and share petitions for various causes. 
+This is a React web petition platform. It allows users to create, sign/comment and share petitions for various causes. 
 The website is available [here](https://petitions.vutov.org/)
 
 

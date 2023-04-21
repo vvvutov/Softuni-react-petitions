@@ -41,7 +41,7 @@ export const Details = () => {
                 userLogin(authData)
             })
             .then
-        (toast.success("Вече може да подпишете петицията"))
+            (toast.success("Вече може да подпишете петицията"))
     };
 
     const onSignHandler = (e) => {
@@ -50,6 +50,7 @@ export const Details = () => {
         e.target.disabled = true;
 
         //updates the petition in state
+        //TO-DO fix it so that the user ID is also added
         signPetitionHandler(petitionId, `${user.firstName} ${user.lastName}`);
 
         //updates the user auth state
@@ -58,18 +59,21 @@ export const Details = () => {
         //updates the user in the firebase collection
         updateFirebaseUser(user._id, {
             ...user,
-            signedPetitions: [...user.signedPetitions, petitionId]
+            signedPetitions: [...user.signedPetitions, petitionId],
         });
-
+console.log(Boolean(petition.signed >= petition.goal-1));
         //edits the petition in firebase collection
         editPetition(petitionId, {
             ...petition,
-            hasFinished: Boolean(petition.signed >= petition.goal),
+            hasFinished: Boolean(petition.signed >= petition.goal-1),
             signed: Number(petition.signed) + 1,
             signedBy: [...petition.signedBy, `${user.firstName} ${user.lastName}`],
         });
         toast.success("Успешно подписахте петицията");
     };
+
+    // console.log(Boolean(petition.signed >= petition.goal));
+    console.log(petition.hasFinished);
 
     const timestamp = new Date(petition.createdAt);
     const formattedDate = timestamp.toLocaleString('en-GB', {
@@ -97,15 +101,15 @@ export const Details = () => {
             <section id="details-info">
 
                 <div className="petition-image">
-                    <img 
-                    src={petition.image} 
-                    onError={(e) => {
-                        e.target.onerror = null; 
-                        e.target.src = '../../assets/default-petition-photo.jpg';
-                      }}
-                    alt="alt" />
+                    <img
+                        src={petition.image}
+                        onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = '../../assets/default-petition-photo.jpg';
+                        }}
+                        alt="alt" />
                 </div>
-             <ProgressBar petition={petition}/>
+                <ProgressBar petition={petition} />
                 <div className="petition-info">
                     <div className="petition-text">
                         <h1 id="title">{petition.title}</h1>
@@ -127,10 +131,10 @@ export const Details = () => {
                     </div>
 
                     <div className="buttons">
-                        {petition.hasFinished &&
+                        {Boolean(petition.signed >= petition.goal) &&
                             <h4>Тази петиция е приключила</h4>
                         }
-                        {!petition.hasFinished && (
+                        {!Boolean(petition.signed >= petition.goal) && (
                             <>
                                 {!isAuthenticated && (
                                     <button
@@ -173,7 +177,7 @@ export const Details = () => {
                                 )}
                             </>
                         )}
-                        
+
                     </div>
                 </div>
             </section>
