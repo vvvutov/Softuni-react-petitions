@@ -13,9 +13,7 @@ const usersCollectionRef = collection(db, "users");
 export const register = async (userData) => {
     try {
         const { user } = await createUserWithEmailAndPassword(auth, userData.email, userData.password);
-        console.log(user);
         const userDocRef = doc(usersCollectionRef, user.uid);
-        console.log(userDocRef);
 
         const desiredData = {
             username: userData.username,
@@ -43,7 +41,6 @@ export const login = async (userData) => {
         const userDocRef = doc(usersCollectionRef, loginInfo.user.uid);
         const userSnap = await getDoc(userDocRef);
         const userSnapData = userSnap.data();
-        console.log(userSnapData);
         return {
             ...userSnapData,
             _id: loginInfo.user.uid,
@@ -60,7 +57,6 @@ export const login = async (userData) => {
   export const googleSignIn = async () => {
     try {
       const googleSignInInfo = await signInWithPopup(auth, googleProvider);
-        console.log(googleSignInInfo);
       const googleInfo = {
         username: googleSignInInfo.user.email.split('@')[0],
         firstName: googleSignInInfo.user.displayName.split(' ')[0],

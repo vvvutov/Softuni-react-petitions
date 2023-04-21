@@ -12,6 +12,9 @@ import { Comments } from './Comments';
 import { ProgressBar } from './ProgressBar';
 
 import { toast } from 'react-toastify';
+import defaultPetitionPhoto from '../../../src/assets/default-petition-photo.jpg'
+import { NotFound } from '../AboutAndNotFound/NotFound';
+
 
 export const Details = () => {
     const navigate = useNavigate();
@@ -23,7 +26,9 @@ export const Details = () => {
     const [buttonText, setButtonText] = useState('Подпиши');
 
     const petition = petitions.find(p => p._id === petitionId);
-    console.log(petition);
+    if(!petition) {
+        return <NotFound/>
+    }
 
     const onDeleteHandler = (e) => {
         e.preventDefault();
@@ -61,7 +66,6 @@ export const Details = () => {
             ...user,
             signedPetitions: [...user.signedPetitions, petitionId],
         });
-console.log(Boolean(petition.signed >= petition.goal-1));
         //edits the petition in firebase collection
         editPetition(petitionId, {
             ...petition,
@@ -72,8 +76,6 @@ console.log(Boolean(petition.signed >= petition.goal-1));
         toast.success("Успешно подписахте петицията");
     };
 
-    // console.log(Boolean(petition.signed >= petition.goal));
-    console.log(petition.hasFinished);
 
     const timestamp = new Date(petition.createdAt);
     const formattedDate = timestamp.toLocaleString('en-GB', {
@@ -102,11 +104,8 @@ console.log(Boolean(petition.signed >= petition.goal-1));
 
                 <div className="petition-image">
                     <img
-                        src={petition.image}
-                        onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.src = '../../assets/default-petition-photo.jpg';
-                        }}
+                        src={petition?.image || defaultPetitionPhoto}
+                   
                         alt="alt" />
                 </div>
                 <ProgressBar petition={petition} />

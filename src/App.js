@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import { ErrorBoundary } from './components/ErrorBoundary/ErrorBoundary'
+// import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import { AuthProvider } from './contexts/AuthContext';
 
 import { Footer } from './components/Home/Footer';
@@ -32,7 +32,7 @@ function App() {
       };
 
     return (
-        <ErrorBoundary>
+        // <ErrorBoundary>
             <AuthProvider>
                 <main>
                     <Header />
@@ -57,7 +57,7 @@ function App() {
                     <ToastContainer {...toastOptions} />
                 </main>
             </AuthProvider>
-        </ErrorBoundary>
+        // </ErrorBoundary>
     );
 }
 

@@ -26,7 +26,6 @@ export const PetitionProvider = ({ children }) => {
   }, []);
 
   const addPetitionHandler = (petitionData) => {
-    console.log(petitionData);
     setPetitions((state) => [...state, petitionData]);
   };
 
@@ -41,8 +40,7 @@ export const PetitionProvider = ({ children }) => {
       const currentPetition = state.find((petition) => petition._id === petitionId);
       currentPetition.signedBy.push(userThatSigned);
       const signed = Number(currentPetition.signed) +1;
-      const hasFinished =  Boolean(currentPetition.signed >= currentPetition.goal)
-      console.log(currentPetition);
+      const hasFinished =  Boolean(currentPetition.signed >= currentPetition.goal-1)
       return [
         {
           ...currentPetition,

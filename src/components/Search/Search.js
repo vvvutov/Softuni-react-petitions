@@ -11,7 +11,7 @@ export const Search = () => {
     const [isLoading, setIsLoading] = useState(false);
     const searchResultsRef = useRef(null);
 
-    const debouncedSearchQuery = useDebounce(searchQuery, 800); 
+    const debouncedSearchQuery = useDebounce(searchQuery, 800);
 
     useEffect(() => {
         if (debouncedSearchQuery) {
@@ -33,7 +33,7 @@ export const Search = () => {
             setSearchResults(result);
             setIsLoading(false);
         });
-        setSearchQuery(""); 
+        setSearchQuery("");
     };
 
     const handleSearchQueryChange = (e) => {
@@ -42,7 +42,7 @@ export const Search = () => {
     };
 
     const handleClick = () => {
-        setSearchResults([]); 
+        setSearchResults([]);
     };
 
     useEffect(() => {
@@ -68,18 +68,17 @@ export const Search = () => {
                     onChange={handleSearchQueryChange}
                 />
 
-                <button type="submit" className="btn-search">
-                    Search
-                </button>
             </form>
             <div className="search-results-container" ref={searchResultsRef}>
                 {isLoading ? (
                     <p>Loading...</p>
-                ) : (
+                ) : searchResults.length > 0 ? (
                     <SearchResults
                         searchResults={searchResults}
                         onClick={() => setSearchResults([])}
                     />
+                ) : (
+                    debouncedSearchQuery && <p>Няма намерени петиции</p>
                 )}
             </div>
         </section>

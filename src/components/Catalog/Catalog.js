@@ -18,7 +18,6 @@ export const Catalog = () => {
         acc[category].push(petition);
         return acc;
     }, {});
-    console.log(Object.keys(groupedPetitions).length);
 
     return (
         <section className="petition-catalog-list">
