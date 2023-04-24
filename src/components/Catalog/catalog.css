@@ -46,7 +46,7 @@ main {
 
 
 /* asdasd */
-.petition-catalog-list .petition {
+/* .petition-catalog-list .petition {
     position: relative;
     padding: 10px;
     width: 500px;
@@ -140,7 +140,7 @@ main {
   .petition-catalog-list .petition .btn-details:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
+  } */
 
 
   @media only screen and (max-width: 768px) {

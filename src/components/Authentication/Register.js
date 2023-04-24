@@ -60,9 +60,9 @@ export const Register = () => {
                 navigate('/')
                 toast.success("Успешна регистрация")
             }).catch((error) => {
-                // toast.error("Потребител с тази електронна поща вече съществува")
-                console.error(error)
-
+                toast.error("Потребител с тази електронна поща вече съществува")
+                submitBtn.value = "Регистрирай ме";
+                submitBtn.disabled = false;
             })
     };
 

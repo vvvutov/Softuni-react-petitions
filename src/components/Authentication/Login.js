@@ -31,6 +31,8 @@ export const Login = () => {
             toast.success(`Добре дошли, ${userData.username} !`)
         } catch (error) {
             toast.error("Грешен потребител/парола");
+            submitBtn.value = "Вход";
+            submitBtn.disabled = false;
         }
     };
 

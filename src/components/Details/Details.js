@@ -13,6 +13,7 @@ import { ProgressBar } from './ProgressBar';
 
 import { toast } from 'react-toastify';
 import defaultPetitionPhoto from '../../../src/assets/default-petition-photo.jpg'
+import { formattedDate } from '../../services/helpers';
 import { NotFound } from '../AboutAndNotFound/NotFound';
 
 
@@ -78,13 +79,6 @@ export const Details = () => {
 
 
     const timestamp = new Date(petition.createdAt);
-    const formattedDate = timestamp.toLocaleString('en-GB', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-    });
 
     const isAuthor = user._id === petition.authorInfo._id;
 
@@ -118,7 +112,7 @@ export const Details = () => {
                                 : <h3>Автор :{petition.authorInfo.username},&nbsp; </h3>
                             }
                             <h3 >{petition.other ? petition.other : petition.category},&nbsp;</h3>
-                            <h3>{formattedDate}&nbsp;</h3>
+                            <h3>{formattedDate(timestamp)}&nbsp;</h3>
                             <span title={petition.signedBy.join(', ')}> {petition.signed ? petition.signed : 0}/{petition.goal}</span> подписа
                         </div>
                         <div className="petition-lower">

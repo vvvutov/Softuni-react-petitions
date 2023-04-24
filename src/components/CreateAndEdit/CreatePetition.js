@@ -98,10 +98,12 @@ export const CreatePetition = () => {
             createPetition({
                 ...values,
                 _id: generatedID,
+                // createdAt: new Date(Date.now()).toString(),
             })
                 .then(addPetitionHandler({
                     ...values,
                     _id: generatedID,
+                    // createdAt: new Date(Date.now()).toString(),
                 }))
                 .then
                 (navigate("/petitions"))
@@ -115,11 +117,12 @@ export const CreatePetition = () => {
     }
 
     const lengthCheck = (e, minLength, maxLength) => {
-        if(values[e.target.name].length){
-        setErrors(state => ({
-            ...state,
-            [e.target.name]: values[e.target.name].length < minLength || values[e.target.name].length > maxLength
-        }))}
+        if (values[e.target.name].length) {
+            setErrors(state => ({
+                ...state,
+                [e.target.name]: values[e.target.name].length < minLength || values[e.target.name].length > maxLength
+            }))
+        }
 
     }
 
@@ -189,7 +192,7 @@ export const CreatePetition = () => {
                             name="description"
                             placeholder="Кратко описание"
                             rows="3"
-                            
+
                             value={values.description}
                             onChange={changeHandler}
                             onBlur={(e) => { lengthCheck(e, 10, 100) }}

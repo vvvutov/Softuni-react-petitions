@@ -1,15 +1,12 @@
-// import { useContext } from "react";
-// import { AuthContext } from "../../contexts/AuthContext";
+import { Link } from 'react-router-dom';
 import './petitionItem.css'
 
 
-export const PetitionItem = ({petition}) => {
+export const PetitionItem = ({ petition }) => {
 
-// const { user } = useContext(AuthContext)
-
-
-return (
-    <div className="latest-petitions">
+  return (
+    <Link to={`/details/${petition._id}`}>
+      <div className="latest-petitions">
         <div className="petition-item" >
           <div className="petition-item-left">
             <img
@@ -23,6 +20,7 @@ return (
             <p className="petition-description">{petition.description}</p>
           </div>
         </div>
-    </div>
-  );
+      </div>
+      </Link>
+      );
 };
