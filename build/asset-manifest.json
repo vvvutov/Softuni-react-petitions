@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.edcb522a.css",
-    "main.js": "/static/js/main.471a6616.js",
+    "main.css": "/static/css/main.029464a3.css",
+    "main.js": "/static/js/main.74da0e74.js",
     "static/media/logo.gif": "/static/media/logo.3ad632f272a7e792cc2d.gif",
     "static/media/default-petition-photo.jpg": "/static/media/default-petition-photo.4a41585193e0cd1b601e.jpg",
     "static/media/illustration-world-map": "/static/media/illustration-world-map.a88a6e87e7bd3a2d3e08",
     "static/media/logo.png": "/static/media/logo.2475b137df7f4afad1d2.png",
     "index.html": "/index.html",
-    "main.edcb522a.css.map": "/static/css/main.edcb522a.css.map",
-    "main.471a6616.js.map": "/static/js/main.471a6616.js.map"
+    "main.029464a3.css.map": "/static/css/main.029464a3.css.map",
+    "main.74da0e74.js.map": "/static/js/main.74da0e74.js.map"
   },
   "entrypoints": [
-    "static/css/main.edcb522a.css",
-    "static/js/main.471a6616.js"
+    "static/css/main.029464a3.css",
+    "static/js/main.74da0e74.js"
   ]
 }

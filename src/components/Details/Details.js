@@ -99,8 +99,7 @@ export const Details = () => {
                 <div className="petition-image">
                     <img
                         src={petition?.image || defaultPetitionPhoto}
-                   
-                        alt="alt" />
+                        alt="alt-petition" />
                 </div>
                 <ProgressBar petition={petition} />
                 <div className="petition-info">
@@ -113,7 +112,6 @@ export const Details = () => {
                             }
                             <h3 >{petition.other ? petition.other : petition.category},&nbsp;</h3>
                             <h3>{formattedDate(timestamp)}&nbsp;</h3>
-                            <span title={petition.signedBy.join(', ')}> {petition.signed ? petition.signed : 0}/{petition.goal}</span> подписа
                         </div>
                         <div className="petition-lower">
                             <p id="description">
@@ -123,12 +121,12 @@ export const Details = () => {
                         </div>
                     </div>
 
-                    <div className="buttons">
                         {Boolean(petition.signed >= petition.goal) &&
                             <h4>Тази петиция е приключила</h4>
                         }
                         {!Boolean(petition.signed >= petition.goal) && (
-                            <>
+                    <div className="buttons">
+                            
                                 {!isAuthenticated && (
                                     <button
                                         className="google-sign-in-button"
@@ -149,7 +147,7 @@ export const Details = () => {
                                         <input
                                             type="button"
                                             onClick={onSignHandler}
-                                            className="btn-delete"
+                                            className="btn"
                                             value={buttonText}
                                         />
                                     )
@@ -157,21 +155,21 @@ export const Details = () => {
 
                                 {isAuthor && (
                                     <div className="author">
-                                        <Link to={`/edit/${petition._id}`} className="btn-edit">
+                                        <Link to={`/edit/${petition._id}`} className="btn">
                                             Редактирай
                                         </Link>
                                         <input
                                             type="button"
                                             onClick={onDeleteHandler}
-                                            className="btn-delete"
+                                            className="btn"
                                             value="Изтрий"
                                         />
                                     </div>
                                 )}
-                            </>
+                           
+                    </div>
                         )}
 
-                    </div>
                 </div>
             </section>
             <Comments user={user} comments={petition.comments} petitionId={petitionId} />

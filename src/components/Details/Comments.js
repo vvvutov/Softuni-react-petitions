@@ -33,6 +33,7 @@ export const Comments = ({ user, petitionId, comments }) => {
                     <div className="comment-time">{comment.time}</div>
                 </div>
                 <div className="comment-body">{comment.comment}</div>
+                <hr/>
             </li>
         );
     };
@@ -41,14 +42,16 @@ export const Comments = ({ user, petitionId, comments }) => {
         <div id="comments-section">
             <h3>Коментари</h3>
             <ul>
+                
                 {commentsState.map(renderComment)}
+               
             </ul>
             {showForm
                 ? (
                     <form onSubmit={handleCommentSubmit}>
                         <div>
                             <label htmlFor="comment">Оставете коментар:</label>
-                            <br />
+                            
                             <textarea
                                 id="comment"
                                 value={newComment}
@@ -57,13 +60,13 @@ export const Comments = ({ user, petitionId, comments }) => {
                                 cols={50}
                             />
                         </div>
-                        <br />
+                        
 
                         {user.username
-                            ? <button className="btn-submit-comment" type="submit">Изпрати</button>
+                            ? <button className="btn" type="submit">Изпрати</button>
                             : <>
                                 <span> Трябва да сте логнат за да коментирате</span>
-                                <button className="btn-submit-comment" type="submit" disabled>- - - - - - -</button>
+                                <button className="btn" type="submit" disabled>- - - - - - -</button>
                             </>
                         }
                     </form>
