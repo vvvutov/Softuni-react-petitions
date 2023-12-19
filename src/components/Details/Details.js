@@ -6,7 +6,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { deletePetition, editPetition } from '../../services/petitionService';
 import { useNavigate } from 'react-router-dom';
 import { updateFirebaseUser } from '../../services/authService';
-import { googleSignIn } from '../../services/authService';
+import { googleSignIn, signInWithFacebook } from '../../services/authService';
 
 import { Comments } from './Comments';
 import { ProgressBar } from './ProgressBar';
@@ -15,6 +15,7 @@ import { toast } from 'react-toastify';
 import defaultPetitionPhoto from '../../../src/assets/default-petition-photo.jpg'
 import { formattedDate } from '../../services/helpers';
 import { NotFound } from '../AboutAndNotFound/NotFound';
+// import { auth } from '../../firebase/firebase';
 
 
 export const Details = () => {
@@ -24,11 +25,15 @@ export const Details = () => {
     const { user, isAuthenticated, userUpdate, userLogin } = useContext(AuthContext);
     const { petitionId } = useParams();
 
+    const [deepLink, setDeepLink] = useState(null);
+
     const [buttonText, setButtonText] = useState('Подпиши');
 
+
+
     const petition = petitions.find(p => p._id === petitionId);
-    if(!petition) {
-        return <NotFound/>
+    if (!petition) {
+        return <NotFound />
     }
 
     const onDeleteHandler = (e) => {
@@ -46,8 +51,20 @@ export const Details = () => {
             .then(authData => {
                 userLogin(authData)
             })
-            .then
-            (toast.success("Вече може да подпишете петицията"))
+            .then(authData =>
+                (`Добре дошли, ${authData.username} !`)
+            )
+    };
+
+    const handleFacebookSignIn = (e) => {
+        e.preventDefault();
+
+        signInWithFacebook()
+            .then(authData => {
+                userLogin(authData)
+                console.log(authData);
+                toast.success(`Добре дошли, ${authData.username} !`)
+            })
     };
 
     const onSignHandler = (e) => {
@@ -70,7 +87,7 @@ export const Details = () => {
         //edits the petition in firebase collection
         editPetition(petitionId, {
             ...petition,
-            hasFinished: Boolean(petition.signed >= petition.goal-1),
+            hasFinished: Boolean(petition.signed >= petition.goal - 1),
             signed: Number(petition.signed) + 1,
             signedBy: [...petition.signedBy, `${user.firstName} ${user.lastName}`],
         });
@@ -91,6 +108,60 @@ export const Details = () => {
         }
     };
 
+// A LOT OF WASTED TIME FROM HERE BELOW!
+//TO DO - facebook login
+
+    // const handleCopyLink = () => {
+    //     const el = document.createElement('textarea');
+    //     el.value = window.location.href;
+
+    //     document.body.appendChild(el);
+    //     el.select();
+    //     document.execCommand('copy');
+    //     document.body.removeChild(el);
+    //     toast.success("Копирахте линка")
+    // };
+
+    // const isEmbeddedBrowser = /FBAN|FBAV|FBMS|FB_IAB|FB4A|FBAN\/Messenger/.test(navigator.userAgent);
+
+    // const handleOpenInNewTab = (e) => {
+    //     e.preventDefault()
+    //     const url = window.location.href;
+    //     window.open(url, '_system');
+    // };
+
+    // //deep link
+
+    // // const createDeepLink = (petitionId) => {
+    // //   const appLink = `petitions://details/${petitionId}`; 
+    // //   const webLink = `https://petitions.vutov.org/details/${petitionId}`; 
+    // //   const redirectUrl = encodeURIComponent(`${appLink}?fallback_url=${webLink}`);
+
+    // //   return redirectUrl
+    // // };
+    
+    // const redirectURL = encodeURIComponent(`petitions://details/${petitionId}?fallback_url=https://petitions.vutov.org/details/${petitionId}`);
+    // const handleOpenLink = () => {
+    //     window.open(decodeURIComponent(redirectURL), "_system");
+    //   };
+
+    window.addEventListener('load', function(event) {
+        document.body.addEventListener('click', function(event) {
+          let target = event.target;
+      
+          if (target.href.includes('petitions://') ) {
+            
+            event.preventDefault();
+      
+            window.open(target.href, '_system');
+            
+          }
+        });
+      });
+
+    // console.log(isEmbeddedBrowser);
+
+    
 
     return (
         <main>
@@ -104,6 +175,7 @@ export const Details = () => {
                 <ProgressBar petition={petition} />
                 <div className="petition-info">
                     <div className="petition-text">
+
                         <h1 id="title">{petition.title}</h1>
                         <div className="info">
                             {petition.showMyFirstName.checked
@@ -121,54 +193,82 @@ export const Details = () => {
                         </div>
                     </div>
 
-                        {Boolean(petition.signed >= petition.goal) &&
-                            <h4>Тази петиция е приключила</h4>
-                        }
-                        {!Boolean(petition.signed >= petition.goal) && (
-                    <div className="buttons">
-                            
-                                {!isAuthenticated && (
-                                    <button
-                                        className="google-sign-in-button"
-                                        onClick={handleGoogleSignIn}
-                                    >
-                                        <img
-                                            src="https://developers.google.com/identity/images/g-logo.png"
-                                            alt="Google sign-in"
-                                        />
-                                        Подпиши петицията с Google
-                                    </button>
-                                )}
+                    {Boolean(petition.signed >= petition.goal) &&
+                        <h4>Тази петиция е приключила</h4>
+                    }
+                    {!Boolean(petition.signed >= petition.goal) && (
+                        <div className="buttons">
 
-                                {didTheUserSignThePetition ? (
-                                    <h4>Вече сте подписали тази петиция!</h4>
-                                ) : (
-                                    isAuthenticated && !isAuthor && (
-                                        <input
-                                            type="button"
-                                            onClick={onSignHandler}
-                                            className="btn"
-                                            value={buttonText}
-                                        />
-                                    )
-                                )}
+                            {!isAuthenticated && 
+                            (
+                                <button
+                                    className="google-sign-in-button"
+                                    onClick={handleGoogleSignIn}
+                                >
+                                    <img
+                                        src="https://developers.google.com/identity/images/g-logo.png"
+                                        alt="Google sign-in"
+                                    />
+                                    Подпиши петицията с Google
+                                </button>
+                            )}
 
-                                {isAuthor && (
-                                    <div className="author">
-                                        <Link to={`/edit/${petition._id}`} className="btn">
-                                            Редактирай
-                                        </Link>
-                                        <input
-                                            type="button"
-                                            onClick={onDeleteHandler}
-                                            className="btn"
-                                            value="Изтрий"
-                                        />
-                                    </div>
-                                )}
-                           
-                    </div>
-                        )}
+                            {/* <h1>{isEmbeddedBrowser.toString()}</h1> */}
+
+                            {/* {!isAuthenticated &&
+                                <div
+                                    className="fb-login-button"
+                                    data-size="large"
+                                    data-button-type="login_with"
+                                    data-layout="default"
+                                    data-auto-logout-link="false"
+                                    data-use-continue-as="true"
+                                    data-scope="email"
+                                    onClick={handleFacebookSignIn}
+                                >
+                                    Log in with Facebook
+                                </div>
+                            } */}
+
+                            {didTheUserSignThePetition ? (
+                                <h4>Вече сте подписали тази петиция!</h4>
+                            ) : (
+                                isAuthenticated && !isAuthor && (
+                                    <input
+                                        type="button"
+                                        onClick={onSignHandler}
+                                        className="btn"
+                                        value={buttonText}
+                                    />
+                                )
+                            )}
+
+                            {isAuthor && (
+                                <div className="author">
+                                    <Link to={`/edit/${petition._id}`} className="btn">
+                                        Редактирай
+                                    </Link>
+                                    <input
+                                        type="button"
+                                        onClick={onDeleteHandler}
+                                        className="btn"
+                                        value="Изтрий"
+                                    />
+                                </div>
+                            )}
+                            {/* it isn't quite working yet
+                            <div className="fb-share-button" data-href="https://your-petition-link.com" data-layout="button_count" data-size="small">
+                                <a target="_blank" rel="noreferrer" href={`https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2F${encodeURIComponent(
+                                    window.location.href
+                                )}&amp;src=sdkpreparse`} className="fb-xfbml-parse-ignore">Share with Messenger</a>
+                            </div> */}
+                            {/* <button onClick={handleCopyLink}>Copy Link</button> */}
+                            {/* <button onClick={handleOpenInNewTab}>open in new</button> */}
+                            {/* <button onClick={handleOpenLink}>OPEN IN NEW</button> */}
+
+
+                        </div>
+                    )}
 
                 </div>
             </section>

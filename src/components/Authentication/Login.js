@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 
 import { AuthContext } from '../../contexts/AuthContext';
-import { login, googleSignIn } from '../../services/authService';
+import { login,  googleSignIn } from '../../services/authService';
 
 import { toast } from 'react-toastify';
 
@@ -14,7 +14,7 @@ export const Login = () => {
 
     const navigate = useNavigate();
 
-    const { userLogin } = useContext(AuthContext)
+    const { userLogin } = useContext(AuthContext);
 
 
     const onSubmit = async (e) => {

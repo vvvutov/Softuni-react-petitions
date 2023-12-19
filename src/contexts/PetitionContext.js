@@ -55,7 +55,7 @@ export const PetitionProvider = ({ children }) => {
   
 
   if (isLoading) {
-    return <div><img src={logo} alt="logo"/></div>;
+    return <div>React petitions platform for the Softuni ReactJS Course</div>;
   }
   
   return (

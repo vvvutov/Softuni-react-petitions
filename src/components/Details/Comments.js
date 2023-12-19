@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { addComment } from '../../services/petitionService';
 import './comments.css'
+
 //May be add comments context or some other way so that the comment stays in the state all the time
 import { generateRandomId, formattedDate } from '../../services/helpers';
 
@@ -10,20 +11,32 @@ export const Comments = ({ user, petitionId, comments }) => {
     const [commentsState, setCommentsState] = useState(comments || []);
     const [newComment, setNewComment] = useState('');
     const [showForm, setShowForm] = useState(true);
-
+    console.log(user);
     const handleCommentSubmit = (e) => {
         e.preventDefault();
-        const comment = {
-            username: `${user.firstName} ${user.lastName}`,
-            time: formattedDate(new Date()),
-            comment: newComment,
-            _id: generateRandomId(10)
-        };
+           
+            
+            let username;
+            if (user.firstName === undefined ) {
+                username  = user.username;
+            } else {
+                username = `${user.firstName} ${user.lastName}`;
+            }
+
+            const comment = {
+              username: username,
+              time: formattedDate(new Date()),
+              comment: newComment,
+              _id: generateRandomId(10),
+            };
+        
         setCommentsState([...comments, comment]);
         setNewComment('');
         addComment(petitionId, comment);
         setShowForm(false);
+        // console.log(comment);
     };
+
 
     const renderComment = (comment) => {
         return (

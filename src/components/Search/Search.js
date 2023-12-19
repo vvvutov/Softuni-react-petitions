@@ -9,6 +9,7 @@ export const Search = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [isSearchVisible, setIsSearchVisible] = useState(true); // New state variable
     const searchResultsRef = useRef(null);
 
     const debouncedSearchQuery = useDebounce(searchQuery, 800);
@@ -45,18 +46,25 @@ export const Search = () => {
         setSearchResults([]);
     };
 
+    // const searchLink = document.getElementById("search");
+    const handleClickOutside = (event) => {
+        if (
+            searchResultsRef.current &&
+            !searchResultsRef.current.contains(event.target) 
+            // event.target !== searchLink && !searchLink.contains(event.target)
+        ) {
+            setSearchResults([]);
+            setSearchQuery("");
+            // setIsSearchVisible(!isSearchVisible);
+        }
+    };
+
     useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (searchResultsRef.current && !searchResultsRef.current.contains(event.target)) {
-                setSearchResults([]);
-                setSearchQuery("");
-            }
-        };
         document.addEventListener("click", handleClickOutside);
         return () => document.removeEventListener("click", handleClickOutside);
     }, []);
 
-    return (
+    return isSearchVisible ? (
         <section className="petition-search" onClick={handleClick}>
             <form className="search-form" onSubmit={handleSubmit}>
                 <input
@@ -67,7 +75,6 @@ export const Search = () => {
                     value={searchQuery}
                     onChange={handleSearchQueryChange}
                 />
-
             </form>
             <div className="search-results-container" ref={searchResultsRef}>
                 {isLoading ? (
@@ -82,5 +89,5 @@ export const Search = () => {
                 )}
             </div>
         </section>
-    );
+    ) : null;
 };
